@@ -1,0 +1,188 @@
+{
+  "entities": {
+    "Profile": {
+      "title": "Profile",
+      "description": "User profile with streak details and preferred category.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "username": { "type": "string" },
+        "displayName": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "bio": { "type": "string" },
+        "joinedDate": { "type": "string" },
+        "currentStreak": { "type": "number" },
+        "longestStreak": { "type": "number" },
+        "favoriteCategory": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin"] }
+      },
+      "required": ["id", "username", "displayName"]
+    },
+    "AuthUser": {
+      "title": "AuthUser",
+      "description": "Credentials for custom fallback authentication.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "password": { "type": "string" }
+      },
+      "required": ["id", "email", "password"]
+    },
+    "Submission": {
+      "title": "Submission",
+      "description": "A user drawing submission for a specific prompt.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "username": { "type": "string" },
+        "userDisplayName": { "type": "string" },
+        "userAvatarUrl": { "type": "string" },
+        "promptId": { "type": "string" },
+        "promptText": { "type": "string" },
+        "season": { "type": "number" },
+        "dayOfSeason": { "type": "number" },
+        "imageUrl": { "type": "string" },
+        "caption": { "type": "string" },
+        "drawingNote": { "type": "string" },
+        "device": { "type": "string" },
+        "uploadTime": { "type": "string" },
+        "ratingsCount": { "type": "number" },
+        "ratingsSum": { "type": "number" }
+      },
+      "required": ["id", "userId", "promptId", "imageUrl"]
+    },
+    "Rating": {
+      "title": "Rating",
+      "description": "A star rating given to a submission by a user.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "username": { "type": "string" },
+        "userDisplayName": { "type": "string" },
+        "submissionId": { "type": "string" },
+        "rating": { "type": "number" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "userId", "submissionId", "rating"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "A text comment on a submission.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "submissionId": { "type": "string" },
+        "userId": { "type": "string" },
+        "username": { "type": "string" },
+        "userDisplayName": { "type": "string" },
+        "userAvatar": { "type": "string" },
+        "text": { "type": "string" },
+        "parentId": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "submissionId", "userId", "text"]
+    },
+    "Friendship": {
+      "title": "Friendship",
+      "description": "Social circle connection state between two artists.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderId": { "type": "string" },
+        "receiverId": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "accepted"] },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "senderId", "receiverId", "status"]
+    },
+    "PrivateChallenge": {
+      "title": "PrivateChallenge",
+      "description": "An invited drawing challenge created by an artist.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "creatorId": { "type": "string" },
+        "creatorName": { "type": "string" },
+        "promptText": { "type": "string" },
+        "deadline": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "creatorId", "promptText", "deadline"]
+    },
+    "ChallengeSubmission": {
+      "title": "ChallengeSubmission",
+      "description": "Submission to a private challenge.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "challengeId": { "type": "string" },
+        "userId": { "type": "string" },
+        "username": { "type": "string" },
+        "userDisplayName": { "type": "string" },
+        "userAvatarUrl": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "caption": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "challengeId", "userId", "imageUrl"]
+    },
+    "InkNotification": {
+      "title": "InkNotification",
+      "description": "Notification message in the drawing studio.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "recipientId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "senderAvatar": { "type": "string" },
+        "type": { "type": "string" },
+        "message": { "type": "string" },
+        "read": { "type": "boolean" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "recipientId", "senderId", "type", "message"]
+    }
+  },
+  "firestore": {
+    "profiles": {
+      "schema": "Profile",
+      "description": "Store all user artist profile information."
+    },
+    "auth_users": {
+      "schema": "AuthUser",
+      "description": "Fallback authentication accounts."
+    },
+    "submissions": {
+      "schema": "Submission",
+      "description": "Daily drawings uploaded by artists."
+    },
+    "ratings": {
+      "schema": "Rating",
+      "description": "Stars given to submissions."
+    },
+    "comments": {
+      "schema": "Comment",
+      "description": "Submissions' commentary thread."
+    },
+    "friendships": {
+      "schema": "Friendship",
+      "description": "Tracks connection requests and companion links."
+    },
+    "private_challenges": {
+      "schema": "PrivateChallenge",
+      "description": "Artist custom prompts for selected companions."
+    },
+    "challenge_submissions": {
+      "schema": "ChallengeSubmission",
+      "description": "Drawings uploaded specifically to private challenges."
+    },
+    "notifications": {
+      "schema": "InkNotification",
+      "description": "In-app alerts for social interactions."
+    }
+  }
+}
