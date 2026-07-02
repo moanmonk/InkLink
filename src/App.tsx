@@ -182,6 +182,7 @@ export default function App() {
         <FeedView 
           currentUser={user} 
           initialSelectedSubmissionId={selectedFeedSubId}
+          onClearSelectedSubmissionId={() => setSelectedFeedSubId(undefined)}
         />
       )}
 

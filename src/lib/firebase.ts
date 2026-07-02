@@ -422,15 +422,38 @@ export async function submitDrawing(
   
   const submissionId = `${userId}_prompt_${promptId}`;
   
-  // Calculate potential streak increment
-  let newStreak = userProfile.currentStreak;
-  // Let's increment streak if this is a new submission for today
-  const existingSub = await safeGetDoc(doc(db, 'submissions', submissionId), `submissions/${submissionId}`);
-  if (!existingSub || !existingSub.exists()) {
-    newStreak += 1;
+  // Calculate potential streak increment correctly per calendar day
+  const submissionsList = await getProfileSubmissions(userId);
+  // Filter out any previous version of this specific prompt submission to avoid self-counting on re-upload
+  const otherSubs = submissionsList.filter(s => s.promptId !== promptId);
+
+  const todayStr = new Date().toISOString().substring(0, 10);
+  const yesterday = new Date();
+  yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+  const yesterdayStr = yesterday.toISOString().substring(0, 10);
+
+  let newStreak = userProfile.currentStreak || 0;
+
+  if (otherSubs.length === 0) {
+    // Very first submission
+    newStreak = 1;
+  } else {
+    const lastSub = otherSubs[0]; // Most recent drawing before this
+    const lastSubDateStr = lastSub.uploadTime ? lastSub.uploadTime.substring(0, 10) : '';
+
+    if (lastSubDateStr === todayStr) {
+      // Already drew today, keep streak the same
+      if (newStreak === 0) newStreak = 1;
+    } else if (lastSubDateStr === yesterdayStr) {
+      // Drew yesterday, increment streak
+      newStreak += 1;
+    } else {
+      // Missed yesterday, reset streak to 1
+      newStreak = 1;
+    }
   }
   
-  const newLongestStreak = Math.max(newStreak, userProfile.longestStreak);
+  const newLongestStreak = Math.max(newStreak, userProfile.longestStreak || 0);
   
   // Update user streaks
   await updateProfile(userId, {

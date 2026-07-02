@@ -19,11 +19,12 @@ import { Submission, Comment, Rating, Profile } from '../types';
 interface FeedViewProps {
   currentUser: Profile;
   initialSelectedSubmissionId?: string;
+  onClearSelectedSubmissionId?: () => void;
 }
 
 const REACTION_TYPES = ['❤️', '🔥', '👏', '😂', '😭', '🤯', '⭐'];
 
-export default function FeedView({ currentUser, initialSelectedSubmissionId }: FeedViewProps) {
+export default function FeedView({ currentUser, initialSelectedSubmissionId, onClearSelectedSubmissionId }: FeedViewProps) {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [filteredSubmissions, setFilteredSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
@@ -120,7 +121,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
       // Update locally immediately
       setSubmissions(prev => prev.map(s => {
         if (s.id === subId) {
-          const reactions = { ...s.reactions };
+          const reactions = { ...(s.reactions || {}) };
           if (!reactions[reaction]) reactions[reaction] = [];
           const idx = reactions[reaction].indexOf(currentUser.id);
           if (idx > -1) {
@@ -138,7 +139,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
       if (selectedSub && selectedSub.id === subId) {
         setSelectedSub(prev => {
           if (!prev) return null;
-          const reactions = { ...prev.reactions };
+          const reactions = { ...(prev.reactions || {}) };
           if (!reactions[reaction]) reactions[reaction] = [];
           const idx = reactions[reaction].indexOf(currentUser.id);
           if (idx > -1) {
@@ -377,7 +378,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {filteredSubmissions.map((sub) => {
               const ratingVal = sub.ratingsCount > 0 ? (sub.ratingsSum / sub.ratingsCount).toFixed(1) : 'No ratings';
-              const totalReactions = (Object.values(sub.reactions) as string[][]).reduce((sum, users) => sum + users.length, 0);
+              const totalReactions = (Object.values(sub.reactions || {}) as string[][]).reduce((sum, users) => sum + users.length, 0);
 
               return (
                 <motion.div
@@ -445,7 +446,13 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
           <div className="fixed inset-0 bg-[#2D3748]/60 z-50 flex justify-end">
             
             {/* Backdrop click to close */}
-            <div className="absolute inset-0 cursor-pointer" onClick={() => setSelectedSub(null)} />
+            <button 
+              className="absolute inset-0 bg-transparent w-full h-full cursor-pointer focus:outline-hidden" 
+              onClick={() => {
+                setSelectedSub(null);
+                if (onClearSelectedSubmissionId) onClearSelectedSubmissionId();
+              }} 
+            />
 
             <motion.div
               initial={{ x: '100%' }}
@@ -476,10 +483,16 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
                 </div>
 
                 <button
-                  onClick={() => setSelectedSub(null)}
-                  className="p-1.5 hover:bg-[#F0F4F8]/60 rounded-full transition-colors cursor-pointer"
+                  onClick={() => {
+                    setSelectedSub(null);
+                    if (onClearSelectedSubmissionId) {
+                      onClearSelectedSubmissionId();
+                    }
+                  }}
+                  className="p-3 bg-stone-100 hover:bg-stone-200 rounded-full transition-colors cursor-pointer flex items-center justify-center min-w-[44px] min-h-[44px] shadow-sm active:scale-95"
+                  title="Close panel"
                 >
-                  <X className="w-4 h-4 text-[#8daa91]" />
+                  <X className="w-5 h-5 text-[#8daa91]" />
                 </button>
               </div>
 
@@ -569,7 +582,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
                   
                   <div className="flex flex-wrap gap-2">
                     {REACTION_TYPES.map((emoji) => {
-                      const userIds = selectedSub.reactions[emoji] || [];
+                      const userIds = (selectedSub.reactions && selectedSub.reactions[emoji]) || [];
                       const hasReacted = userIds.includes(currentUser.id);
                       return (
                         <button

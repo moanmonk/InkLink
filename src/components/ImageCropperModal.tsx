@@ -20,7 +20,6 @@ export default function ImageCropperModal({ imageSrc, onCropComplete, onClose }:
 
   // Reset adjustments when image source changes
   useEffect(() => {
-    setZoom(1);
     setRotation(0);
     setOffset({ x: 0, y: 0 });
   }, [imageSrc]);
@@ -48,6 +47,16 @@ export default function ImageCropperModal({ imageSrc, onCropComplete, onClose }:
     setRotation((prev) => (prev + 90) % 360);
   };
 
+  // Handle image load to automatically compute a zoom level that fits the entire image
+  const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = e.currentTarget;
+    const naturalW = img.naturalWidth || 280;
+    const naturalH = img.naturalHeight || 280;
+    // Calculate zoom to fit the entire image inside the 280x280 crop box
+    const fitZoom = naturalH > naturalW ? naturalW / naturalH : 1;
+    setZoom(fitZoom);
+  };
+
   // Perform canvas-based crop, rotation, scale, and compression
   const handleCrop = () => {
     if (!imageRef.current) return;
@@ -72,26 +81,26 @@ export default function ImageCropperModal({ imageSrc, onCropComplete, onClose }:
     // Apply user selected rotation
     ctx.rotate((rotation * Math.PI) / 180);
 
-    // Calculate dimensions of image inside crop box
-    // Find scale ratio of actual image vs viewport display
-    const cropFrameSize = 280; // matches display box in UI
-    const displayWidth = img.width || 280;
+    // Viewport crop frame size is 280px
+    const cropFrameSize = 280;
+    const canvasScale = size / cropFrameSize; // matches display box in UI (800 / 280)
+
     const naturalW = img.naturalWidth || 280;
     const naturalH = img.naturalHeight || 280;
-    const scaleFactor = naturalW / displayWidth;
 
-    // Draw the source image with offset, zoom and rotation centered
-    const drawWidth = naturalW * zoom;
-    const drawHeight = naturalH * zoom;
+    // On-screen baseline image width is 280px.
+    // So on the 800px canvas, the baseline width is size * zoom
+    const drawWidth = size * zoom;
+    const drawHeight = (size * (naturalH / naturalW)) * zoom;
 
-    // Map offset from screen coordinates to native image pixels
-    const nativeOffsetX = offset.x * scaleFactor;
-    const nativeOffsetY = offset.y * scaleFactor;
+    // Map offset from screen coordinates to canvas coordinates
+    const canvasOffsetX = offset.x * canvasScale;
+    const canvasOffsetY = offset.y * canvasScale;
 
     ctx.drawImage(
       img,
-      -drawWidth / 2 + nativeOffsetX,
-      -drawHeight / 2 + nativeOffsetY,
+      -drawWidth / 2 + canvasOffsetX,
+      -drawHeight / 2 + canvasOffsetY,
       drawWidth,
       drawHeight
     );
@@ -146,6 +155,7 @@ export default function ImageCropperModal({ imageSrc, onCropComplete, onClose }:
             ref={imageRef}
             src={imageSrc}
             alt="Source"
+            onLoad={handleImageLoad}
             className="max-w-none pointer-events-none transition-transform duration-75 select-none"
             style={{
               width: '280px',
@@ -182,7 +192,7 @@ export default function ImageCropperModal({ imageSrc, onCropComplete, onClose }:
             </div>
             <input
               type="range"
-              min="0.8"
+              min="0.1"
               max="3"
               step="0.05"
               value={zoom}
