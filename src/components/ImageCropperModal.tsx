@@ -74,11 +74,14 @@ export default function ImageCropperModal({ imageSrc, onCropComplete, onClose }:
     // Calculate dimensions of image inside crop box
     // Find scale ratio of actual image vs viewport display
     const cropFrameSize = 280; // matches display box in UI
-    const scaleFactor = (img.naturalWidth / img.width);
+    const displayWidth = img.width || 280;
+    const naturalW = img.naturalWidth || 280;
+    const naturalH = img.naturalHeight || 280;
+    const scaleFactor = naturalW / displayWidth;
 
     // Draw the source image with offset, zoom and rotation centered
-    const drawWidth = img.naturalWidth * zoom;
-    const drawHeight = img.naturalHeight * zoom;
+    const drawWidth = naturalW * zoom;
+    const drawHeight = naturalH * zoom;
 
     // Map offset from screen coordinates to native image pixels
     const nativeOffsetX = offset.x * scaleFactor;

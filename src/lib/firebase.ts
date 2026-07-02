@@ -481,11 +481,20 @@ export async function submitDrawing(
 export async function uploadDrawingImage(userId: string, promptId: string, base64DataUrl: string): Promise<string> {
   try {
     const storageRef = ref(storage, `drawings/${userId}_${promptId}_${Date.now()}.jpg`);
-    await uploadString(storageRef, base64DataUrl, 'data_url');
-    const downloadUrl = await getDownloadURL(storageRef);
-    return downloadUrl;
+    
+    // Wrap upload logic with a timeout
+    const uploadPromise = (async () => {
+      await uploadString(storageRef, base64DataUrl, 'data_url');
+      return await getDownloadURL(storageRef);
+    })();
+
+    const timeoutPromise = new Promise<string>((_, reject) =>
+      setTimeout(() => reject(new Error("Storage upload timed out")), 1500)
+    );
+
+    return await Promise.race([uploadPromise, timeoutPromise]);
   } catch (error) {
-    console.warn("Firebase Storage upload failed, falling back to local base64:", error);
+    console.warn("Firebase Storage upload failed or timed out, falling back to local base64:", error);
     return base64DataUrl;
   }
 }
