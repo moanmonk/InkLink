@@ -67,7 +67,7 @@ export default function SettingsView({ user, onRefreshUser }: SettingsViewProps)
   };
 
   return (
-    <div className="flex flex-col h-full max-w-lg mx-auto justify-center select-none py-4">
+    <div className="flex flex-col max-w-lg mx-auto select-none pt-2 pb-12">
       
       {/* HEADER SECTION */}
       <div className="border-b border-[#CBD5E1] pb-3 mb-6">

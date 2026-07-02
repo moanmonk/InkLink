@@ -3,6 +3,56 @@ import { motion, AnimatePresence } from 'motion/react';
 import { BookOpen, Users, Compass, Award, Bell, Settings, ShieldAlert, FileHeart, CalendarRange, LogOut } from 'lucide-react';
 import { Profile } from '../types';
 
+function CuteCatLogo({ size = 40 }: { size?: number }) {
+  return (
+    <div className="relative flex-shrink-0 select-none pointer-events-none" style={{ width: size, height: size }}>
+      <svg viewBox="0 0 100 100" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+        {/* Paintbrush behind/next to the cat */}
+        <g transform="rotate(25 75 40) translate(15, -10)">
+          {/* Handle */}
+          <rect x="47" y="20" width="6" height="40" rx="3" fill="#D7A15C" stroke="#4e6a53" strokeWidth="2.5" />
+          {/* Ferrule */}
+          <rect x="46" y="14" width="8" height="6" fill="#A0AEC0" stroke="#4e6a53" strokeWidth="2.5" />
+          {/* Tip with pink paint */}
+          <path d="M 46,14 C 46,14 47,2 50,2 C 53,2 54,14 54,14 Z" fill="#EE98AD" stroke="#4e6a53" strokeWidth="2.5" strokeLinejoin="round" />
+        </g>
+
+        {/* Left Ear */}
+        <path d="M 30,35 L 14,8 L 44,22 Z" fill="#ffffff" stroke="#4e6a53" strokeWidth="4" strokeLinejoin="round" />
+        <path d="M 28,29 L 18,13 L 37,20 Z" fill="#EE98AD" />
+
+        {/* Right Ear */}
+        <path d="M 70,35 L 86,8 L 56,22 Z" fill="#ffffff" stroke="#4e6a53" strokeWidth="4" strokeLinejoin="round" />
+        <path d="M 72,29 L 82,13 L 63,20 Z" fill="#EE98AD" />
+
+        {/* Head/Face */}
+        <path d="M 20,48 C 20,30 32,24 50,24 C 68,24 80,30 80,48 C 80,66 72,82 50,82 C 28,82 20,66 20,48 Z" fill="#ffffff" stroke="#4e6a53" strokeWidth="4" strokeLinejoin="round" />
+
+        {/* Eyes */}
+        <circle cx="38" cy="46" r="5" fill="#2D3748" />
+        <circle cx="62" cy="46" r="5" fill="#2D3748" />
+        {/* Eye highlights */}
+        <circle cx="36" cy="44" r="1.5" fill="#ffffff" />
+        <circle cx="60" cy="44" r="1.5" fill="#ffffff" />
+
+        {/* Blushing cheeks */}
+        <circle cx="29" cy="54" r="4.5" fill="#EE98AD" opacity="0.65" />
+        <circle cx="71" cy="54" r="4.5" fill="#EE98AD" opacity="0.65" />
+
+        {/* Cute mouth (W shape) */}
+        <path d="M 44,52 Q 47,55 50,52 Q 53,55 56,52" fill="none" stroke="#2D3748" strokeWidth="3" strokeLinecap="round" />
+
+        {/* Cute whiskers */}
+        <path d="M 16,50 L 5,49 M 16,56 L 7,57" stroke="#4e6a53" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M 84,50 L 95,49 M 84,56 L 93,57" stroke="#4e6a53" strokeWidth="2.5" strokeLinecap="round" />
+
+        {/* Little paw on the side holding the paintbrush */}
+        <circle cx="76" cy="62" r="5" fill="#ffffff" stroke="#4e6a53" strokeWidth="2.5" />
+      </svg>
+    </div>
+  );
+}
+
 interface JournalLayoutProps {
   children: React.ReactNode;
   activeTab: string;
@@ -36,7 +86,7 @@ export default function JournalLayout({
   }
 
   return (
-    <div className="h-[100dvh] w-screen bg-[#fbf9f4] text-[#2D3748] p-1.5 sm:p-6 md:p-8 font-sans flex items-center justify-center relative overflow-hidden select-none">
+    <div className="h-[100dvh] w-screen bg-[#fbf9f4] text-[#2D3748] pt-[calc(6px+env(safe-area-inset-top))] pb-[calc(6px+env(safe-area-inset-bottom))] px-1.5 sm:p-6 md:p-8 font-sans flex items-center justify-center relative overflow-hidden select-none">
       
       {/* Decorative desktop elements: gentle lilac, soft peach, and sage blobs */}
       <div className="absolute top-8 left-12 w-32 h-32 bg-[#9097F3]/5 rounded-full filter blur-3xl pointer-events-none animate-pulse" />
@@ -49,22 +99,18 @@ export default function JournalLayout({
       </div>
 
       {/* Main Leather/Cardboard Notebook Binder Wrapper in warm organic style */}
-      <div className="w-full max-w-5xl h-full md:h-[82vh] bg-[#8daa91] rounded-3xl shadow-[0_20px_50px_rgba(141,170,145,0.15),_inset_0_1px_3px_rgba(255,255,255,0.4),_inset_0_-1px_10px_rgba(0,0,0,0.05)] p-1.5 sm:p-3 relative flex flex-col md:flex-row border border-[#8daa91]/40">
+      <div className="w-full max-w-5xl h-full md:h-[82vh] bg-[#8daa91] rounded-3xl shadow-[0_20px_50px_rgba(141,170,145,0.15),_inset_0_1px_3px_rgba(255,255,255,0.4),_inset_0_-1px_10px_rgba(0,0,0,0.05)] p-1.5 sm:p-3 relative flex flex-col-reverse md:flex-row border border-[#8daa91]/40">
         
         {/* Binder texture stitches around border */}
         <div className="absolute inset-2 border border-dashed border-white/20 rounded-2xl pointer-events-none opacity-50" />
 
         {/* Sidebar/Navigation Bookmarks */}
-        <div className="w-full md:w-56 flex flex-row md:flex-col justify-between items-center md:items-stretch py-2 px-3 md:px-2 md:py-6 bg-white/15 rounded-2xl md:rounded-r-none relative z-10 md:mr-1 border-b md:border-b-0 md:border-r border-white/10">
+        <div className="w-full md:w-56 flex flex-row md:flex-col justify-between items-center md:items-stretch py-2 px-3 md:px-2 md:py-6 bg-white/15 rounded-2xl md:rounded-r-none relative z-10 md:mr-1 border-t md:border-t-0 md:border-r border-white/10">
           
-          {/* Logo Brand area (Moss Green aesthetic) */}
-          <div className="hidden md:flex flex-col items-center mb-8 px-2">
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md border border-[#8daa91]/20 relative group rotate-[-4deg] ring-2 ring-white/20 ring-offset-2 ring-offset-[#8daa91]">
-              <span className="font-serif text-[#8daa91] font-black text-lg select-none">i</span>
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#EE98AD] rounded-full animate-pulse" />
-            </div>
-            <h1 className="mt-3 text-white font-serif font-bold text-lg tracking-wider">InkLink</h1>
-            <p className="text-white/70 font-mono text-[9px] tracking-widest uppercase mt-0.5">Social Challenge</p>
+          {/* Logo Brand area (Moss Green aesthetic) with cute cat with brush */}
+          <div className="hidden md:flex flex-col items-center mb-6 px-2">
+            <CuteCatLogo size={60} />
+            <h1 className="mt-2 text-white font-serif font-black text-xl tracking-wider">InkLink</h1>
           </div>
 
           {/* User badge preview */}
@@ -156,8 +202,21 @@ export default function JournalLayout({
           {/* Faint dot-grid paper background */}
           <div className="absolute inset-0 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:16px_16px] opacity-20 pointer-events-none" />
 
+          {/* Mobile top logo header with cute cat with brush and no social challenge line */}
+          <div className="md:hidden flex items-center justify-between border-b border-stone-100/60 pb-3 pt-4 px-5 bg-white relative z-20">
+            <div className="flex items-center gap-2.5">
+              <CuteCatLogo size={36} />
+              <span className="font-serif font-black text-[#8daa91] text-base tracking-wide leading-none">InkLink</span>
+            </div>
+            {user && (
+              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#8daa91]/10 rounded-full border border-[#8daa91]/10">
+                <span className="text-[10px] font-mono font-black text-[#8daa91]">🔥 {user.currentStreak}d streak</span>
+              </div>
+            )}
+          </div>
+
           {/* Page Content area */}
-          <main className="flex-grow overflow-y-auto no-scrollbar relative p-3 sm:p-6 md:p-8 z-10">
+          <main className="flex-grow overflow-y-auto no-scrollbar relative p-4 pt-6 sm:p-6 md:p-8 z-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
@@ -171,17 +230,6 @@ export default function JournalLayout({
               </motion.div>
             </AnimatePresence>
           </main>
-          
-          {/* Quick status bar at the bottom page margins */}
-          <footer className="min-h-[24px] h-auto py-1 sm:py-0 sm:h-6 px-3 sm:px-4 bg-[#fbf9f4] border-t border-[#E2E8F0] flex flex-col sm:flex-row sm:items-center justify-between text-[9px] sm:text-[10px] text-[#64748B] font-mono flex-shrink-0 gap-1 sm:gap-4">
-            <div className="flex items-center gap-1 justify-center sm:justify-start">
-              <span className="w-1.5 h-1.5 bg-[#8daa91] rounded-full inline-block animate-pulse" />
-              <span>Realtime Connected</span>
-            </div>
-            <div className="text-center sm:text-right">
-              <span>INKLINK VOL. I — 28 DAY CHALLENGE</span>
-            </div>
-          </footer>
         </div>
 
 
