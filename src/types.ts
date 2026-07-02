@@ -13,13 +13,9 @@ export interface Profile {
 
 export interface Prompt {
   id: string;
-  text: string;
+  title: string;
+  text: string; // Keep text as alias to prevent breaking other components
   category: string;
-  difficulty: '⚡ 5 min' | '✏️ 10 min' | '🎨 20 min';
-  estimatedTime: string;
-  isWeeklyRidiculous: boolean;
-  season: number;
-  dayOfSeason: number;
 }
 
 export interface Submission {

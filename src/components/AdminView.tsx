@@ -60,7 +60,7 @@ export default function AdminView() {
   }
 
   // Sample prompt days list
-  const samplePromptsList = Array.from({ length: 15 }, (_, i) => getPromptForDay(i));
+  const samplePromptsList = Array.from({ length: 30 }, (_, i) => getPromptForDay(i));
 
   return (
     <div className="flex flex-col h-full justify-between gap-4 relative select-none">
@@ -167,21 +167,15 @@ export default function AdminView() {
               {samplePromptsList.map((p) => (
                 <div key={p.id} className="bg-white border border-stone-200 p-3.5 rounded-3xl flex flex-col justify-between shadow-2xs">
                   <div className="flex items-center justify-between">
-                    <span className="text-[9px] font-mono text-stone-400 uppercase tracking-widest">Day {p.dayOfSeason}</span>
-                    <span className={`px-1.5 py-0.5 rounded-lg text-[8px] font-mono uppercase ${
-                      p.isWeeklyRidiculous ? 'bg-red-100 text-red-800 border border-red-300' : 'bg-[#fbf9f4] text-stone-500'
-                    }`}>
+                    <span className="text-[9px] font-mono text-stone-400 uppercase tracking-widest">{p.id}</span>
+                    <span className="px-1.5 py-0.5 rounded-lg text-[8px] font-mono uppercase bg-[#fbf9f4] text-stone-500">
                       {p.category}
                     </span>
                   </div>
 
                   <p className="font-serif font-bold text-stone-800 text-xs mt-2 leading-tight">
-                    "{p.text}"
+                    "{p.text || p.title}"
                   </p>
-
-                  <div className="flex items-center gap-3 text-4xs font-mono text-stone-500 uppercase tracking-tight mt-3">
-                    <span>Estimate: <strong className="text-stone-700">{p.difficulty}</strong></span>
-                  </div>
                 </div>
               ))}
             </div>

@@ -1,6 +1,6 @@
 {
   "name": "InkLink",
-  "description": "A private daily drawing challenge app for friends with a warm physical journal aesthetic. Sketch, upload, rate, react, and comment with your close group.",
+  "description": "A private daily drawing challenge app for friends with a warm physical journal aesthetic, featuring over 3000 unique, creative story-style prompts, social commentary, and relaxed sketch sharing with no pressure timers.",
   "requestFramePermissions": ["camera"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

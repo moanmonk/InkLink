@@ -6,307 +6,533 @@ function seedRandom(seed: number) {
   return x - Math.floor(x);
 }
 
-// 1. Playful Categories specified by user
-export const PLAYFUL_CATEGORIES = [
-  'Funny', 'Everyday Life', 'Slightly Absurd', 'Cute', 'Fantasy', 'Food', 'Animals',
-  'Random Situations', 'Emotions', 'Cartoons', 'Objects with personalities',
-  'Tiny stories', 'Imagination', 'Wholesome', 'Cozy', 'Seasonal'
+export const PROMPT_CATEGORIES = [
+  "Character Design",
+  "Emotion",
+  "Memories",
+  "Longing",
+  "Horror",
+  "Mystery",
+  "Fantasy",
+  "Dreams",
+  "Atmosphere",
+  "Storytelling",
+  "Everyday Life",
+  "Cinematic",
+  "Nature",
+  "Urban",
+  "Cozy",
+  "Style Challenge",
+  "Objects & Places",
+  "Adventure",
+  "Sci-Fi",
+  "Historical",
+  "Mythology",
+  "Seasonal",
+  "Weekly Unhinged"
 ];
 
-// 2. Beautiful Hand-crafted prompts containing ALL user-requested prompts and similar high-quality examples (Days 0 to 100+)
-const GOLDEN_HANDCRAFTED_PROMPTS: { text: string; category: string; difficulty: '⚡ 5 min' | '✏️ 10 min' | '🎨 20 min' }[] = [
-  { text: "A duck wearing bright yellow rain boots", category: "Cute", difficulty: "⚡ 5 min" },
-  { text: "A sleepy baby dragon drinking a steaming mug of hot chocolate", category: "Cozy", difficulty: "✏️ 10 min" },
-  { text: "A chunky penguin doing squats at the gym", category: "Funny", difficulty: "✏️ 10 min" },
-  { text: "A tiny green frog running a busy espresso coffee shop", category: "Wholesome", difficulty: "🎨 20 min" },
-  { text: "Your tired backpack resting after surviving exam week", category: "Everyday Life", difficulty: "✏️ 10 min" },
-  { text: "A cute little ghost who is afraid of the dark", category: "Cute", difficulty: "⚡ 5 min" },
-  { text: "A professional banana working a boring 9-to-5 office desk job", category: "Slightly Absurd", difficulty: "✏️ 10 min" },
-  { text: "A graceful shark wearing a pink tutu learning ballet", category: "Funny", difficulty: "🎨 20 min" },
-  { text: "The smiling crescent moon taking a silly phone selfie", category: "Imagination", difficulty: "⚡ 5 min" },
-  { text: "Your favorite chocolate chip cookie as a caped superhero", category: "Cartoons", difficulty: "✏️ 10 min" },
-  { text: "A fluffy cloud that unfortunately forgot how to rain", category: "Emotions", difficulty: "⚡ 5 min" },
-  { text: "A tiny wizard boiling a pot of delicious instant noodles", category: "Fantasy", difficulty: "✏️ 10 min" },
-  { text: "A sleepy little robot plugging itself in for a nap", category: "Cozy", difficulty: "⚡ 5 min" },
-  { text: "A snobbish pigeon wearing a golden crown who thinks it's royalty", category: "Objects with personalities", difficulty: "✏️ 10 min" },
-  { text: "A baby dinosaur carefully trying bubble tea with a giant straw", category: "Cute", difficulty: "✏️ 10 min" },
-  { text: "Your bedroom if gravity suddenly stopped working", category: "Imagination", difficulty: "🎨 20 min" },
-  { text: "The world's saddest little potato sitting on a bench", category: "Emotions", difficulty: "⚡ 5 min" },
-  { text: "A tiny box turtle winning a high-speed Formula 1 race", category: "Slightly Absurd", difficulty: "✏️ 10 min" },
-  { text: "A vintage kitchen refrigerator sipping juice on a sunny vacation beach", category: "Objects with personalities", difficulty: "✏️ 10 min" },
-  { text: "A cool vampire secretly addicted to warm garlic bread", category: "Funny", difficulty: "✏️ 10 min" },
-  { text: "A fierce pirate captain ordering a happy meal at a fast food counter", category: "Random Situations", difficulty: "🎨 20 min" },
-  { text: "A dragon working customer service answering phone calls", category: "Slightly Absurd", difficulty: "✏️ 10 min" },
-  { text: "A chubby kitten who accidentally got crowned as king of the forest", category: "Wholesome", difficulty: "✏️ 10 min" },
-  { text: "A massive friendly blue whale squeezed into a tiny garden swimming pool", category: "Slightly Absurd", difficulty: "🎨 20 min" },
-  { text: "A fluffy raccoon opening a bakery with warm croissants", category: "Cozy", difficulty: "🎨 20 min" },
-  { text: "A giant scary monster that is actually extremely shy", category: "Wholesome", difficulty: "✏️ 10 min" },
-  { text: "A superhero whose only power is making perfectly golden toast", category: "Funny", difficulty: "⚡ 5 min" },
-  { text: "A happy snowman sunbathing on a tropical beach island", category: "Seasonal", difficulty: "✏️ 10 min" },
-  { text: "A cheeky haunted toaster floating in the air with funny faces", category: "Slightly Absurd", difficulty: "⚡ 5 min" },
-  { text: "A fluffy dairy cow becoming an astronaut floating in deep space", category: "Animals", difficulty: "✏️ 10 min" },
-  { text: "A lazy wizard casting a spell to fetch the TV remote", category: "Fantasy", difficulty: "✏️ 10 min" },
-  { text: "A tiny bumblebee wearing shiny medieval knight armor", category: "Cute", difficulty: "⚡ 5 min" },
-  { text: "A cute hamster driving a giant monster truck over obstacles", category: "Cute", difficulty: "✏️ 10 min" },
-  { text: "A serious penguin detective inspecting a magnifying glass", category: "Tiny stories", difficulty: "✏️ 10 min" },
-  { text: "A transparent jellyfish roasting marshmallows while going camping", category: "Animals", difficulty: "✏️ 10 min" },
-  { text: "A spooky skeleton trying difficult yoga poses", category: "Funny", difficulty: "✏️ 10 min" },
-  { text: "A plump chicken who is secretly a midnight ninja", category: "Cartoons", difficulty: "✏️ 10 min" },
-  { text: "A warm coffee cup looking highly anxious about spilling", category: "Objects with personalities", difficulty: "⚡ 5 min" },
-  { text: "A cozy living room couch that came alive and grew a friendly face", category: "Imagination", difficulty: "✏️ 10 min" },
-  { text: "A tech-savvy duck wearing headphones stealing the neighbor's WiFi", category: "Funny", difficulty: "✏️ 10 min" },
-  { text: "An avocado doing split jumps in a tiny aerobics outfit", category: "Funny", difficulty: "⚡ 5 min" },
-  { text: "A wise owl wearing large reading glasses cozying up under a blanket", category: "Cozy", difficulty: "✏️ 10 min" },
-  { text: "A giant friendly capybara taking a warm orange-blossom bath", category: "Wholesome", difficulty: "✏️ 10 min" },
-  { text: "A tiny cute snail carrying a single giant red strawberry", category: "Cute", difficulty: "⚡ 5 min" },
-  { text: "A friendly little alien trying to eat spaghetti with chopsticks", category: "Slightly Absurd", difficulty: "✏️ 10 min" },
-  { text: "A marshmallow crying as it gets ready to dive into hot chocolate", category: "Emotions", difficulty: "⚡ 5 min" },
-  { text: "A cozy treehouse illuminated by warm fairy lights at sunset", category: "Cozy", difficulty: "🎨 20 min" },
-  { text: "A paper airplane flying past the moon carrying a tiny letter", category: "Tiny stories", difficulty: "⚡ 5 min" },
-  { text: "A cute woodland fairy taking a nap inside an empty tulip flower", category: "Fantasy", difficulty: "✏️ 10 min" },
-  { text: "A retro vintage television showing a fish bowl inside of it", category: "Objects with personalities", difficulty: "✏️ 10 min" },
-  { text: "A golden sunflower wearing sunglasses and smiling on a sunny day", category: "Seasonal", difficulty: "⚡ 5 min" },
-  { text: "A chubby kitten tangled inside a giant rainbow ball of yarn", category: "Cute", difficulty: "✏️ 10 min" },
-  { text: "A happy taco doing a salsa dance with maracas", category: "Food", difficulty: "⚡ 5 min" },
-  { text: "A fancy teacup having a tiny boxing match with a wooden spoon", category: "Slightly Absurd", difficulty: "✏️ 10 min" },
-  { text: "A slice of delicious pizza escaping a fork on a mini bicycle", category: "Funny", difficulty: "✏️ 10 min" },
-  { text: "A beautiful glass greenhouse filled with floating purple jellyfish", category: "Imagination", difficulty: "🎨 20 min" },
-  { text: "An antique compass where the needle points directly to a star", category: "Fantasy", difficulty: "✏️ 10 min" },
-  { text: "A small cute hedgehog carrying an apple twice its size", category: "Cute", difficulty: "⚡ 5 min" },
-  { text: "A rusty old boot auditioning for a glitzy Broadway musical", category: "Objects with personalities", difficulty: "✏️ 10 min" },
-  { text: "A proud dog wearing a chef's hat baking bone-shaped biscuits", category: "Wholesome", difficulty: "✏️ 10 min" },
-  { text: "A little cloud wearing a colorful winter knit hat and scarf", category: "Seasonal", difficulty: "⚡ 5 min" },
-  { text: "A mischievous raccoon opening up a box of fresh donuts", category: "Cozy", difficulty: "✏️ 10 min" },
-  { text: "A magical lighthouse casting beams of colorful rainbows", category: "Fantasy", difficulty: "🎨 20 min" },
-  { text: "A sleepy sloth hugging a giant warm cappuccino mug", category: "Cozy", difficulty: "✏️ 10 min" },
-  { text: "A cute little red panda taking a nap on top of a pile of books", category: "Cute", difficulty: "✏️ 10 min" },
-  { text: "An ancient stone gargoyle making a silly funny face to passersby", category: "Slightly Absurd", difficulty: "✏️ 10 min" },
-  { text: "A magical key sprouting leafy green vines and delicate white flowers", category: "Fantasy", difficulty: "⚡ 5 min" },
-  { text: "A friendly octopus trying to paint on eight canvases at once", category: "Animals", difficulty: "🎨 20 min" },
-  { text: "A delicious croissant shaped like a sleeping cat in a display window", category: "Food", difficulty: "✏️ 10 min" },
-  { text: "A giant sunflower giving a warm hug to a tired busy bumblebee", category: "Wholesome", difficulty: "✏️ 10 min" },
-  { text: "A sleepy marshmallow putting on a tiny black sleeping mask", category: "Cozy", difficulty: "⚡ 5 min" },
-  { text: "An old retro record player spinning a disc made of a tree ring", category: "Objects with personalities", difficulty: "✏️ 10 min" },
-  { text: "A tiny cute mouse reading a miniature book with a matchstick lamp", category: "Cute", difficulty: "✏️ 10 min" },
-  { text: "A friendly yeti sharing an umbrella with a little penguin", category: "Wholesome", difficulty: "✏️ 10 min" },
-  { text: "A vintage camera catching memories as tiny floating Polaroid frames", category: "Imagination", difficulty: "✏️ 10 min" },
-  { text: "A warm cup of hot cocoa with sweet floating marshmallow clouds", category: "Cozy", difficulty: "⚡ 5 min" },
-  { text: "A wizard's tall pointed hat covered in glowing celestial maps", category: "Fantasy", difficulty: "✏️ 10 min" },
-  { text: "A small stone well in a magical forest surrounded by wild ferns", category: "Fantasy", difficulty: "✏️ 10 min" },
-  { text: "A cute baby owl peeping out of a warm tree hollow on a starry night", category: "Cute", difficulty: "✏️ 10 min" },
-  { text: "A warm slice of pumpkin pie dreaming of whipped cream hats", category: "Seasonal", difficulty: "⚡ 5 min" },
-  { text: "A vintage bicycle leaning against a cozy village bookstore", category: "Everyday Life", difficulty: "🎨 20 min" },
-  { text: "A sleepy robot hugging its battery-charger plush toy", category: "Cute", difficulty: "⚡ 5 min" },
-  { text: "A cute little chipmunk carrying an autumn leaf as an umbrella", category: "Seasonal", difficulty: "⚡ 5 min" },
-  { text: "A friendly whale carrying a tiny island garden on its back", category: "Imagination", difficulty: "🎨 20 min" },
-  { text: "A jar filled with tiny shining stars instead of fireflies", category: "Fantasy", difficulty: "✏️ 10 min" },
-  { text: "A teapot shaped like a sleeping garden snail resting on a leaf", category: "Food", difficulty: "✏️ 10 min" },
-  { text: "A small puppy wearing a cozy wool sweater sleeping in an armchair", category: "Cozy", difficulty: "✏️ 10 min" },
-  { text: "A happy slice of cheese hiding inside a luxurious jewelry box", category: "Slightly Absurd", difficulty: "⚡ 5 min" },
-  { text: "A majestic woodland stag with branch antlers blooming with flowers", category: "Fantasy", difficulty: "🎨 20 min" },
-  { text: "An antique grandfather clock with a tree growing inside of it", category: "Imagination", difficulty: "🎨 20 min" },
-  { text: "A friendly cloud delivering mail to different mountain tops", category: "Tiny stories", difficulty: "✏️ 10 min" },
-  { text: "A lazy wizard using a levitation spell to drink juice", category: "Fantasy", difficulty: "✏️ 10 min" },
-  { text: "A vintage pocket watch with golden gears turning into green ivy", category: "Imagination", difficulty: "✏️ 10 min" },
-  { text: "A pair of worn leather explorer boots covered in colorful patches", category: "Everyday Life", difficulty: "✏️ 10 min" },
-  { text: "A delicious cup of coffee reflecting a miniature starry galaxy", category: "Cozy", difficulty: "⚡ 5 min" },
-  { text: "A miniature medieval castle carved from driftwood on a beach", category: "Fantasy", difficulty: "🎨 20 min" },
-  { text: "A sleepy red panda hugging a bamboo stalk like a giant pillow", category: "Cute", difficulty: "✏️ 10 min" },
-  { text: "A wooden rowboat floating calmly on a misty quiet lake", category: "Everyday Life", difficulty: "✏️ 10 min" },
-  { text: "A warm cozy fireplace with little glowing soot sprites", category: "Cozy", difficulty: "✏️ 10 min" },
-  { text: "A squirrel wearing a tiny hand-knitted green winter scarf", category: "Seasonal", difficulty: "⚡ 5 min" },
-  { text: "An old stone bridge over a clear stream filled with glowing fish", category: "Fantasy", difficulty: "🎨 20 min" }
-];
+const CATEGORY_VOCABULARY: Record<string, { subjects: string[], situations: string[], environments: string[] }> = {
+  "Character Design": {
+    subjects: [
+      "A retired monster hunter", "A pirate librarian", "A royal bodyguard", "A wandering chef", 
+      "A cursed king", "The final boss of a forgotten game", "A detective who never removes their mask",
+      "A clockwork tailor", "A blind cartographer of invisible lands", "A weary sky-captain",
+      "A glassblower who traps sighs", "A scribe writing the last page of history", "A mechanical sentinel that loves birds",
+      "A dollmaker whose creations whisper at night", "A tea brewer who speaks to spirits", "A quiet astronomer",
+      "A merchant of stolen shadows", "A warrior who fights with a wooden sword", "A lighthouse keeper who is a ghost",
+      "A street performer juggling fallen stars", "A scholar of ancient star charts"
+    ],
+    situations: [
+      "repairing a delicate porcelain wing", "sewing a coat out of autumn leaves", "looking at an old faded portrait",
+      "clutching an unbroken hourglass", "carrying a suitcase of glowing letters", "teaching a wild crow how to speak",
+      "searching for their misplaced shadow", "waiting for a train that left decades ago", "painting a map of their dreams",
+      "brewing tea from dry rose petals", "reading a letter in a foreign language", "mending a broken sword with gold",
+      "sleeping under a yellow umbrella", "assembling a tiny brass clockwork heart"
+    ],
+    environments: [
+      "in a dusty, candlelit archives room", "at a train station where nobody remembers arriving", "on a quiet street corner at midnight",
+      "inside a magical greenhouse garden", "beneath the roots of a grand ancient oak", "in a cozy village bookstore",
+      "overlooking a sea of soft clouds", "in a small forgotten tavern", "inside a sanctuary of sleeping birds",
+      "on the deck of a wooden airship"
+    ]
+  },
+  "Emotion": {
+    subjects: [
+      "Being trapped by your own thoughts", "Waiting for a message that never comes", "Carrying invisible chains",
+      "Hope sparking in the darkest hour", "Regret turning into stone", "Nostalgia sweeping through an empty corridor",
+      "Freedom in the middle of a rainstorm", "Jealousy as a growing shadow", "Relief after a long quiet journey",
+      "Growing apart from someone you loved", "Homesickness under a foreign sky", "Feeling lost in a crowd of friendly faces",
+      "Finding peace in a small forgotten garden", "Moving on and leaving a key behind", "Guilt represented as a heavy crown",
+      "Loneliness sitting at a table set for two", "Joy bursting through cracked pavement", "Grief as a gentle, quiet snow",
+      "The warmth of a sudden, quiet understanding", "A heart made of fragile stained glass"
+    ],
+    situations: [
+      "wrapped in a blanket of memories", "standing on the edge of a quiet lake", "surrounded by drifting autumn leaves",
+      "looking at a fading reflection", "clutching a single paper crane", "sitting on an old wooden bench",
+      "watching the world pass by in black and white", "reaching out for a hand that isn't there", "watching a single candle burn down",
+      "listening to the sound of distant rain"
+    ],
+    environments: [
+      "in an empty, echoey hall", "under a gray, endless winter sky", "in a sun-drenched room filled with dust motes",
+      "on a quiet train ride at twilight", "at a crossroads where the signs have faded", "in a peaceful room filled with plants",
+      "inside a small attic of childhood toys"
+    ]
+  },
+  "Memories": {
+    subjects: [
+      "Your happiest memory", "Your worst school day", "The place you always return to", "Your dream vacation",
+      "A childhood smell", "A rainy afternoon you remember", "The first time you felt proud", "The day everything changed",
+      "A half-remembered lullaby", "A sun-drenched kitchen", "An old toy that still whispers its owner's name",
+      "The last conversation before a long journey", "A worn-out photo in a dusty frame", "The sound of laughter in a house that is now silent",
+      "A bicycle ride at sunset with no destination", "A tree house built from scrap wood", "An empty playground at dusk"
+    ],
+    situations: [
+      "fading like old newspaper ink", "preserved inside a glass jar", "glowing with a soft amber light",
+      "covered in a light layer of dust", "replaying in a loop like an old film", "bringing back the warmth of summer",
+      "tangled in wild ivy and sweet-pea vines", "floating away on a gentle breeze", "etched into the bark of an old tree"
+    ],
+    environments: [
+      "in a nostalgic, sepia-toned world", "under a warm summer sun", "during a quiet winter afternoon",
+      "in an old, overgrown backyard", "inside a vintage photobook", "along a dusty country road",
+      "near a crackling, cozy fireplace"
+    ]
+  },
+  "Longing": {
+    subjects: [
+      "Something you love but can never have", "The life you imagine before falling asleep", "Looking at a distant star and wishing you were there",
+      "An empty chair waiting for someone who won't return", "A message in a bottle floating on an endless ocean",
+      "A key that fits a door that no longer exists", "Reaching for a shadow that disappears when touched",
+      "A letter written but never sent", "Waiting at the gates of a forgotten city", "A music box that only plays when you are sad",
+      "A ship sailing towards the horizon without you", "A hand reaching for a falling star", "An envelope with a blank stamp",
+      "A telescope pointed at a planet made of water"
+    ],
+    situations: [
+      "waiting patiently in the fog", "slowly dissolving into stardust", "calling out into an empty canyon",
+      "searching for a familiar face", "listening to a melody with no words", "gazing at a closed iron gate",
+      "counting the seconds on a clock with no hands", "holding onto a thread that is breaking"
+    ],
+    environments: [
+      "on a quiet, misty pier at dawn", "at the edge of a cliff overlooking the sea", "in an empty station with locked doors",
+      "under an absolute midnight sky", "in a quiet room with a single window", "on a windy hilltop with tall grass",
+      "inside a library of lost manuscripts"
+    ]
+  },
+  "Horror": {
+    subjects: [
+      "A staircase that never ends", "Someone watching from the window", "A playground after midnight",
+      "A smile that feels wrong", "The last person awake", "A forgotten hospital room", "A town where nobody speaks",
+      "A shadow that moves slower than you", "A mirror that shows your room, but empty", "A telephone that rings in an empty forest",
+      "A locked drawer scratching from the inside", "A door where the handle turns on its own", "An eye looking through a crack in the wall",
+      "A television screen displaying your back"
+    ],
+    situations: [
+      "lit by a single flickering light", "swallowed by a creeping black fog", "standing perfectly still in the dark",
+      "dripping with cold, quiet dread", "surrounded by dolls with glass eyes", "echoing with a soft, slow whisper",
+      "with footprints leading into the wall", "where the shadows stretch in the wrong direction"
+    ],
+    environments: [
+      "in an abandoned old schoolhouse", "inside a damp, mossy basement", "along a lonely highway at 3 AM",
+      "in a silent, dark forest of dead trees", "inside an empty, sterile white hallway", "under an old creaky bridge"
+    ]
+  },
+  "Mystery": {
+    subjects: [
+      "The last page of an unsolved case", "A locked door nobody questions", "A train with no destination",
+      "The missing photograph", "A suitcase left behind", "An abandoned lighthouse", "A set of wet footprints on dry carpet",
+      "A diary with entries dated in the future", "A key found inside a fresh loaf of bread", "A vintage typewriter typing on its own",
+      "An envelope marked 'open in fifty years'", "A pocket watch that ticks backwards"
+    ],
+    situations: [
+      "hidden under a loose wooden floorboard", "whispering a riddle in Morse code", "covered in mysterious golden symbols",
+      "resting under a single spotlight", "wrapped in heavy velvet fabric", "revealed by a sudden flash of lightning",
+      "pointing to a coordinates map on a desk", "leaving a trail of glowing blue sand"
+    ],
+    environments: [
+      "in a rainy city at midnight", "inside a dusty, old mansion library", "on a foggy pier where a ship just left",
+      "at an antique shop filled with relics", "inside a secret room behind a bookshelf", "at a dark museum gallery"
+    ]
+  },
+  "Fantasy": {
+    subjects: [
+      "The last dragon protecting a ruined kingdom", "A traveler collecting stars", "A sword stuck in a stone that grows wild roses",
+      "An ancient library where books fly like birds", "A bridge made entirely of frozen moonlight", "A small tavern serving forest spirits",
+      "A glowing map that reveals hidden paths", "A crown made of glass and frost", "A merchant who trades in dreams and whispers",
+      "A sleeping giant covered in pine trees", "A deer with antlers made of blooming cherry trees", "A castle floating on a single cloud"
+    ],
+    situations: [
+      "casting a soft, warm magical glow", "singing to a sleeping forest", "guarding an ancient golden chest",
+      "floating gently on a magical draft", "brewing a potion of pure luck", "weaving thread out of starlight",
+      "resting in a shrine of moss and stone", "offering water to a weary traveler"
+    ],
+    environments: [
+      "in a magical, whispering forest", "under a sky with three moons", "inside an ancient mountain cave of crystals",
+      "at the edge of a starry celestial pond", "in a valley of glowing giant mushrooms", "at a cliffside shrine"
+    ]
+  },
+  "Dreams": {
+    subjects: [
+      "A hallway where every door is slightly open", "A train station where nobody remembers arriving", "Floating through a sky of paper fish",
+      "A library where all pages are blank", "Walking on water that reflects a different sky", "A clock that runs backwards in a cozy room",
+      "An endless spiral of floating doors and keys", "A garden where flowers bloom in neon colors", "Slipping through the cracks of a chalkboard",
+      "Conversing with a shadow that has your voice", "A house that is bigger on the inside", "A staircase leading into the clouds"
+    ],
+    situations: [
+      "defying gravity with every step", "wrapped in a soft, pastel mist", "melting like warm candle wax",
+      "fading away as you try to touch it", "playing a song you've never heard before", "shifting shapes whenever you look away",
+      "lit by a soft, surreal purple light", "floating on a river of liquid starlight"
+    ],
+    environments: [
+      "inside a dreamscape of floating islands", "in a world made entirely of watercolor washes", "under a sky filled with constellations",
+      "in an infinite room of mirrors", "along a beach where the sand glows blue", "inside a cozy cloud sanctuary"
+    ]
+  },
+  "Atmosphere": {
+    subjects: [
+      "A rainy city at midnight", "The moment before everything changes", "A quiet museum after the lights go out",
+      "A misty morning where the world is just silhouettes", "The first snowfall on a quiet, sleepy street",
+      "A warm lantern lighting up a foggy alleyway", "A beach where the sand is black and the water is silver",
+      "Sunset over an endless field of glowing lavender", "An old attic filled with dust motes and memories",
+      "The golden hour filtering through a dusty window", "A thunderstorm rolling in over a vast plain"
+    ],
+    situations: [
+      "drenched in deep blue shadows", "bathed in a soft amber glow", "shivering in the cool autumn breeze",
+      "shining under a lonely spotlight", "wrapped in a thick blanket of fog", "painted with soft pastel brushstrokes",
+      "quietly resting in absolute stillness", "lit by the soft neon glow of a café sign"
+    ],
+    environments: [
+      "on a quiet street corner", "in a vast, empty wilderness", "along a historic stone bridge",
+      "inside a cozy, quiet study room", "at a sleepy train stop", "on an overgrown rooftop greenhouse"
+    ]
+  },
+  "Storytelling": {
+    subjects: [
+      "A room someone left in a hurry", "The hero after losing", "The villain before becoming evil",
+      "A traveler telling stories around a campfire", "An empty throne in a majestic, silent hall", "The last letter written by an explorer",
+      "A path split in two with a single warning sign", "A broken shield resting against a stone monument", "An old map with a cross marked 'Here lies hope'",
+      "A messenger bird carrying a blank scroll", "A sword retired and used as a fireplace poker"
+    ],
+    situations: [
+      "telling a silent story of old battles", "waiting for the curtain to rise", "marked with the scars of a long journey",
+      "half-covered by creeping green ivy", "glowing with the last embers of fire", "lying forgotten in the tall grass",
+      "waiting for a hand to reclaim it", "cast aside on a cold stone floor"
+    ],
+    environments: [
+      "in a ruined castle throne room", "at a campsite under a starry wilderness sky", "along a winding trail of stepping stones",
+      "inside a dusty museum display case", "on a quiet mountain pass at dawn", "inside a forgotten warrior's tomb"
+    ]
+  },
+  "Everyday Life": {
+    subjects: [
+      "Your dream home", "A quiet afternoon doing nothing", "The perfect cup of tea", "A cat napping on a stack of laundry",
+      "Walking home under a sunset sky", "Watering a single green sprout on a windowsill", "An old wooden desk covered in sketchbooks",
+      "Getting lost in a book on a busy train", "A messy room that feels incredibly cozy", "Cooking a warm meal for yourself",
+      "A pair of worn-out sneakers by the front door", "An open sketchpad with a pencil resting on it"
+    ],
+    situations: [
+      "filled with a feeling of quiet contentment", "bathed in the soft light of Sunday morning", "surrounded by a pile of favorite books",
+      "warming your hands on a cold evening", "humming a quiet tune to yourself", "resting after a long, productive day",
+      "enjoying a slow, mindful breath of fresh air", "creating a small mess of watercolor paints"
+    ],
+    environments: [
+      "in a cozy, sunlit apartment", "on a peaceful neighborhood street", "at a small window seat looking at a garden",
+      "at a local park bench under a sturdy tree", "inside a warm, busy kitchen", "on a train winding through fields"
+    ]
+  },
+  "Cinematic": {
+    subjects: [
+      "The climax of a movie you haven't seen", "A lone figure standing against an incoming storm", "An epic escape across a crumbling bridge",
+      "A dramatic reunion under a pouring rainstorm", "The final shot of a classic film", "A neon-lit street reflecting a car chase",
+      "A hero looking out over a futuristic metropolis at sunrise", "A majestic vessel launching into the unknown", "The final stand of a legendary warrior",
+      "A traveler reaching the peak of a high mountain range"
+    ],
+    situations: [
+      "captured in high-contrast wide-screen frame", "bathed in dramatic cinematic backlighting", "with debris and petals swirling in the air",
+      "framed by a massive, arching gateway", "with dramatic shadows casting long silhouettes", "looking down at an endless ocean of clouds",
+      "standing resolute against the odds", "with a single tear catching the light"
+    ],
+    environments: [
+      "against a sky of deep crimson and gold", "on a high cliff overlooking a futuristic city", "inside an ancient, grand temple hall",
+      "along an endless desert highway", "at a dramatic, misty sea shore", "in a neon-drenched urban canyon"
+    ]
+  },
+  "Nature": {
+    subjects: [
+      "A forest that doesn't want visitors", "A waterfall that flows upwards", "A giant tree hollow that serves as a sanctuary",
+      "A field of flowers that glow under the moon", "An ancient mountain with a face carved by wind", "A river reflecting shooting stars",
+      "A secret cave hidden behind a curtain of ivy", "Autumn leaves swirling in a mini tornado", "A lonely pine tree standing tall on a cliff",
+      "A quiet mossy stone where forest fairies rest", "A grove of birch trees with bark that shimmers"
+    ],
+    situations: [
+      "whispering secrets in the breeze", "growing thick with glowing moss and mushrooms", "shining with morning dew like diamonds",
+      "changing colors in a single instant", "sheltering a family of forest animals", "undisturbed by the passage of time",
+      "breathing slowly in the quiet twilight", "dancing under a canopy of green leaves"
+    ],
+    environments: [
+      "deep in the heart of the wildwood", "high on a wind-swept peak", "along a winding crystalline stream",
+      "in a hidden sunlit valley of ferns", "at the edge of a deep, ancient lake", "inside a cavern of glowing stone"
+    ]
+  },
+  "Urban": {
+    subjects: [
+      "A subway car filled with quiet strangers", "An alleyway decorated with colorful murals", "Rooftops overlooking a bustling city",
+      "A small plant growing in a crack of concrete", "A historic clock tower surrounded by skyscrapers", "A neon sign flickering in a quiet corner",
+      "An old telephone booth converted into a library", "A street artist drawing with chalk on pavement", "A streetcar winding through a historic district",
+      "An abandoned theater with velvet seats"
+    ],
+    situations: [
+      "glowing with the warm lights of a rainy night", "buzzing with the soft hum of evening traffic", "bathed in the orange glow of streetlamps",
+      "reflecting in a rain puddle on the asphalt", "framed by criss-crossing telephone wires", "decorated with festive paper lanterns",
+      "quietly resting after the morning rush", "standing as a silent relic of the past"
+    ],
+    environments: [
+      "in a sprawling, modern metropolis", "along a historic cobblestone street", "on a rooftop garden overlooking the skyline",
+      "at a quiet subway platform", "inside a cozy corner diner", "at an old city plaza with a fountain"
+    ]
+  },
+  "Cozy": {
+    subjects: [
+      "Your ideal reading corner", "A tiny cabin during a heavy snowfall", "A warm café on a rainy evening",
+      "A room filled with flourishing green plants", "The perfect Sunday morning", "A cup of hot coffee next to a sleeping puppy",
+      "Knitting a soft scarf by a fireplace", "A table filled with freshly baked bread", "A cozy bed with a mountain of pillows",
+      "A window seat looking out at a quiet garden", "A mug of warm cider with cinnamon sticks"
+    ],
+    situations: [
+      "wrapped in a warm, chunky wool blanket", "lit by the soft, golden light of string bulbs", "with steam curling lazily into the air",
+      "filled with the scent of fresh pine and rain", "echoing with the quiet purr of a sleeping cat", "surrounded by stack of leather notebooks",
+      "while listening to the gentle patter of raindrops", "creating a sanctuary of quiet and calm"
+    ],
+    environments: [
+      "inside a tiny, wooden forest cottage", "at a sleepy village bookstore nook", "in a warm, timber-framed attic room",
+      "on a quiet, lazy sun-porch", "near a crackling, brick hearth fireplace"
+    ]
+  },
+  "Style Challenge": {
+    subjects: [
+      "Design a character inspired by autumn", "Design a city inspired by music", "Design a sword inspired by the ocean",
+      "Design a café inspired by the moon", "Design a monster inspired by insomnia", "Design an outfit inspired by a rainy afternoon",
+      "Design a castle inspired by paper origami", "Design a spirit inspired by forest moss", "Design a dragon inspired by cherry blossoms",
+      "Design a vehicle inspired by a pocket watch", "Design a key inspired by a grandfather clock"
+    ],
+    situations: [
+      "using flowing, elegant organic linework", "drawn using only a single shade of ink", "focusing heavily on beautiful negative space",
+      "combining sharp geometric shapes and soft textures", "styled like a page from a vintage explorer's journal", "using simple, bold graphic silhouettes",
+      "with delicate, intricate repeating patterns", "inspired by woodblock printing styles"
+    ],
+    environments: [
+      "on a clean, crisp parchment paper backdrop", "framed by a neat circular boundary", "sketched with subtle, dry brush strokes",
+      "with a high-contrast inkwash overlay", "styled in classic vintage book plates"
+    ]
+  },
+  "Objects & Places": {
+    subjects: [
+      "An ancient well filled with coins and stars", "An antique camera that captures the past", "A hidden attic shelf of old globes",
+      "A wooden cabinet with a miniature world inside", "A key with no matching lock", "A vintage typewriter with a page half-written",
+      "A glass terrarium holding a miniature storm", "An old pocket watch stopped on a specific minute", "A majestic library with shelves to the sky",
+      "An antique mirror that shows a different season", "A wooden writing slope with inkwells"
+    ],
+    situations: [
+      "covered in a fine velvet of moss and dust", "shining with a subtle, internal golden light", "surrounded by scattered handwritten letters",
+      "resting on a dark polished mahogany desk", "wrapped in an old piece of silk ribbon", "weathered by many decades of use",
+      "reflecting a soft, warm candle flame", "with clockwork gears slowly spinning inside"
+    ],
+    environments: [
+      "in a quiet, dusty corner of the room", "inside a grand collector's cabinet", "on a high mantelpiece above a fireplace",
+      "at the center of a silent, forgotten room", "under a glass dome on a wooden table"
+    ]
+  },
+  "Adventure": {
+    subjects: [
+      "A map leading to a city that doesn't exist", "An explorer scaling a giant stone statue", "A path leading through giant mushrooms",
+      "A hot air balloon sailing over uncharted mountains", "A wooden ship navigating a sea of clouds", "A hidden temple entrance guarded by ivy",
+      "A backpack stuffed with maps and compasses", "Crossing a rope bridge over a deep misty canyon", "An old lantern guiding a secret path",
+      "A traveler looking at a massive landmark in the distance"
+    ],
+    situations: [
+      "searching for clues in ancient ruins", "following a trail of glowing breadcrumbs", "discovering a hidden passage behind a waterfall",
+      "braving a sudden, swirling gust of wind", "mapping out the paths of an unexplored valley", "climbing towards a glowing castle on high",
+      "navigating by the alignment of the stars", "resting for a brief moment on the trail"
+    ],
+    environments: [
+      "deep inside a lost subterranean city", "high above a vast, wilderness of pine forests", "along a steep, rocky cliffside track",
+      "in a canyon where the walls are carved with runes", "at a historic stone crossroads"
+    ]
+  },
+  "Sci-Fi": {
+    subjects: [
+      "An abandoned space station orbiting a blue planet", "A robot learning to care for a delicate flower", "A futuristic city with flying streetcars",
+      "An astronaut looking at Earth from the moon", "A greenhouse on a dome-covered Mars colony", "A holographic memory playing in an empty room",
+      "A cybernetic helper brewing a cup of tea", "A spaceship repair shop in an asteroid belt", "A neon-lit cyber bazaar at midnight",
+      "A telescope observing a distant nebula", "A machine that records the sound of starlight"
+    ],
+    situations: [
+      "glowing with soft turquoise neon lights", "operating in complete, peaceful zero-gravity", "covered in a thin layer of alien dust",
+      "transmitting a weak, rhythmic signal into the dark", "projecting a soft, flickering blue light", "decorated with green plants in metal pots",
+      "tending to a small, indoor garden of wheat", "floating silently in the endless deep space"
+    ],
+    environments: [
+      "on the observation deck of a vessel", "inside a high-tech subterranean laboratory", "at a futuristic repair bay",
+      "against a backdrop of countless distant stars", "inside a quiet, dome-covered biodome colony"
+    ]
+  },
+  "Historical": {
+    subjects: [
+      "A scribe working by candlelight in a monastery", "An ancient Roman marketplace at sunrise", "A Victorian study filled with maps",
+      "A vintage train station in the early 1900s", "An Egyptian stone carver polishing hieroglyphs", "A majestic castle hall prepared for a banquet",
+      "An old-world apothecary shop with jars of herbs", "A traditional wooden tea house in ancient Kyoto", "A scholar reading scroll by a oil lamp"
+    ],
+    situations: [
+      "written with elegant, old-world calligraphy", "dressed in rich, historic flowing robes", "filled with the soft scratching of a quill pen",
+      "bathed in the warm, dusty light of afternoon", "resting on a table of heavy carved oak", "surrounded by vials of colorful inks",
+      "perfectly preserved in the passage of centuries", "capturing the quiet essence of a bygone era"
+    ],
+    environments: [
+      "inside a grand stone scriptorium", "at a quiet, timber-framed merchant stall", "in a cozy parlor with velvet curtains",
+      "at a dusty writing desk covered in parchment", "in a tranquil garden with stone lanterns"
+    ]
+  },
+  "Mythology": {
+    subjects: [
+      "A celestial fox with nine tails painting the sky", "A phoenix rising from golden embers", "An encounter with a forest satyr",
+      "A majestic pegasus resting on a cloud peak", "An offering left at a shrine of river spirit", "A sea serpent guiding a lost sailboat",
+      "The golden scales of a wise dragon", "A Valkyrie looking down from a cloud", "A stone statue of a deity overgrown with vines"
+    ],
+    situations: [
+      "surrounded by a halo of soft divine starlight", "whispering an ancient oath to the wind", "leaving glowing footprints in the grass",
+      "bathing in a pool of liquid gold", "guarding an ancient, sacred temple gateway", "weaving a tapestry of mortal fates",
+      "resting in a sanctuary of wildflowers", "gazing out over the mortal world with ancient eyes"
+    ],
+    environments: [
+      "high on the snow-covered peak of Mount Olympus", "at a mossy shrine deep in a bamboo grove", "on the shores of an emerald, sacred lake",
+      "inside a cavern of columns made of basalt", "against a sky of blazing cosmic colors"
+    ]
+  },
+  "Seasonal": {
+    subjects: [
+      "A scarecrow wearing a warm knitted hat", "A frozen pond reflecting a pink sunrise", "A cherry blossom petal landing on water",
+      "A picnic blanket under a warm summer sun", "Harvesting ripe pumpkins on a crisp morning", "A snow globe containing a tiny cozy village",
+      "Summer fireflies lighting up a dark field", "A spring garden waking up after winter", "An autumn forest painted in deep red and gold"
+    ],
+    situations: [
+      "celebrating the first day of spring blossoms", "shivering under a blanket of white snow", "bathed in the bright, golden heat of July",
+      "surrounded by falling leaves of orange and rust", "glowing with the warmth of a seasonal hearth", "bringing the joy of harvest festival",
+      "decorated with handmade seasonal wreaths", "quietly sleeping through the winter solstice"
+    ],
+    environments: [
+      "in an orchard of apple trees", "in a backyard covered in fresh winter frost", "along a lane bordered by pink blossoms",
+      "at a lakeside cabin under summer stars", "in a quiet clearing of a golden forest"
+    ]
+  },
+  "Weekly Unhinged": {
+    subjects: [
+      "Superman with an absurdly oversized butt stuck in a tiny elevator",
+      "A bodybuilder fairy trying to bench press a heavy pine twig",
+      "A medieval knight ordering bubble tea at a busy modern counter",
+      "A chubby pigeon winning a gold medal at the Olympic games",
+      "A samurai losing an intense argument to a loud angry goose",
+      "An ancient red dragon working customer service on a tiny laptop",
+      "A T-Rex trying online dating with its extremely short arms",
+      "A cat wearing a business suit presenting a pie chart on fish",
+      "A wizard using a magic staff to retrieve a lost sock from under a bed",
+      "An alien trying to understand how a kitchen toaster works",
+      "A grumpy potato starting a heavy metal rock band in a cellar",
+      "A goldfish wearing a suit elected as the president of the ocean",
+      "A sausage escaping a hungry fork on a tiny unicycle",
+      "A dinosaur trying to apply mascara to its eyelashes",
+      "A vacuum cleaner trying to suck up all the stars in the sky",
+      "A giant head of broccoli trying to style its hair with a comb"
+    ],
+    situations: [
+      "looking completely ridiculous and out of place", "sweating profusely and trying their absolute best", "screaming in absolute frustration",
+      "while everyone around them acts completely normal", "under a shower of glittering star confetti", "with an expression of intense focus",
+      "while wearing a tiny neon pink tutu", "in front of an audience of highly serious judges"
+    ],
+    environments: [
+      "in the middle of a very quiet library", "on a live television broadcast room", "at a highly professional office board room",
+      "in a crowded, modern city street subway", "inside a fancy, five-star restaurant dining room"
+    ]
+  }
+};
 
-// 3. Weekly Ridiculous Prompts (Day of Season is a multiple of 7)
-const WEEKLY_RIDICULOUS_PROMPTS = [
-  "A fat monkey wearing tight skinny jeans",
-  "Flying underwear attacking a giant medieval castle",
-  "Superman with an enormous butt stuck in a very tiny red car",
-  "A grumpy goldfish wearing a suit becoming president of the ocean",
-  "A tiny brown potato starting an energetic heavy metal rock band",
-  "The world's strongest mosquito lifting an entire dumbbell",
-  "A massive fire-breathing dragon working the drive-thru window at McDonald's",
-  "A great white shark wearing a pink ballet tutu learning ballet in a pond",
-  "A cheeky haunted refrigerator trying to jump-scare a kitchen cabinet",
-  "A banana wearing cool dark sunglasses riding a skateboard down a grand staircase",
-  "An existential squirrel debating a walnut about the meaning of life",
-  "A grumpy sausage running away from a hungry fork on a tiny unicycle",
-  "A proud pug dressed as an emperor commanding an army of rubber ducks",
-  "A silly penguin trying to toast a marshmallow over a freezing icicle",
-  "A vacuum cleaner trying to suck up the stars in the night sky",
-  "A giant green broccoli trying to style its hair with a tiny comb",
-  "A fancy tea kettle having a wrestling match with a wooden spatula",
-  "A carrot wearing a cool leather jacket riding a fast motorcycle",
-  "A ghost trying to fold a fitted sheet and getting extremely frustrated",
-  "A dinosaur trying to apply mascara to its eyelashes with its tiny arms",
-  "A lazy snail hitchhiking on the back of a hyperactive cheetah",
-  "A slice of cheese trying to hide from a grater by wearing a wig",
-  "A pineapple trying to squeeze into a jar of pickles",
-  "An onion crying because it peeled itself in front of a mirror",
-  "A slice of pizza running a marathon while dripping hot cheese",
-  "A chicken wearing a scuba mask swimming with goldfishes",
-  "A hotdog dog wearing a real mustard hat acting as a security guard",
-  "A tomato lifting tiny blueberry weights at the veggie gym"
-];
+// Generates exactly 3150 unique prompts deterministically on load
+function pregeneratePrompts(): Prompt[] {
+  const prompts: Prompt[] = [];
+  const seenTitles = new Set<string>();
 
-// 4. Large Vocabulary Sets for generating over 3000 unique combination prompts (DayIndex > 100)
-const COMB_SUBJECTS = [
-  "A cute little puppy", "A chubby kitten", "A tiny green frog", "A friendly little ghost",
-  "A sleepy baby dragon", "A chunky penguin", "A cute baby panda", "A fluffy red panda",
-  "A slow sleepy sloth", "A tiny cute hedgehog", "An adorable capybara", "A wise old owl",
-  "A happy koala", "A fluffy sheep", "A cute baby elephant", "A tiny woodland mouse",
-  "A majestic baby unicorn", "A friendly little alien", "A sleepy little robot", "A mischievous raccoon",
-  "A brave little hamster", "A transparent jellyfish", "A fluffy squirrel", "A cute baby sea otter",
-  "A proud little duckling", "A friendly woodland deer", "A plump ninja chicken", "A little fox cub",
-  "A cool cartoon banana", "A happy slice of cheese", "A slice of delicious pizza", "A cute little avocado",
-  "A cheerful strawberry", "A warm coffee cup", "A sleepy marshmallow", "A happy little taco",
-  "A cheeky haunted toaster", "A friendly refrigerator", "A vintage typewriter", "A retro television",
-  "An old leather journal", "A magic grandfather clock", "A cozy armchair", "A tiny wizard's hat",
-  "A magical glowing key", "A paper airplane", "A smiling crescent moon", "A fluffy winter cloud",
-  "A bright happy sunflower", "A tiny mushroom house", "A friendly blue whale", "A cute box turtle",
-  "A pirate parrot", "A bee wearing knight armor", "A detective penguin", "A skeleton doing yoga",
-  "A nervous cup of tea", "A sleeping bag with feet", "A backpack with a face", "A treasure chest",
-  "A cute piggy bank", "An antique pocket watch", "A friendly green monster", "A garden snail",
-  "A funny little potato", "A happy waffle", "A fluffy cupcake", "A bowl of warm ramen",
-  "A cool vampire duck", "A sleepy forest fairy", "A mermaid kitten", "A baby phoenix",
-  "A robot vacuum cleaner", "A cheerful carrot", "A cozy wool sweater", "A pair of yellow rain boots",
-  "A cute potted cactus", "A paper boat", "A yellow submarine", "A fluffy sheep cloud",
-  "A red apple with glasses", "A friendly shark", "A lazy wizard toad", "A tiny astronaut hamster",
-  "A sleepy gingerbread man", "A happy slice of pumpkin pie", "A cute snowman", "A friendly yeti",
-  "A tiny cute ladybug", "A glowing lantern", "A happy croissant", "A cute slice of watermelon",
-  "A magical spellbook", "A sleepy little star", "A fluffy raccoon chef", "A dinosaur eating ice cream"
-];
-
-const COMB_ACTIVITIES = [
-  "drinking a warm mug of hot cocoa", "taking a peaceful little nap", "singing a happy song",
-  "reading a tiny leather book", "writing a secret letter", "baking fresh chocolate cookies",
-  "planting a tiny green flower", "looking through a telescope", "climbing a mountain of books",
-  "swimming inside a giant teacup", "riding a miniature red bicycle", "dancing in the warm rain",
-  "listening to a vintage record player", "taking a silly phone selfie", "cooking a pot of instant noodles",
-  "doing difficult yoga poses", "driving a tiny toy car", "going on a cozy picnic",
-  "wearing a oversized wool sweater", "gazing up at the starry sky", "playing a miniature grand piano",
-  "learning graceful ballet moves", "ordering food at a drive-thru", "baking sweet warm croissants",
-  "trying a cup of bubble tea", "winning a fast race", "relaxing on a sunny vacation",
-  "making a slice of golden toast", "stealing the neighbor's WiFi", "going on a camping trip",
-  "trying hard to learn how to fly", "eating a large plate of spaghetti", "flying a colorful kite",
-  "building a beautiful sandcastle", "collecting tiny shiny seashells", "catching glowing fireflies",
-  "wrapping up a colorful gift", "decorating a green Christmas tree", "blowing giant soap bubbles",
-  "making a wish on a star", "hiding inside a warm coat pocket", "balancing carefully on a rope",
-  "performing a silly magic trick", "knitting a long colorful scarf", "sweeping the wooden floor",
-  "watering a cute potted plant", "painting a funny self-portrait", "composing a tiny poem",
-  "folding a delicate paper crane", "gazing at a warm fireplace", "hugging a giant red strawberry",
-  "rowing a leaf boat in a pond", "sleeping soundly on a fluffy cloud", "wearing a detective magnifying glass",
-  "drinking a giant milkshake", "playing a game of hide and seek", "taking a warm bubble bath",
-  "studying a secret treasure map", "whispering a funny secret", "searching for lost gold coins",
-  "skating down a paved hill", "sliding down a bright rainbow", "eating a giant chocolate chip cookie",
-  "wearing funny dark sunglasses", "trying on a giant wizard hat", "sweating doing squats at the gym",
-  "running a cozy neighborhood coffee shop", "being secretly afraid of the dark", "working a boring office desk job"
-];
-
-const COMB_SITUATIONS = [
-  "on a sunny tropical beach island", "inside a giant glass bottle", "under a warm cozy blanket",
-  "beneath a beautiful starry sky", "in a field of glowing purple lavender", "on top of a giant red mushroom",
-  "inside a tiny garden swimming pool", "wearing heavy medieval knight armor", "driving a giant monster truck",
-  "stuck inside an incredibly tiny car", "wearing very tight skinny jeans", "inside a dusty attic library",
-  "on a rainy quiet street corner", "near a crackling warm fireplace", "in the middle of a foggy forest",
-  "with gravity completely turned off", "while secretly working as a ninja", "with an expression of pure anxiety",
-  "coming alive at the stroke of midnight", "carrying a strawberry twice its size", "pitching a tent under a giant fern",
-  "leaning outside a village bookstore", "shaped like a sleeping garden snail", "surrounded by fluttering origami butterflies",
-  "with shiny clockwork gears spinning", "lit by a single glowing candle", "with shadows that tell a funny story",
-  "on a cozy winter afternoon", "dressed in a tiny wizard robe", "wearing a crown made of autumn leaves",
-  "on a bright sunny autumn morning", "during a sudden summer rainstorm", "inside a magical greenhouse garden",
-  "surrounded by floating paper lanterns", "with roots dipping into a starry pond", "gently floating on a cloud of steam",
-  "weathered by centuries of soft rain", "decorated with hand-drawn star maps", "shining with soft magical starlight",
-  "reminiscent of a cozy children's book", "with a touch of quiet mystery", "focusing on beautiful negative space",
-  "styled like a vintage field journal", "with delicate warm sepia tones", "capturing a quiet cozy mood",
-  "for a tiny story about close friendship", "in a heartwarming cartoon drawing style", "bringing sweet wholesome smiles",
-  "with playful little details", "under a giant red umbrella", "on a quiet Sunday morning",
-  "while listening to soft ambient music", "wrapped in a fluffy woolen scarf", "eating warm breakfast in bed",
-  "in a dreamlike fairy wonderland", "patiently waiting for the weekend", "trying its best to be brave",
-  "with an adorable sleepy face expression", "wearing a tiny yellow school backpack", "with sparkly happy eyes"
-];
-
-// Helper to get deterministic random item from array
-function selectDeterministic<T>(arr: T[], seed: number): T {
-  const index = Math.floor(seedRandom(seed) * arr.length);
-  return arr[index];
-}
-
-// Generates a Prompt object deterministically for any given day index (0 to infinite)
-// This guarantees that Day X is identical for all players!
-export function getPromptForDay(dayIndex: number): Prompt {
-  const seed = dayIndex + 12345; // custom offset seed
-
-  const season = Math.floor(dayIndex / 28) + 1;
-  const dayOfSeason = (dayIndex % 28) + 1;
-
-  // Every 7th day is a completely ridiculous prompt
-  const isWeeklyRidiculous = dayOfSeason % 7 === 0;
-
-  let text = '';
-  let category = '';
-  let difficulty: '⚡ 5 min' | '✏️ 10 min' | '🎨 20 min' = '✏️ 10 min';
-
-  if (isWeeklyRidiculous) {
-    category = 'Slightly Absurd';
-    // Select from weekly ridiculous prompts
-    const ridIdx = (season * 4 + Math.floor(dayOfSeason / 7)) % WEEKLY_RIDICULOUS_PROMPTS.length;
-    text = WEEKLY_RIDICULOUS_PROMPTS[ridIdx];
-    difficulty = '🎨 20 min';
-  } else if (dayIndex < GOLDEN_HANDCRAFTED_PROMPTS.length) {
-    // Select from our handcrafted high-quality prompt database
-    const item = GOLDEN_HANDCRAFTED_PROMPTS[dayIndex];
-    text = item.text;
-    category = item.category;
-    difficulty = item.difficulty;
-  } else {
-    // Deterministic combination for infinite unique prompts (> 3000!)
-    const seedS = seed * 3;
-    const seedA = seed * 5;
-    const seedSi = seed * 7;
-    const seedC = seed * 11;
-    const seedD = seed * 13;
-
-    const subject = selectDeterministic(COMB_SUBJECTS, seedS);
-    const activity = selectDeterministic(COMB_ACTIVITIES, seedA);
-    const situation = selectDeterministic(COMB_SITUATIONS, seedSi);
-
-    text = `${subject} ${activity} ${situation}`;
-    category = selectDeterministic(PLAYFUL_CATEGORIES, seedC);
-
-    // Assign drawing times deterministically
-    const dRoll = seedRandom(seedD);
-    if (dRoll < 0.25) {
-      difficulty = '⚡ 5 min';
-    } else if (dRoll < 0.75) {
-      difficulty = '✏️ 10 min';
+  for (let i = 0; i < 3150; i++) {
+    // 1 in every 7 prompts is Weekly Unhinged
+    const isWeeklyUnhinged = (i + 1) % 7 === 0;
+    let category = "";
+    if (isWeeklyUnhinged) {
+      category = "Weekly Unhinged";
     } else {
-      difficulty = '🎨 20 min';
+      const otherCategories = PROMPT_CATEGORIES.filter(c => c !== "Weekly Unhinged");
+      const catIndex = Math.floor(i / 7) % otherCategories.length;
+      category = otherCategories[catIndex];
     }
+
+    const vocab = CATEGORY_VOCABULARY[category];
+    const sLen = vocab.subjects.length;
+    const siLen = vocab.situations.length;
+    const eLen = vocab.environments.length;
+
+    let sIdx = (i * 17 + 11) % sLen;
+    let siIdx = (i * 23 + 19) % siLen;
+    let eIdx = (i * 29 + 31) % eLen;
+
+    let subject = vocab.subjects[sIdx];
+    let situation = vocab.situations[siIdx];
+    let environment = vocab.environments[eIdx];
+
+    let title = `${subject} ${situation} ${environment}.`;
+    title = title.replace(/\s+/g, ' ').replace(/\.+/g, '.').trim();
+
+    // Prevent duplicates
+    let attempt = 0;
+    while (seenTitles.has(title) && attempt < 100) {
+      attempt++;
+      sIdx = (sIdx + 1) % sLen;
+      siIdx = (siIdx + 2) % siLen;
+      eIdx = (eIdx + 3) % eLen;
+      subject = vocab.subjects[sIdx];
+      situation = vocab.situations[siIdx];
+      environment = vocab.environments[eIdx];
+      title = `${subject} ${situation} ${environment}.`;
+      title = title.replace(/\s+/g, ' ').replace(/\.+/g, '.').trim();
+    }
+
+    seenTitles.add(title);
+
+    prompts.push({
+      id: `prompt_${i}`,
+      title,
+      text: title, // Keep duplicate alias for perfect compatibility
+      category
+    });
   }
 
-  return {
-    id: `prompt_${dayIndex}`,
-    text,
-    category,
-    difficulty,
-    estimatedTime: difficulty === '⚡ 5 min' ? '5 mins' : difficulty === '✏️ 10 min' ? '10 mins' : '20 mins',
-    isWeeklyRidiculous,
-    season,
-    dayOfSeason
-  };
+  return prompts;
 }
 
-// Dynamic Search indexing across our combined infinite pool
+export const ALL_PREGENERATED_PROMPTS: Prompt[] = pregeneratePrompts();
+
+// Gets a deterministic prompt for any day index (0 to infinite)
+export function getPromptForDay(dayIndex: number): Prompt {
+  const index = Math.abs(dayIndex) % ALL_PREGENERATED_PROMPTS.length;
+  return ALL_PREGENERATED_PROMPTS[index];
+}
+
+// Dynamic search across pre-generated database
 export function searchPrompts(query: string, limit = 50): Prompt[] {
   const lowercaseQuery = query.toLowerCase();
   const matched: Prompt[] = [];
-  
-  // Search through first 3500 days to find unique matches!
-  for (let i = 0; i < 3500; i++) {
-    const p = getPromptForDay(i);
-    if (p.text.toLowerCase().includes(lowercaseQuery) || p.category.toLowerCase().includes(lowercaseQuery)) {
+
+  for (const p of ALL_PREGENERATED_PROMPTS) {
+    if (
+      p.title.toLowerCase().includes(lowercaseQuery) ||
+      p.text.toLowerCase().includes(lowercaseQuery) ||
+      p.category.toLowerCase().includes(lowercaseQuery)
+    ) {
       matched.push(p);
       if (matched.length >= limit) break;
     }
@@ -314,23 +540,23 @@ export function searchPrompts(query: string, limit = 50): Prompt[] {
   return matched;
 }
 
-// 5. Encorage Messages list for daily motivation
+// Encouraging messages for daily motivation without times or pressures
 export const ENCOURAGING_MESSAGES = [
   "Done is better than perfect.",
-  "Every sketch counts.",
-  "Have fun with this one.",
+  "Every line is progress.",
+  "No rush. Let your mind wander.",
+  "Let your hand explore the ink.",
+  "No timer, no pressure. Just play.",
+  "There are no mistakes, only unexpected paths.",
+  "Take your time, enjoy the quiet rhythm.",
   "Draw it your way.",
-  "No pressure, just pencils.",
-  "Even stick figures are welcome.",
-  "Your personal style is your superpower.",
-  "Mistakes are just happy design accidents.",
-  "Relax, breathe, and let your pen wander.",
-  "A draft today is a treasure tomorrow.",
-  "Just 5 minutes of sketching changes the day.",
-  "Every line is progress."
+  "Even a single stroke holds beauty.",
+  "Your style is uniquely your own.",
+  "Relax, take a deep breath, and sketch.",
+  "The pen is a traveler, let it guide you."
 ];
 
 export function getEncouragementForDay(dayIndex: number): string {
-  const idx = (dayIndex + 42) % ENCOURAGING_MESSAGES.length;
+  const idx = Math.abs(dayIndex + 42) % ENCOURAGING_MESSAGES.length;
   return ENCOURAGING_MESSAGES[idx];
 }

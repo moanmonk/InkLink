@@ -115,7 +115,11 @@ export default function JournalLayout({
 
           {/* User badge preview */}
           {user && (
-            <div className="hidden md:flex items-center gap-2.5 px-3 py-2 bg-white/20 border border-white/10 rounded-xl mb-6 mx-1 shadow-sm">
+            <button
+              onClick={() => setActiveTab('profile')}
+              className="hidden md:flex items-center gap-2.5 px-3 py-2 bg-white/20 border border-white/10 rounded-xl mb-6 mx-1 shadow-sm cursor-pointer hover:bg-white/30 transition-all text-left w-[calc(100%-8px)]"
+              title="View your personal Sketchbook"
+            >
               <div className="w-9 h-9 rounded-full bg-white border border-[#CBD5E1] overflow-hidden shadow-xs flex-shrink-0 flex items-center justify-center font-serif text-[#2D3748] font-bold">
                 {user.avatarUrl ? (
                   <img src={user.avatarUrl} alt="avatar" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
@@ -127,7 +131,7 @@ export default function JournalLayout({
                 <p className="text-white font-bold text-xs truncate leading-none mb-1">{user.displayName}</p>
                 <p className="text-white/90 text-[10px] font-mono font-bold leading-none">🔥 {user.currentStreak} day streak</p>
               </div>
-            </div>
+            </button>
           )}
 
           {/* Nav Links */}

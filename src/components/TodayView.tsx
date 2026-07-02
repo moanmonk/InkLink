@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Calendar, Flame, Timer, Compass, Upload, Sparkles, Feather, Image as ImageIcon, Camera, Trash2 } from 'lucide-react';
+import { Calendar, Flame, Timer, Compass, Upload, Sparkles, Feather, Image as ImageIcon, Camera, Trash2, MessageSquare } from 'lucide-react';
 import { getPromptForDay, getEncouragementForDay } from '../lib/prompts';
 import { getSubmission, submitDrawing, deleteSubmission, getFriendsList, getSubmissionsForPrompt, uploadDrawingImage } from '../lib/firebase';
 import { Profile, Submission, Prompt } from '../types';
@@ -189,12 +189,15 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
         return;
       }
 
+      const season = Math.floor(dayIndex / 28) + 1;
+      const dayOfSeason = (dayIndex % 28) + 1;
+
       const sub = await submitDrawing(
         user.id,
         prompt.id,
         prompt.text,
-        prompt.season,
-        prompt.dayOfSeason,
+        season,
+        dayOfSeason,
         finalImg,
         caption,
         drawingNote || (showCanvasMode ? 'Digital Ink Sketchpad' : 'Physical Paper Sketch'),
@@ -360,27 +363,52 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                 animate={{ opacity: 1, scale: 1 }}
                 className="bg-white border border-[#CBD5E1] p-4 rounded-3xl shadow-xs flex flex-col gap-3 relative"
               >
-                <div className="aspect-square w-full rounded-2xl overflow-hidden bg-[#F8FAFC] border border-[#CBD5E1] flex items-center justify-center relative">
-                  <img src={submission.imageUrl} alt="today-submission" className="w-full h-full object-contain" referrerPolicy="no-referrer" />
+                <div 
+                  onClick={() => onNavigateToFeed(submission.id)}
+                  className="aspect-square w-full rounded-2xl overflow-hidden bg-[#F8FAFC] border border-[#CBD5E1] flex items-center justify-center relative cursor-pointer group hover:border-[#8daa91]/60 transition-all shadow-inner"
+                  title="Click to view comments, ratings, and write replies"
+                >
+                  <img src={submission.imageUrl} alt="today-submission" className="w-full h-full object-contain p-2 group-hover:scale-102 transition-transform duration-300" referrerPolicy="no-referrer" />
                   
+                  {/* Subtle view indicator overlay on hover */}
+                  <div className="absolute inset-0 bg-stone-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                    <span className="bg-white/95 backdrop-blur-xs px-3.5 py-2 rounded-xl text-xs font-serif font-bold text-[#2D3748] shadow-md flex items-center gap-1.5 border border-[#CBD5E1]">
+                      <Compass className="w-4 h-4 text-[#8daa91]" />
+                      <span>View Comments & Notes</span>
+                    </span>
+                  </div>
+
                   {/* Delete / Replace overlay */}
                   <button
-                    onClick={handleDelete}
-                    className="absolute bottom-3 right-3 p-2 bg-[#EE98AD] hover:bg-[#dd7d93] text-white rounded-xl shadow-md transition-colors cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete();
+                    }}
+                    className="absolute bottom-3 right-3 p-2.5 bg-[#EE98AD] hover:bg-[#dd7d93] text-white rounded-xl shadow-md transition-all cursor-pointer hover:scale-105 active:scale-95 z-20"
                     title="Delete and re-draw before midnight"
                   >
-                    <Trash2 className="w-4.5 h-4.5" />
+                    <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
 
-                <div className="px-1">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#64748B]">Your Daily Sketch</span>
-                  <p className="font-serif italic text-[#2D3748] mt-1 text-sm">
-                    {submission.caption || '“Silent drawing of today”'}
-                  </p>
-                  <p className="text-[10px] font-mono text-[#64748B] mt-0.5">
-                    Instrument: {submission.drawingNote} | Device: {submission.device}
-                  </p>
+                <div className="px-1 flex flex-col justify-between h-full">
+                  <div>
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#64748B]">Your Daily Sketch</span>
+                    <p className="font-serif italic text-[#2D3748] mt-1 text-sm">
+                      {submission.caption || '“Silent drawing of today”'}
+                    </p>
+                    <p className="text-[10px] font-mono text-[#64748B] mt-0.5">
+                      Instrument: {submission.drawingNote} | Device: {submission.device}
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => onNavigateToFeed(submission.id)}
+                    className="w-full py-2.5 mt-4 rounded-xl bg-[#8daa91]/10 hover:bg-[#8daa91]/25 border border-[#8daa91]/20 text-[#4e6a53] font-serif font-black text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer select-none"
+                  >
+                    <MessageSquare className="w-4 h-4 text-[#8daa91]" />
+                    <span>Open Comments & Notes Thread</span>
+                  </button>
                 </div>
               </motion.div>
             ) : (
@@ -408,13 +436,6 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                     <p className="text-2xs text-[#4e6a53] font-serif italic mt-3 bg-[#8daa91]/5 px-3 py-1.5 rounded-xl border border-[#8daa91]/10 inline-block">
                       ✨ {getEncouragementForDay(dayIndex)}
                     </p>
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs font-serif text-[#64748B] italic border-t border-[#CBD5E1] pt-3">
-                    <div className="flex items-center gap-1.5">
-                      <Timer className="w-4 h-4 text-[#8daa91]" />
-                      <span>Estimated Time: <strong className="font-sans font-bold text-[#2D3748]">{prompt.difficulty}</strong></span>
-                    </div>
                   </div>
                 </div>
 

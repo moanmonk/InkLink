@@ -20,7 +20,7 @@ const PRESET_AVATARS = [
 ];
 
 const CATEGORIES = [
-  'Daily Life', 'Nature', 'Fantasy', 'Sci-Fi', 'Urban', 'Dreams', 'Surreal', 'Mythology', 'Objects'
+  'Character Design', 'Emotion', 'Memories', 'Longing', 'Horror', 'Mystery', 'Fantasy', 'Dreams', 'Atmosphere', 'Storytelling', 'Everyday Life', 'Cinematic', 'Nature', 'Urban', 'Cozy'
 ];
 
 export default function OnboardingView({ user, onOnboardingComplete }: OnboardingViewProps) {
