@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, Star, MessageSquare, Heart, Sparkles, X, Send, Trash2, Edit3, MessageCircle, AlertCircle } from 'lucide-react';
 import { 
@@ -391,7 +392,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
                       <img
                         src={sub.imageUrl}
                         alt="drawing-post"
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
+                        className="w-full h-full object-contain p-1 transition-transform duration-500 group-hover:scale-102"
                         referrerPolicy="no-referrer"
                       />
                       
@@ -440,7 +441,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
 
       {/* DETAIL DRAWER / PHYSICAL OPEN PAGE PANEL */}
       <AnimatePresence>
-        {selectedSub && (
+        {selectedSub && createPortal(
           <div className="fixed inset-0 bg-[#2D3748]/60 z-50 flex justify-end">
             
             {/* Backdrop click to close */}
@@ -490,7 +491,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
                   <img
                     src={selectedSub.imageUrl}
                     alt="expanded-drawing"
-                    className="w-full h-auto max-h-[350px] object-contain rounded-2xl"
+                    className="w-full h-auto max-h-[500px] object-contain rounded-2xl mx-auto"
                     referrerPolicy="no-referrer"
                   />
                 </div>
@@ -639,7 +640,8 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
               </div>
 
             </motion.div>
-          </div>
+          </div>,
+          document.body
         )}
       </AnimatePresence>
 

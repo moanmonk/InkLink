@@ -202,8 +202,8 @@ export default function AdminView() {
                   return (
                     <div key={sub.id} className="bg-white border border-stone-200 p-2.5 rounded-3xl shadow-2xs space-y-2 text-center relative flex flex-col justify-between">
                       <div>
-                        <div className="aspect-square bg-stone-50 border border-stone-100 rounded-2xl overflow-hidden">
-                          <img src={sub.imageUrl} alt="sub" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                        <div className="aspect-square bg-stone-50 border border-stone-100 rounded-2xl overflow-hidden flex items-center justify-center">
+                          <img src={sub.imageUrl} alt="sub" className="w-full h-full object-contain p-1" referrerPolicy="no-referrer" />
                         </div>
                         <p className="text-2xs font-serif font-bold text-stone-700 mt-2 truncate">{sub.userDisplayName}</p>
                         <p className="text-[10px] text-stone-400 font-serif italic truncate">"{sub.caption || 'Daily draft'}"</p>

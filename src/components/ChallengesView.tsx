@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
 import { Award, Plus, Calendar, Clock, Users, ShieldAlert, Image as ImageIcon, CheckCircle, Lock, Upload, Feather } from 'lucide-react';
 import { 
@@ -263,8 +264,8 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
                         <div className="grid grid-cols-2 gap-3">
                           {challengeSubs.map((s) => (
                             <div key={s.id} className="bg-white border border-[#CBD5E1] p-2 rounded-2xl text-center space-y-1">
-                              <div className="aspect-square bg-[#F8FAFC] border border-[#CBD5E1]/60 rounded-xl overflow-hidden">
-                                <img src={s.imageUrl} alt="sub" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                              <div className="aspect-square bg-[#F8FAFC] border border-[#CBD5E1]/60 rounded-xl overflow-hidden flex items-center justify-center">
+                                <img src={s.imageUrl} alt="sub" className="w-full h-full object-contain p-1" referrerPolicy="no-referrer" />
                               </div>
                               <p className="text-[10px] font-serif font-bold text-[#2D3748] truncate">{s.userDisplayName}</p>
                               {s.caption && <p className="text-[9px] font-serif italic text-[#64748B] truncate">"{s.caption}"</p>}
@@ -337,7 +338,7 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
       </div>
 
       {/* CREATE MODAL DIALOG */}
-      {showCreateModal && (
+      {showCreateModal && createPortal(
         <div className="fixed inset-0 bg-[#2D3748]/60 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0" onClick={() => setShowCreateModal(false)} />
           <motion.div
@@ -433,7 +434,8 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
               </div>
             </form>
           </motion.div>
-        </div>
+        </div>,
+        document.body
       )}
 
     </div>

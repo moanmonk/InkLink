@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
 import { ZoomIn, RotateCw, Check, X, Move } from 'lucide-react';
 
@@ -102,7 +103,7 @@ export default function ImageCropperModal({ imageSrc, onCropComplete, onClose }:
     onCropComplete(croppedDataUrl);
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 z-50 select-none">
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -229,6 +230,7 @@ export default function ImageCropperModal({ imageSrc, onCropComplete, onClose }:
           </div>
         </div>
       </motion.div>
-    </div>
+    </div>,
+    document.body
   );
 }

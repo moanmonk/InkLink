@@ -261,8 +261,8 @@ export default function ProfileView({ user, onRefreshUser, onSelectSubmissionInF
                   onClick={() => onSelectSubmissionInFeed(sub.id)}
                   className="bg-white border border-stone-200 p-2 rounded-2xl text-center cursor-pointer shadow-sm hover:shadow-md transition-shadow relative group hover:border-[#8daa91]/60"
                 >
-                  <div className="aspect-square bg-stone-50 border border-stone-100 rounded-xl overflow-hidden">
-                    <img src={sub.imageUrl} alt="grid-sub" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  <div className="aspect-square bg-stone-50 border border-stone-100 rounded-xl overflow-hidden flex items-center justify-center">
+                    <img src={sub.imageUrl} alt="grid-sub" className="w-full h-full object-contain p-1" referrerPolicy="no-referrer" />
                   </div>
                   <p className="text-3xs font-mono uppercase text-stone-400 mt-1.5">Day {sub.dayOfSeason}</p>
                   <p className="text-2xs font-serif italic text-stone-600 truncate">"{sub.caption || 'Daily ritual'}"</p>
