@@ -121,9 +121,9 @@ export default function App() {
 
   if (!authChecked) {
     return (
-      <div className="min-h-screen bg-[#241a12] text-stone-300 flex flex-col items-center justify-center font-serif italic gap-2.5">
-        <div className="w-12 h-12 rounded-full border border-stone-500/30 flex items-center justify-center animate-spin">
-          <span className="text-xs font-bold not-italic font-mono">ink</span>
+      <div className="min-h-screen bg-[#fbf9f4] text-[#4e6a53] flex flex-col items-center justify-center font-serif italic gap-2.5 select-none">
+        <div className="w-12 h-12 rounded-full border border-[#8daa91]/40 flex items-center justify-center animate-spin">
+          <span className="text-xs font-bold not-italic font-mono text-[#8daa91]">ink</span>
         </div>
         <span>Opening InkLink vault...</span>
       </div>
@@ -133,7 +133,7 @@ export default function App() {
   // Awaiting Login
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#241a12] p-4 flex items-center justify-center">
+      <div className="min-h-screen bg-[#fbf9f4] p-4 flex items-center justify-center select-none">
         <AuthView onAuthSuccess={(profile) => setUser(profile)} />
       </div>
     );
@@ -143,7 +143,7 @@ export default function App() {
   const needsOnboarding = !user.avatarUrl;
   if (needsOnboarding) {
     return (
-      <div className="min-h-screen bg-[#241a12] p-4 flex items-center justify-center">
+      <div className="min-h-screen bg-[#fbf9f4] p-4 flex items-center justify-center select-none">
         <OnboardingView 
           user={user} 
           onOnboardingComplete={(updatedProfile) => setUser(updatedProfile)} 

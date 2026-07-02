@@ -24,14 +24,14 @@ export const PASTEL_PALETTES: { [key: string]: PastelPalette } = {
   },
   sage: {
     id: 'sage',
-    primary: '#88B69E',
-    hover: '#76A38B',
-    bgLight: 'bg-[#88B69E]/8',
-    border: 'border-[#88B69E]/25',
-    text: 'text-[#417057]',
-    badgeBg: 'bg-[#88B69E]/12',
-    btnClass: 'bg-[#88B69E] hover:bg-[#76A38B] text-white shadow-[2px_2px_0_rgba(136,182,158,0.15)] hover:shadow-none',
-    shadowGlow: 'rgba(136, 182, 158, 0.15)'
+    primary: '#8daa91',
+    hover: '#7ba180',
+    bgLight: 'bg-[#8daa91]/8',
+    border: 'border-[#8daa91]/25',
+    text: 'text-[#4e6a53]',
+    badgeBg: 'bg-[#8daa91]/12',
+    btnClass: 'bg-[#8daa91] hover:bg-[#7ba180] text-white shadow-[2px_2px_0_rgba(141,170,145,0.15)] hover:shadow-none',
+    shadowGlow: 'rgba(141, 170, 145, 0.15)'
   },
   peach: {
     id: 'peach',
@@ -76,6 +76,28 @@ export const PASTEL_PALETTES: { [key: string]: PastelPalette } = {
     badgeBg: 'bg-[#859EBA]/12',
     btnClass: 'bg-[#859EBA] hover:bg-[#728CA9] text-white shadow-[2px_2px_0_rgba(133,158,186,0.15)] hover:shadow-none',
     shadowGlow: 'rgba(133, 158, 186, 0.15)'
+  },
+  periwinkle: {
+    id: 'periwinkle',
+    primary: '#A1C4FD',
+    hover: '#8EB4FA',
+    bgLight: 'bg-[#A1C4FD]/8',
+    border: 'border-[#A1C4FD]/25',
+    text: 'text-[#4D7AD2]',
+    badgeBg: 'bg-[#A1C4FD]/12',
+    btnClass: 'bg-[#A1C4FD] hover:bg-[#8EB4FA] text-white shadow-[2px_2px_0_rgba(161,196,253,0.15)] hover:shadow-none',
+    shadowGlow: 'rgba(161, 196, 253, 0.15)'
+  },
+  mint: {
+    id: 'mint',
+    primary: '#9ADEC9',
+    hover: '#81C9B3',
+    bgLight: 'bg-[#9ADEC9]/8',
+    border: 'border-[#9ADEC9]/25',
+    text: 'text-[#3F8F75]',
+    badgeBg: 'bg-[#9ADEC9]/12',
+    btnClass: 'bg-[#9ADEC9] hover:bg-[#81C9B3] text-white shadow-[2px_2px_0_rgba(154,222,201,0.15)] hover:shadow-none',
+    shadowGlow: 'rgba(154, 222, 201, 0.15)'
   }
 };
 
@@ -96,6 +118,12 @@ export function getPaletteForCategory(category: string): PastelPalette {
   }
   if (cat.includes('seasonal') || cat.includes('story') || cat.includes('life')) {
     return PASTEL_PALETTES.butter;
+  }
+  if (cat.includes('surreal') || cat.includes('sci-fi') || cat.includes('dreams')) {
+    return PASTEL_PALETTES.periwinkle;
+  }
+  if (cat.includes('nature') || cat.includes('mythology') || cat.includes('urban')) {
+    return PASTEL_PALETTES.mint;
   }
   return PASTEL_PALETTES.slate;
 }

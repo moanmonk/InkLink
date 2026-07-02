@@ -245,7 +245,7 @@ export default function SketchCanvas({ onSaveSnapshot, savedDrawingUrl }: Sketch
     <div ref={containerRef} className="flex flex-col gap-4 w-full h-full relative">
       
       {/* Canvas Drawing area styled as a textured paper notebook sheet */}
-      <div className="flex-grow w-full min-h-[300px] bg-[#faf6f0] border-2 border-[#eae4d5] rounded-xl shadow-inner relative overflow-hidden group touch-none cursor-crosshair">
+      <div className="flex-grow w-full min-h-[300px] bg-[#faf6f0] border-2 border-[#eae4d5] rounded-3xl shadow-inner relative overflow-hidden group touch-none cursor-crosshair">
         
         {/* Subtle texture lines inside the active canvas area */}
         <div className="absolute inset-0 bg-[radial-gradient(#d5cebe_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
@@ -264,7 +264,7 @@ export default function SketchCanvas({ onSaveSnapshot, savedDrawingUrl }: Sketch
 
         {/* Float overlay saved indicator */}
         {isSaved && (
-          <div className="absolute top-3 right-3 bg-emerald-700/95 text-stone-100 text-xs font-serif font-medium px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 shadow-md">
+          <div className="absolute top-3 right-3 bg-emerald-700/95 text-stone-100 text-xs font-serif font-medium px-2.5 py-1.5 rounded-xl flex items-center gap-1.5 shadow-md">
             <Check className="w-3.5 h-3.5" />
             <span>Sketch captured!</span>
           </div>
@@ -272,7 +272,7 @@ export default function SketchCanvas({ onSaveSnapshot, savedDrawingUrl }: Sketch
       </div>
 
       {/* Toolbar Area Styled cleanly like a classic desk drawer tray */}
-      <div className="bg-[#f5ebd6] p-3 rounded-xl border border-[#eae0ca] flex flex-col gap-3 shadow-sm select-none">
+      <div className="bg-[#fbf9f4] p-4 rounded-3xl border border-[#CBD5E1] flex flex-col gap-3 shadow-sm select-none">
         
         <div className="flex flex-wrap items-center justify-between gap-3">
           
@@ -300,12 +300,12 @@ export default function SketchCanvas({ onSaveSnapshot, savedDrawingUrl }: Sketch
           </div>
 
           {/* Tools Toggle (Pen / Eraser) */}
-          <div className="flex items-center gap-1 bg-[#eae4d5]/60 p-1 rounded-lg border border-[#ded7c8]">
+          <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-xl border border-stone-200">
             <button
               onClick={() => setTool('pen')}
-              className={`p-1.5 rounded transition-all text-xs font-serif font-semibold cursor-pointer flex items-center gap-1 select-none ${
+              className={`p-1.5 rounded-lg transition-all text-xs font-serif font-semibold cursor-pointer flex items-center gap-1 select-none ${
                 tool === 'pen' 
-                  ? 'bg-stone-800 text-white shadow-sm' 
+                  ? 'bg-[#8daa91] text-white shadow-sm' 
                   : 'text-stone-600 hover:text-stone-800 hover:bg-stone-200/40'
               }`}
             >
@@ -314,9 +314,9 @@ export default function SketchCanvas({ onSaveSnapshot, savedDrawingUrl }: Sketch
             </button>
             <button
               onClick={() => setTool('eraser')}
-              className={`p-1.5 rounded transition-all text-xs font-serif font-semibold cursor-pointer flex items-center gap-1 select-none ${
+              className={`p-1.5 rounded-lg transition-all text-xs font-serif font-semibold cursor-pointer flex items-center gap-1 select-none ${
                 tool === 'eraser' 
-                  ? 'bg-stone-800 text-white shadow-sm' 
+                  ? 'bg-[#8daa91] text-white shadow-sm' 
                   : 'text-stone-600 hover:text-stone-800 hover:bg-stone-200/40'
               }`}
             >
@@ -338,10 +338,10 @@ export default function SketchCanvas({ onSaveSnapshot, savedDrawingUrl }: Sketch
                 <button
                   key={w.value}
                   onClick={() => setCurrentWidth(w.value)}
-                  className={`px-2.5 py-1 text-[10px] font-mono tracking-tighter rounded border transition-all cursor-pointer ${
+                  className={`px-2.5 py-1 text-[10px] font-mono tracking-tighter rounded-lg border transition-all cursor-pointer ${
                     currentWidth === w.value
-                      ? 'bg-stone-700 border-stone-800 text-white shadow-sm'
-                      : 'border-stone-300 text-stone-600 hover:bg-[#eae4d5]/50'
+                      ? 'bg-[#8daa91] border-[#8daa91] text-white shadow-sm'
+                      : 'border-stone-300 text-stone-600 hover:bg-stone-100'
                   }`}
                 >
                   {w.name}
@@ -355,10 +355,10 @@ export default function SketchCanvas({ onSaveSnapshot, savedDrawingUrl }: Sketch
             <button
               onClick={handleUndo}
               disabled={history.length <= 1}
-              className={`p-1.5 rounded border border-stone-300 bg-[#fbf7ee] transition-all cursor-pointer ${
+              className={`p-1.5 rounded-lg border border-stone-300 bg-white transition-all cursor-pointer ${
                 history.length <= 1 
                   ? 'opacity-45 cursor-not-allowed text-stone-400' 
-                  : 'text-stone-700 hover:bg-[#eae4d5]/40 hover:text-stone-900 active:scale-95'
+                  : 'text-stone-700 hover:bg-stone-100 hover:text-stone-900 active:scale-95'
               }`}
               title="Undo Sketch Line"
             >
@@ -367,7 +367,7 @@ export default function SketchCanvas({ onSaveSnapshot, savedDrawingUrl }: Sketch
 
             <button
               onClick={handleClear}
-              className="p-1.5 rounded border border-stone-300 bg-[#fbf7ee] text-stone-700 hover:bg-red-50 hover:text-red-700 active:scale-95 transition-all cursor-pointer"
+              className="p-1.5 rounded-lg border border-stone-300 bg-white text-stone-700 hover:bg-red-50 hover:text-red-700 active:scale-95 transition-all cursor-pointer"
               title="Clear Notebook Sheet"
             >
               <Trash2 className="w-3.5 h-3.5" />
@@ -375,7 +375,7 @@ export default function SketchCanvas({ onSaveSnapshot, savedDrawingUrl }: Sketch
 
             <button
               onClick={handleCapture}
-              className="px-4 py-1.5 rounded-lg bg-amber-800 hover:bg-amber-900 text-stone-100 text-xs font-serif font-bold transition-all shadow-[2px_2px_0_rgba(18,12,8,0.25)] hover:shadow-none translate-y-[-1px] active:translate-y-0 cursor-pointer flex items-center gap-1.5 select-none"
+              className="px-4 py-1.5 rounded-xl bg-[#8daa91] hover:bg-[#7ba180] text-white text-xs font-serif font-bold transition-all shadow-[2px_2px_0_rgba(141,170,145,0.25)] hover:shadow-none translate-y-[-1px] active:translate-y-0 cursor-pointer flex items-center gap-1.5 select-none"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Capture Drawing</span>

@@ -329,9 +329,9 @@ export async function deleteUserAccount(userId: string): Promise<void> {
     const q = query(collection(db, 'auth_users'), where('id', '==', userId));
     const snap = await safeGetDocs(q, 'auth_users');
     if (snap && !snap.empty) {
-      snap.forEach(async (docSnap) => {
+      for (const docSnap of snap.docs) {
         await safeDeleteDoc(docSnap.ref, `auth_users/${docSnap.id}`);
-      });
+      }
     }
   } catch (err) {
     console.warn("Failed to delete fallback auth_users doc:", err);

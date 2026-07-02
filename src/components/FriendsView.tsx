@@ -149,7 +149,7 @@ export default function FriendsView({ currentUser }: FriendsViewProps) {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-[#64748B] font-serif italic">
-        <Users className="w-8 h-8 text-[#8E94F2] animate-spin mb-2" />
+        <Users className="w-8 h-8 text-[#8daa91] animate-spin mb-2" />
         <span>Summoning your companion artists...</span>
       </div>
     );
@@ -166,19 +166,19 @@ export default function FriendsView({ currentUser }: FriendsViewProps) {
         </div>
 
         {/* Sub tabs inside page */}
-        <div className="flex bg-[#F0F4F8] p-1 rounded-lg border border-[#CBD5E1] self-start sm:self-auto">
+        <div className="flex bg-[#fbf9f4] p-1 rounded-xl border border-[#CBD5E1] self-start sm:self-auto">
           <button
             onClick={() => setActiveSubTab('circle')}
-            className={`px-3 py-1.5 rounded text-2xs font-serif font-bold transition-all cursor-pointer ${
-              activeSubTab === 'circle' ? 'bg-[#8E94F2] text-white shadow-xs' : 'text-[#64748B] hover:text-[#2D3748]'
+            className={`px-3 py-1.5 rounded-lg text-2xs font-serif font-bold transition-all cursor-pointer ${
+              activeSubTab === 'circle' ? 'bg-[#8daa91] text-white shadow-xs' : 'text-[#64748B] hover:text-[#2D3748]'
             }`}
           >
             My Circle ({friends.length})
           </button>
           <button
             onClick={() => setActiveSubTab('search')}
-            className={`px-3 py-1.5 rounded text-2xs font-serif font-bold transition-all cursor-pointer ${
-              activeSubTab === 'search' ? 'bg-[#8E94F2] text-white shadow-xs' : 'text-[#64748B] hover:text-[#2D3748]'
+            className={`px-3 py-1.5 rounded-lg text-2xs font-serif font-bold transition-all cursor-pointer ${
+              activeSubTab === 'search' ? 'bg-[#8daa91] text-white shadow-xs' : 'text-[#64748B] hover:text-[#2D3748]'
             }`}
           >
             Find Artists
@@ -196,13 +196,13 @@ export default function FriendsView({ currentUser }: FriendsViewProps) {
               <h4 className="font-serif text-sm font-black text-[#2D3748]">Companions in Circle</h4>
               
               {friends.length === 0 ? (
-                <div className="py-12 border border-dashed border-[#CBD5E1] rounded-xl bg-[#F8FAFC]/60 text-center text-[#64748B] font-serif italic px-6">
+                <div className="py-12 border border-dashed border-[#CBD5E1] rounded-3xl bg-[#fbf9f4] text-center text-[#64748B] font-serif italic px-6">
                   <span>No companions in your circle yet. Search and invite artists to share sketches and comment!</span>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-h-[460px] overflow-y-auto no-scrollbar pr-1">
                   {friends.map((friend) => (
-                    <div key={friend.id} className="bg-white border border-[#CBD5E1] p-3.5 rounded-xl shadow-xs flex items-center justify-between gap-3 relative hover:border-[#8E94F2]/60 transition-colors">
+                    <div key={friend.id} className="bg-white border border-[#CBD5E1] p-3.5 rounded-3xl shadow-xs flex items-center justify-between gap-3 relative hover:border-[#8daa91]/60 transition-colors">
                       <div className="flex items-center gap-2.5">
                         <div className="w-10 h-10 rounded-full bg-[#E1E8F0] border border-[#CBD5E1]/40 overflow-hidden flex-shrink-0 flex items-center justify-center font-bold font-serif shadow-xs">
                           {friend.avatarUrl ? (
@@ -230,18 +230,18 @@ export default function FriendsView({ currentUser }: FriendsViewProps) {
               )}
             </div>
 
-            {/* RIGHT SIDE: Pending Requests received */}
+            {/* RIGHT SIDE: Companion List */}
             <div className="md:col-span-5 space-y-4">
               <h4 className="font-serif text-sm font-black text-[#2D3748]">Sealed Invitations</h4>
               
               {pendingSenders.length === 0 ? (
-                <div className="p-4 border border-dashed border-[#CBD5E1]/80 rounded-xl text-center text-[#64748B] font-serif italic bg-[#F8FAFC]/40 text-2xs">
+                <div className="p-4 border border-dashed border-[#CBD5E1]/80 rounded-3xl text-center text-[#64748B] font-serif italic bg-[#fbf9f4] text-2xs">
                   <span>No pending invitations at your front desk.</span>
                 </div>
               ) : (
                 <div className="space-y-3">
                   {pendingSenders.map(({ friendshipId, sender }) => (
-                    <div key={friendshipId} className="bg-[#F8FAFC] border border-[#CBD5E1] p-4 rounded-xl flex items-center justify-between gap-3 shadow-xs">
+                    <div key={friendshipId} className="bg-[#fbf9f4] border border-[#CBD5E1] p-4 rounded-3xl flex items-center justify-between gap-3 shadow-xs">
                       <div className="flex items-center gap-2.5">
                         <div className="w-9 h-9 rounded-full bg-[#E1E8F0] border border-[#CBD5E1]/30 overflow-hidden flex-shrink-0">
                           {sender.avatarUrl ? (
@@ -259,13 +259,13 @@ export default function FriendsView({ currentUser }: FriendsViewProps) {
                       <div className="flex items-center gap-1.5 flex-shrink-0">
                         <button
                           onClick={() => handleAcceptRequest(friendshipId)}
-                          className="px-2.5 py-1.5 bg-[#8E94F2] hover:bg-[#8E94F2]/90 text-white rounded-lg text-3xs font-serif font-bold shadow-xs transition-colors cursor-pointer"
+                          className="px-2.5 py-1.5 bg-[#8daa91] hover:bg-[#7ba180] text-white rounded-xl text-3xs font-serif font-bold shadow-xs transition-colors cursor-pointer"
                         >
                           Accept
                         </button>
                         <button
                           onClick={() => handleDeclineRequest(friendshipId)}
-                          className="px-2.5 py-1.5 bg-white hover:bg-[#F8FAFC] text-[#2D3748] rounded-lg text-3xs font-serif font-bold border border-[#CBD5E1] transition-colors cursor-pointer"
+                          className="px-2.5 py-1.5 bg-white hover:bg-stone-50 text-[#2D3748] rounded-xl text-3xs font-serif font-bold border border-[#CBD5E1] transition-colors cursor-pointer"
                         >
                           Decline
                         </button>
@@ -289,12 +289,12 @@ export default function FriendsView({ currentUser }: FriendsViewProps) {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search artists by username or display name..."
-                className="flex-grow px-3 py-2 text-xs font-serif bg-white border border-[#CBD5E1] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#8E94F2] focus:border-[#8E94F2] text-[#2D3748]"
+                className="flex-grow px-3 py-2 text-xs font-serif bg-white border border-[#CBD5E1] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#8daa91] focus:border-[#8daa91] text-[#2D3748]"
                 required
               />
               <button
                 type="submit"
-                className="px-5 py-2 bg-[#8E94F2] hover:bg-[#8E94F2]/90 text-white rounded-lg text-xs font-serif font-bold cursor-pointer shadow-xs"
+                className="px-5 py-2 bg-[#8daa91] hover:bg-[#7ba180] text-white rounded-xl text-xs font-serif font-bold cursor-pointer shadow-xs"
               >
                 Search
               </button>
@@ -321,7 +321,7 @@ export default function FriendsView({ currentUser }: FriendsViewProps) {
                       const { status } = getFriendshipStatus(profile.id);
 
                       return (
-                        <div key={profile.id} className="bg-white border border-[#CBD5E1] p-4 rounded-xl shadow-xs flex flex-col items-center text-center justify-between gap-4 hover:border-[#8E94F2]/60 transition-colors">
+                        <div key={profile.id} className="bg-white border border-[#CBD5E1] p-4 rounded-3xl shadow-xs flex flex-col items-center text-center justify-between gap-4 hover:border-[#8daa91]/60 transition-colors">
                           <div className="space-y-2 flex flex-col items-center">
                             <div className="w-14 h-14 rounded-full bg-[#E1E8F0] border border-[#CBD5E1]/50 overflow-hidden shadow-xs flex items-center justify-center font-bold font-serif text-base">
                               {profile.avatarUrl ? (
@@ -345,7 +345,7 @@ export default function FriendsView({ currentUser }: FriendsViewProps) {
                             {status === 'none' && (
                               <button
                                 onClick={() => handleSendRequest(profile.id)}
-                                className="w-full py-1.5 bg-[#8E94F2] hover:bg-[#8E94F2]/90 text-white rounded-lg text-2xs font-serif font-bold flex items-center justify-center gap-1 cursor-pointer select-none shadow-[1.5px_1.5px_0_rgba(142,148,242,0.15)]"
+                                className="w-full py-1.5 bg-[#8daa91] hover:bg-[#7ba180] text-white rounded-xl text-2xs font-serif font-bold flex items-center justify-center gap-1 cursor-pointer select-none shadow-[1.5px_1.5px_0_rgba(141,170,145,0.15)]"
                               >
                                 <UserPlus className="w-3.5 h-3.5" />
                                 <span>Invite to Circle</span>
@@ -358,13 +358,13 @@ export default function FriendsView({ currentUser }: FriendsViewProps) {
                               </div>
                             )}
                             {status === 'pending_received' && (
-                              <div className="text-[#F09A9D] text-2xs font-serif font-bold flex items-center justify-center gap-1 py-1 animate-bounce">
+                              <div className="text-[#ee98ad] text-2xs font-serif font-bold flex items-center justify-center gap-1 py-1 animate-bounce">
                                 <Sparkles className="w-3.5 h-3.5" />
                                 <span>Invited You!</span>
                               </div>
                             )}
                             {status === 'accepted' && (
-                              <div className="text-[#8E94F2] text-2xs font-serif font-bold flex items-center justify-center gap-1 py-1">
+                              <div className="text-[#4e6a53] text-2xs font-serif font-bold flex items-center justify-center gap-1 py-1">
                                 <UserCheck className="w-3.5 h-3.5" />
                                 <span>Companion Artist</span>
                               </div>

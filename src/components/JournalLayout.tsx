@@ -36,12 +36,12 @@ export default function JournalLayout({
   }
 
   return (
-    <div className="h-[100dvh] w-screen bg-[#F0F4F8] text-[#2D3748] p-1.5 sm:p-6 md:p-8 font-sans flex items-center justify-center relative overflow-hidden select-none">
+    <div className="h-[100dvh] w-screen bg-[#fbf9f4] text-[#2D3748] p-1.5 sm:p-6 md:p-8 font-sans flex items-center justify-center relative overflow-hidden select-none">
       
       {/* Decorative desktop elements: gentle lilac, soft peach, and sage blobs */}
-      <div className="absolute top-8 left-12 w-32 h-32 bg-[#9097F3]/8 rounded-full filter blur-3xl pointer-events-none animate-pulse" />
-      <div className="absolute bottom-12 right-12 w-48 h-48 bg-[#EE98AD]/8 rounded-full filter blur-3xl pointer-events-none animate-pulse" />
-      <div className="absolute top-1/3 right-1/4 w-36 h-36 bg-[#88B69E]/8 rounded-full filter blur-3xl pointer-events-none" />
+      <div className="absolute top-8 left-12 w-32 h-32 bg-[#9097F3]/5 rounded-full filter blur-3xl pointer-events-none animate-pulse" />
+      <div className="absolute bottom-12 right-12 w-48 h-48 bg-[#EE98AD]/5 rounded-full filter blur-3xl pointer-events-none animate-pulse" />
+      <div className="absolute top-1/3 right-1/4 w-36 h-36 bg-[#8daa91]/8 rounded-full filter blur-3xl pointer-events-none" />
 
       {/* Tiny physical details in background */}
       <div className="absolute top-4 left-4 text-[#64748B] font-mono text-[10px] tracking-widest hidden lg:block opacity-40">
@@ -49,27 +49,27 @@ export default function JournalLayout({
       </div>
 
       {/* Main Leather/Cardboard Notebook Binder Wrapper in warm organic style */}
-      <div className="w-full max-w-5xl h-full md:h-[82vh] bg-[#E1E8F0] rounded-2xl shadow-[0_20px_50px_rgba(51,65,85,0.12),_inset_0_1px_3px_rgba(255,255,255,0.4),_inset_0_-1px_10px_rgba(0,0,0,0.05)] p-1.5 sm:p-3 relative flex flex-col md:flex-row border border-[#CBD5E1]">
+      <div className="w-full max-w-5xl h-full md:h-[82vh] bg-[#8daa91] rounded-3xl shadow-[0_20px_50px_rgba(141,170,145,0.15),_inset_0_1px_3px_rgba(255,255,255,0.4),_inset_0_-1px_10px_rgba(0,0,0,0.05)] p-1.5 sm:p-3 relative flex flex-col md:flex-row border border-[#8daa91]/40">
         
         {/* Binder texture stitches around border */}
-        <div className="absolute inset-2 border border-dashed border-[#64748B]/30 rounded-xl pointer-events-none opacity-50" />
+        <div className="absolute inset-2 border border-dashed border-white/20 rounded-2xl pointer-events-none opacity-50" />
 
         {/* Sidebar/Navigation Bookmarks */}
-        <div className="w-full md:w-56 flex flex-row md:flex-col justify-between items-center md:items-stretch py-2 px-3 md:px-2 md:py-6 bg-[#E1E8F0]/40 rounded-xl md:rounded-r-none relative z-10 md:mr-1 border-b md:border-b-0 md:border-r border-[#CBD5E1]">
+        <div className="w-full md:w-56 flex flex-row md:flex-col justify-between items-center md:items-stretch py-2 px-3 md:px-2 md:py-6 bg-white/15 rounded-2xl md:rounded-r-none relative z-10 md:mr-1 border-b md:border-b-0 md:border-r border-white/10">
           
           {/* Logo Brand area (Moss Green aesthetic) */}
           <div className="hidden md:flex flex-col items-center mb-8 px-2">
-            <div className="w-12 h-12 bg-[#88B69E] rounded-full flex items-center justify-center shadow-md border border-[#CBD5E1] relative group rotate-[-4deg] ring-2 ring-[#CBD5E1] ring-offset-2 ring-offset-[#E1E8F0]">
-              <span className="font-serif text-[#F0F4F8] font-black text-lg select-none">i</span>
+            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md border border-[#8daa91]/20 relative group rotate-[-4deg] ring-2 ring-white/20 ring-offset-2 ring-offset-[#8daa91]">
+              <span className="font-serif text-[#8daa91] font-black text-lg select-none">i</span>
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#EE98AD] rounded-full animate-pulse" />
             </div>
-            <h1 className="mt-3 text-[#2D3748] font-serif font-bold text-lg tracking-wider">InkLink</h1>
-            <p className="text-[#64748B] font-mono text-[9px] tracking-widest uppercase mt-0.5">Social Challenge</p>
+            <h1 className="mt-3 text-white font-serif font-bold text-lg tracking-wider">InkLink</h1>
+            <p className="text-white/70 font-mono text-[9px] tracking-widest uppercase mt-0.5">Social Challenge</p>
           </div>
 
           {/* User badge preview */}
           {user && (
-            <div className="hidden md:flex items-center gap-2.5 px-3 py-2 bg-[#F0F4F8]/80 border border-[#CBD5E1] rounded-lg mb-6 mx-1 shadow-sm">
+            <div className="hidden md:flex items-center gap-2.5 px-3 py-2 bg-white/20 border border-white/10 rounded-xl mb-6 mx-1 shadow-sm">
               <div className="w-9 h-9 rounded-full bg-white border border-[#CBD5E1] overflow-hidden shadow-xs flex-shrink-0 flex items-center justify-center font-serif text-[#2D3748] font-bold">
                 {user.avatarUrl ? (
                   <img src={user.avatarUrl} alt="avatar" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
@@ -78,8 +78,8 @@ export default function JournalLayout({
                 )}
               </div>
               <div className="overflow-hidden">
-                <p className="text-[#2D3748] font-bold text-xs truncate leading-none mb-1">{user.displayName}</p>
-                <p className="text-[#EE98AD] text-[10px] font-mono font-bold leading-none">🔥 {user.currentStreak} day streak</p>
+                <p className="text-white font-bold text-xs truncate leading-none mb-1">{user.displayName}</p>
+                <p className="text-white/90 text-[10px] font-mono font-bold leading-none">🔥 {user.currentStreak} day streak</p>
               </div>
             </div>
           )}
@@ -94,16 +94,16 @@ export default function JournalLayout({
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   style={{
-                    color: isActive ? tab.color : '#64748B',
+                    color: isActive ? '#4e6a53' : 'rgba(255, 255, 255, 0.8)',
                   }}
-                  className={`flex items-center md:gap-3 px-2 sm:px-3 py-2 md:py-2.5 rounded-lg text-xs font-serif font-medium transition-all duration-300 relative select-none cursor-pointer flex-shrink-0 ${
+                  className={`flex items-center md:gap-3 px-2 sm:px-3 py-2 md:py-2.5 rounded-xl text-xs font-serif font-medium transition-all duration-300 relative select-none cursor-pointer flex-shrink-0 ${
                     isActive
-                       ? 'bg-[#F0F4F8] shadow-xs border border-[#CBD5E1] translate-y-[-1px] md:translate-x-[4px]'
-                       : 'hover:bg-[#F0F4F8]/40'
+                       ? 'bg-[#fbf9f4] shadow-sm border border-white/20 translate-y-[-1px] md:translate-x-[4px]'
+                       : 'hover:bg-white/10'
                   }`}
                   id={`tab-btn-${tab.id}`}
                 >
-                  <IconComp className="w-4 h-4" style={{ color: isActive ? tab.color : '#64748B' }} />
+                  <IconComp className="w-4 h-4" style={{ color: isActive ? '#8daa91' : 'rgba(255, 255, 255, 0.8)' }} />
                   <span className="hidden md:block">{tab.label}</span>
                   
                   {tab.badge !== undefined && tab.badge > 0 && (
@@ -114,7 +114,7 @@ export default function JournalLayout({
                   
                   {/* Visual pointer clip for active tab on desktop */}
                   {isActive && (
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-6 rounded-l-md hidden md:block" style={{ backgroundColor: tab.color }} />
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-6 rounded-l-md hidden md:block" style={{ backgroundColor: '#8daa91' }} />
                   )}
                 </button>
               );
@@ -123,11 +123,11 @@ export default function JournalLayout({
             {user && (
               <button
                 onClick={onLogout}
-                className="flex items-center md:hidden gap-3 px-2 sm:px-3 py-2 rounded-lg text-xs font-serif font-medium transition-all duration-300 relative select-none cursor-pointer flex-shrink-0 text-[#64748B] hover:text-[#EE98AD] hover:bg-[#EE98AD]/10"
+                className="flex items-center md:hidden gap-3 px-2 sm:px-3 py-2 rounded-xl text-xs font-serif font-medium transition-all duration-300 relative select-none cursor-pointer flex-shrink-0 text-white/80 hover:text-white hover:bg-white/10"
                 title="Sign Out"
                 id="tab-btn-logout"
               >
-                <LogOut className="w-4 h-4 text-[#64748B]" />
+                <LogOut className="w-4 h-4 text-white/80" />
                 <span className="hidden md:block">Sign Out</span>
               </button>
             )}
@@ -137,7 +137,7 @@ export default function JournalLayout({
           {user && (
             <button
               onClick={onLogout}
-              className="hidden md:block mt-auto text-[#64748B] hover:text-[#EE98AD] text-2xs font-mono tracking-widest uppercase py-1.5 px-3 border border-[#CBD5E1] hover:border-[#EE98AD]/40 rounded transition-all cursor-pointer text-center mx-1 select-none"
+              className="hidden md:block mt-auto text-white/80 hover:text-white text-2xs font-mono tracking-widest uppercase py-1.5 px-3 border border-white/20 hover:border-white/50 rounded-xl transition-all cursor-pointer text-center mx-1 select-none"
             >
               Sign Out
             </button>
@@ -145,16 +145,16 @@ export default function JournalLayout({
         </div>
 
         {/* Paper Page of the Sketchbook */}
-        <div className="flex-grow bg-white rounded-xl shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),_0_10px_20px_rgba(0,0,0,0.06)] relative overflow-hidden flex flex-col border border-[#CBD5E1]">
+        <div className="flex-grow bg-white rounded-3xl shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),_0_10px_20px_rgba(0,0,0,0.06)] relative overflow-hidden flex flex-col border border-[#CBD5E1]">
           
           {/* Notebook Spiral Binding visual accent (Metal loop rings overlay on left margin of paper page on desktop) */}
           <div className="absolute top-0 bottom-0 left-0 w-4 bg-gradient-to-r from-slate-200/40 via-slate-300/10 to-transparent pointer-events-none border-r border-[#CBD5E1]/30 z-20 hidden md:block" />
           
           {/* Subtle paper texture overlays */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#F09A9D]/2 via-transparent to-transparent pointer-events-none z-10" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#8daa91]/2 via-transparent to-transparent pointer-events-none z-10" />
           
           {/* Faint dot-grid paper background */}
-          <div className="absolute inset-0 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:16px_16px] opacity-25 pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:16px_16px] opacity-20 pointer-events-none" />
 
           {/* Page Content area */}
           <main className="flex-grow overflow-y-auto no-scrollbar relative p-3 sm:p-6 md:p-8 z-10">
@@ -173,9 +173,9 @@ export default function JournalLayout({
           </main>
           
           {/* Quick status bar at the bottom page margins */}
-          <footer className="min-h-[24px] h-auto py-1 sm:py-0 sm:h-6 px-3 sm:px-4 bg-[#F8FAFC] border-t border-[#E2E8F0] flex flex-col sm:flex-row sm:items-center justify-between text-[9px] sm:text-[10px] text-[#64748B] font-mono flex-shrink-0 gap-1 sm:gap-4">
+          <footer className="min-h-[24px] h-auto py-1 sm:py-0 sm:h-6 px-3 sm:px-4 bg-[#fbf9f4] border-t border-[#E2E8F0] flex flex-col sm:flex-row sm:items-center justify-between text-[9px] sm:text-[10px] text-[#64748B] font-mono flex-shrink-0 gap-1 sm:gap-4">
             <div className="flex items-center gap-1 justify-center sm:justify-start">
-              <span className="w-1.5 h-1.5 bg-[#8E94F2] rounded-full inline-block animate-pulse" />
+              <span className="w-1.5 h-1.5 bg-[#8daa91] rounded-full inline-block animate-pulse" />
               <span>Realtime Connected</span>
             </div>
             <div className="text-center sm:text-right">

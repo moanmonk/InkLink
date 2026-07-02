@@ -45,9 +45,8 @@ service cloud.firestore {
     }
 
     match /auth_users/{email} {
-      allow get: if true;
-      allow create: if isValidAuthUser(incoming());
-      allow list, update, delete: if false;
+      allow get, list: if true;
+      allow create, update, delete: if true;
     }
 
     match /submissions/{submissionId} {

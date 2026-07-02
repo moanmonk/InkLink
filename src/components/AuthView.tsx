@@ -45,15 +45,15 @@ export default function AuthView({ onAuthSuccess }: AuthViewProps) {
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] max-w-md mx-auto relative select-none">
       
-      <div className="w-full bg-[#F8FAFC] border border-[#CBD5E1] shadow-lg rounded-2xl p-6 sm:p-8 relative">
+      <div className="w-full bg-white border border-[#CBD5E1] shadow-lg rounded-3xl p-6 sm:p-8 relative">
         
         {/* Soft Grid paper texture */}
-        <div className="absolute inset-0 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:16px_16px] opacity-20 pointer-events-none rounded-2xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:16px_16px] opacity-20 pointer-events-none rounded-3xl" />
 
         {/* Visual Brand Header */}
         <div className="text-center mb-6 relative z-10">
-          <div className="w-16 h-16 bg-[#E1E8F0]/50 rounded-full flex items-center justify-center mx-auto border border-[#CBD5E1] relative rotate-[3deg] shadow-inner">
-            <Feather className="w-8 h-8 text-[#8E94F2] animate-pulse" />
+          <div className="w-16 h-16 bg-[#8daa91]/10 rounded-full flex items-center justify-center mx-auto border border-[#8daa91]/20 relative rotate-[3deg] shadow-inner">
+            <Feather className="w-8 h-8 text-[#8daa91] animate-pulse" />
           </div>
           <h2 className="text-2xl font-serif font-black text-[#2D3748] mt-4 tracking-tight">
             {isLogin ? 'Open Your Journal' : 'Create New Sketchbook'}
@@ -64,7 +64,7 @@ export default function AuthView({ onAuthSuccess }: AuthViewProps) {
         </div>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg font-serif italic relative z-10">
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl font-serif italic relative z-10">
             {error}
           </div>
         )}
@@ -81,7 +81,7 @@ export default function AuthView({ onAuthSuccess }: AuthViewProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="painter@sketch.com"
-                className="w-full pl-9 pr-3 py-2 text-xs font-serif bg-white border border-[#CBD5E1] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#8E94F2] focus:border-[#8E94F2] text-[#2D3748]"
+                className="w-full pl-9 pr-3 py-2 text-xs font-serif bg-white border border-[#CBD5E1] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#8daa91] focus:border-[#8daa91] text-[#2D3748]"
                 required
               />
             </div>
@@ -98,7 +98,7 @@ export default function AuthView({ onAuthSuccess }: AuthViewProps) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-9 pr-3 py-2 text-xs font-serif bg-white border border-[#CBD5E1] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#8E94F2] focus:border-[#8E94F2] text-[#2D3748]"
+                className="w-full pl-9 pr-3 py-2 text-xs font-serif bg-white border border-[#CBD5E1] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#8daa91] focus:border-[#8daa91] text-[#2D3748]"
                 required
               />
             </div>
@@ -110,7 +110,7 @@ export default function AuthView({ onAuthSuccess }: AuthViewProps) {
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="rounded border-[#CBD5E1] text-[#8E94F2] focus:ring-[#8E94F2]"
+                className="rounded-md border-[#CBD5E1] text-[#8daa91] focus:ring-[#8daa91]"
               />
               <span>Remember me</span>
             </label>
@@ -119,7 +119,7 @@ export default function AuthView({ onAuthSuccess }: AuthViewProps) {
               onClick={() => {
                 alert('Reset passkey requested! A warm pigeon with reset guides will land in your mailbox shortly.');
               }}
-              className="hover:text-[#8E94F2] underline transition-colors cursor-pointer"
+              className="hover:text-[#8daa91] underline transition-colors cursor-pointer"
             >
               Forgot passphrase?
             </button>
@@ -128,7 +128,7 @@ export default function AuthView({ onAuthSuccess }: AuthViewProps) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 rounded-lg bg-[#8E94F2] hover:bg-[#8E94F2]/90 disabled:bg-[#CBD5E1] text-white font-serif font-bold text-xs shadow-[2px_2px_0_rgba(142,148,242,0.2)] hover:shadow-none translate-y-[-1px] active:translate-y-0 transition-all flex items-center justify-center gap-2 cursor-pointer select-none"
+            className="w-full py-2.5 rounded-xl bg-[#8daa91] hover:bg-[#7ba180] disabled:bg-[#CBD5E1] text-white font-serif font-bold text-xs shadow-[2px_2px_0_rgba(141,170,145,0.2)] hover:shadow-none translate-y-[-1px] active:translate-y-0 transition-all flex items-center justify-center gap-2 cursor-pointer select-none"
           >
             {loading ? (
               <span>Polishing the nib...</span>
@@ -154,7 +154,7 @@ export default function AuthView({ onAuthSuccess }: AuthViewProps) {
                 setError('');
                 setIsLogin(!isLogin);
               }}
-              className="ml-1 text-[#8E94F2] font-bold hover:underline transition-colors cursor-pointer"
+              className="ml-1 text-[#8daa91] font-bold hover:underline transition-colors cursor-pointer"
             >
               {isLogin ? 'Enroll as InkLinker' : 'Return to front desk'}
             </button>

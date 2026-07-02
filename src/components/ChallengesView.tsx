@@ -152,7 +152,7 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-[#64748B] font-serif italic">
-        <Award className="w-8 h-8 text-[#8E94F2] animate-bounce mb-2" />
+        <Award className="w-8 h-8 text-[#8daa91] animate-bounce mb-2" />
         <span>Sorting through active duels...</span>
       </div>
     );
@@ -171,13 +171,13 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
         {hasCompletedToday ? (
           <button
             onClick={() => setShowCreateModal(true)}
-            className="px-4 py-2 bg-[#8E94F2] hover:bg-[#8E94F2]/90 text-white text-xs font-serif font-bold rounded-lg shadow-[2px_2px_0_rgba(142,148,242,0.15)] hover:shadow-none translate-y-[-1px] active:translate-y-0 transition-all cursor-pointer flex items-center gap-1.5"
+            className="px-4 py-2 bg-[#8daa91] hover:bg-[#7ba180] text-white text-xs font-serif font-bold rounded-xl shadow-[2px_2px_0_rgba(141,170,145,0.15)] hover:shadow-none translate-y-[-1px] active:translate-y-0 transition-all cursor-pointer flex items-center gap-1.5"
           >
             <Plus className="w-4 h-4" />
             <span>Create Duel</span>
           </button>
         ) : (
-          <div className="bg-[#F0F4F8] text-[#64748B] border border-[#CBD5E1] text-2xs font-serif italic p-1.5 px-3 rounded-lg flex items-center gap-1.5">
+          <div className="bg-[#fbf9f4] text-[#64748B] border border-[#CBD5E1] text-2xs font-serif italic p-1.5 px-3 rounded-xl flex items-center gap-1.5">
             <Lock className="w-3.5 h-3.5 text-[#64748B]/60" />
             <span>Locked until today's sketch is bound</span>
           </div>
@@ -191,7 +191,7 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
           <h4 className="font-serif text-sm font-black text-[#2D3748]">Active Duels</h4>
           
           {challenges.length === 0 ? (
-            <div className="py-12 border border-dashed border-[#CBD5E1] rounded-xl bg-white text-center text-[#64748B] font-serif italic px-6">
+            <div className="py-12 border border-dashed border-[#CBD5E1] rounded-3xl bg-white text-center text-[#64748B] font-serif italic px-6">
               <span>No active private challenges yet. Complete today's daily ritual to challenge your friends!</span>
             </div>
           ) : (
@@ -204,8 +204,8 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
                   <div
                     key={c.id}
                     onClick={() => handleOpenChallengeDetails(c.id)}
-                    className={`bg-white border p-4 rounded-xl cursor-pointer shadow-xs transition-all relative ${
-                      isViewing ? 'border-[#8E94F2] bg-[#8E94F2]/5 ring-1 ring-[#8E94F2]/10' : 'border-[#CBD5E1] hover:border-[#8E94F2]/60'
+                    className={`bg-white border p-4 rounded-3xl cursor-pointer shadow-xs transition-all relative ${
+                      isViewing ? 'border-[#8daa91] bg-[#8daa91]/5 ring-1 ring-[#8daa91]/10' : 'border-[#CBD5E1] hover:border-[#8daa91]/60'
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -236,7 +236,7 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
         {/* RIGHT COLUMN: ACTIVE CHALLENGE SUBMISSIONS / DRAWING PANEL */}
         <div className="md:col-span-6">
           {activeChallengeId ? (
-            <div className="bg-[#F8FAFC] border border-[#CBD5E1] p-5 rounded-2xl shadow-xs space-y-4">
+            <div className="bg-white border border-[#CBD5E1] p-5 rounded-3xl shadow-xs space-y-4">
               
               {/* Challenge Details header */}
               {(() => {
@@ -247,7 +247,7 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
                 return (
                   <div className="space-y-4">
                     <div className="border-b border-[#CBD5E1] pb-3">
-                      <span className="text-[10px] font-mono uppercase text-[#8E94F2] tracking-widest font-bold">Active Duel Room</span>
+                      <span className="text-[10px] font-mono uppercase text-[#4e6a53] tracking-widest font-bold">Active Duel Room</span>
                       <h4 className="font-serif text-base font-black text-[#2D3748] leading-tight mt-1">
                         "{c.promptText}"
                       </h4>
@@ -262,8 +262,8 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
                       ) : (
                         <div className="grid grid-cols-2 gap-3">
                           {challengeSubs.map((s) => (
-                            <div key={s.id} className="bg-white border border-[#CBD5E1] p-2 rounded-xl text-center space-y-1">
-                              <div className="aspect-square bg-[#F8FAFC] border border-[#CBD5E1]/60 rounded overflow-hidden">
+                            <div key={s.id} className="bg-white border border-[#CBD5E1] p-2 rounded-2xl text-center space-y-1">
+                              <div className="aspect-square bg-[#F8FAFC] border border-[#CBD5E1]/60 rounded-xl overflow-hidden">
                                 <img src={s.imageUrl} alt="sub" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                               </div>
                               <p className="text-[10px] font-serif font-bold text-[#2D3748] truncate">{s.userDisplayName}</p>
@@ -277,11 +277,11 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
                     {/* Submit Area for active challenge */}
                     <div className="border-t border-[#CBD5E1] pt-4">
                       {userAlreadySubmitted ? (
-                        <div className="bg-[#8E94F2]/10 border border-[#8E94F2]/50 text-[#8E94F2] p-3 rounded-xl flex items-center gap-2">
+                        <div className="bg-[#8daa91]/10 border border-[#8daa91]/50 text-[#4e6a53] p-3 rounded-2xl flex items-center gap-2">
                           <CheckCircle className="w-5 h-5 flex-shrink-0" />
                           <div className="leading-tight">
                             <p className="text-2xs font-serif font-bold">Your sketch has been entered!</p>
-                            <p className="text-[10px] text-[#8E94F2]/80 font-serif italic mt-0.5">Wait for your friends to submit their drafts.</p>
+                            <p className="text-[10px] text-[#4e6a53]/80 font-serif italic mt-0.5">Wait for your friends to submit their drafts.</p>
                           </div>
                         </div>
                       ) : showCanvasMode ? (
@@ -291,20 +291,20 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
                           />
  
                           {canvasDataUrl && (
-                            <div className="p-3 bg-[#8E94F2]/10 rounded-lg border border-[#8E94F2]/40 space-y-2">
-                              <p className="text-2xs text-[#8E94F2] font-serif italic">Duel draft captured! Add a caption below.</p>
+                            <div className="p-3 bg-[#8daa91]/10 rounded-2xl border border-[#8daa91]/40 space-y-2">
+                              <p className="text-2xs text-[#4e6a53] font-serif italic">Duel draft captured! Add a caption below.</p>
                               <div className="flex gap-2">
                                 <input
                                   type="text"
                                   value={challengeCaption}
                                   onChange={(e) => setChallengeCaption(e.target.value)}
                                   placeholder="Add an artist caption..."
-                                  className="flex-grow px-2 py-1.5 text-xs font-serif bg-white border border-[#CBD5E1] rounded focus:outline-none focus:border-[#8E94F2]"
+                                  className="flex-grow px-2.5 py-1.5 text-xs font-serif bg-white border border-[#CBD5E1] rounded-xl focus:outline-none focus:border-[#8daa91]"
                                 />
                                 <button
                                   onClick={handleChallengeSubmit}
                                   disabled={isSubmittingChallenge}
-                                  className="px-4 py-1.5 bg-[#8E94F2] text-white font-serif text-xs rounded hover:bg-[#8E94F2]/90 font-bold cursor-pointer shadow-xs"
+                                  className="px-4 py-1.5 bg-[#8daa91] hover:bg-[#7ba180] text-white font-serif text-xs rounded-xl cursor-pointer shadow-xs font-bold"
                                 >
                                   {isSubmittingChallenge ? 'Sending...' : 'Submit Entry'}
                                 </button>
@@ -315,7 +315,7 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
                       ) : (
                         <button
                           onClick={() => setShowCanvasMode(true)}
-                          className="w-full py-2.5 bg-[#8E94F2] hover:bg-[#8E94F2]/90 text-white text-xs font-serif font-bold rounded-xl flex items-center justify-center gap-1.5 shadow-[2px_2px_0_rgba(142,148,242,0.15)] hover:shadow-none translate-y-[-1px] active:translate-y-0 cursor-pointer"
+                          className="w-full py-2.5 bg-[#8daa91] hover:bg-[#7ba180] text-white text-xs font-serif font-bold rounded-xl flex items-center justify-center gap-1.5 shadow-[2px_2px_0_rgba(141,170,145,0.15)] hover:shadow-none translate-y-[-1px] active:translate-y-0 cursor-pointer"
                         >
                           <Feather className="w-4 h-4" />
                           <span>Enter Your Duel Sketch</span>
@@ -328,7 +328,7 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
  
             </div>
           ) : (
-            <div className="h-full flex items-center justify-center text-[#64748B] font-serif italic text-xs py-12 border border-dashed border-[#CBD5E1] rounded-2xl bg-[#F8FAFC]/60 p-6 text-center">
+            <div className="h-full flex items-center justify-center text-[#64748B] font-serif italic text-xs py-12 border border-dashed border-[#CBD5E1] rounded-3xl bg-[#fbf9f4] p-6 text-center">
               <span>Select an active duel from the left scroll list to review submissions and enter your drawing!</span>
             </div>
           )}
@@ -343,7 +343,7 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="w-full max-w-md bg-[#F0F4F8] border border-[#CBD5E1] rounded-2xl p-6 shadow-2xl relative z-10 space-y-4"
+            className="w-full max-w-md bg-white border border-[#CBD5E1] rounded-3xl p-6 shadow-2xl relative z-10 space-y-4"
           >
             <div className="border-b border-[#CBD5E1] pb-2">
               <h4 className="font-serif text-lg font-black text-[#2D3748]">Draft Private Challenge</h4>
@@ -360,7 +360,7 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
                   value={customPrompt}
                   onChange={(e) => setCustomPrompt(e.target.value)}
                   placeholder="e.g., A vintage teapot overgrown with deep sea coral."
-                  className="w-full px-3 py-2 text-xs font-serif bg-white border border-[#CBD5E1] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#8E94F2] focus:border-[#8E94F2] text-[#2D3748]"
+                  className="w-full px-3 py-2 text-xs font-serif bg-[#fbf9f4] border border-[#CBD5E1] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#8daa91] focus:border-[#8daa91] text-[#2D3748]"
                   required
                 />
               </div>
@@ -372,7 +372,7 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
                 <select
                   value={deadline}
                   onChange={(e) => setDeadline(e.target.value)}
-                  className="w-full px-3 py-2 text-xs font-serif bg-white border border-[#CBD5E1] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#8E94F2] focus:border-[#8E94F2] text-[#2D3748]"
+                  className="w-full px-3 py-2 text-xs font-serif bg-[#fbf9f4] border border-[#CBD5E1] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#8daa91] focus:border-[#8daa91] text-[#2D3748]"
                 >
                   <option value="12 Hours">12 Hours</option>
                   <option value="24 Hours">24 Hours</option>
@@ -389,7 +389,7 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
                 {friends.length === 0 ? (
                   <p className="text-2xs font-serif italic text-[#64748B] py-1.5">You have no companion artists. Connect with friends first!</p>
                 ) : (
-                  <div className="space-y-2 max-h-32 overflow-y-auto pr-1 border border-[#CBD5E1] rounded-lg p-2.5 bg-white">
+                  <div className="space-y-2 max-h-32 overflow-y-auto pr-1 border border-[#CBD5E1] rounded-xl p-2.5 bg-white">
                     {friends.map((friend) => {
                       const checked = selectedFriends.includes(friend.id);
                       return (
@@ -398,7 +398,7 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
                             type="checkbox"
                             checked={checked}
                             onChange={() => handleToggleFriendSelection(friend.id)}
-                            className="rounded border-[#CBD5E1] text-[#8E94F2] focus:ring-[#8E94F2]"
+                            className="rounded border-[#CBD5E1] text-[#8daa91] focus:ring-[#8daa91]"
                           />
                           <div className="w-5 h-5 rounded-full overflow-hidden bg-[#E1E8F0] border border-[#CBD5E1]/30 flex-shrink-0">
                             {friend.avatarUrl ? (
@@ -419,14 +419,14 @@ export default function ChallengesView({ user }: ChallengesViewProps) {
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="px-4 py-2 border border-[#CBD5E1] rounded-lg text-xs font-serif text-[#2D3748] hover:bg-[#F8FAFC]"
+                  className="px-4 py-2 border border-[#CBD5E1] rounded-xl text-xs font-serif text-[#2D3748] hover:bg-[#F8FAFC]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isCreating}
-                  className="px-5 py-2 bg-[#8E94F2] text-white rounded-lg text-xs font-serif font-bold hover:bg-[#8E94F2]/90 shadow-[2px_2px_0_rgba(142,148,242,0.15)] transition-all cursor-pointer"
+                  className="px-5 py-2 bg-[#8daa91] text-white rounded-xl text-xs font-serif font-bold hover:bg-[#7ba180] shadow-[2px_2px_0_rgba(141,170,145,0.25)] transition-all cursor-pointer"
                 >
                   {isCreating ? 'Dispatching...' : 'Launch Duel'}
                 </button>

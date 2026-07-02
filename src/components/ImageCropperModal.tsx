@@ -104,7 +104,7 @@ export default function ImageCropperModal({ imageSrc, onCropComplete, onClose }:
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden flex flex-col"
+        className="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden flex flex-col"
         id="image-cropper-card"
       >
         {/* HEADER */}
@@ -183,7 +183,7 @@ export default function ImageCropperModal({ imageSrc, onCropComplete, onClose }:
               step="0.05"
               value={zoom}
               onChange={(e) => setZoom(parseFloat(e.target.value))}
-              className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#8E94F2]"
+              className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#8daa91]"
             />
           </div>
 
@@ -191,7 +191,7 @@ export default function ImageCropperModal({ imageSrc, onCropComplete, onClose }:
           <div className="flex gap-2.5">
             <button
               onClick={rotateImage}
-              className="flex-1 py-2 px-3 border border-slate-200 bg-white hover:bg-slate-100 rounded-lg text-2xs font-serif font-bold text-slate-700 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+              className="flex-1 py-2 px-3 border border-slate-200 bg-white hover:bg-slate-100 rounded-xl text-2xs font-serif font-bold text-slate-700 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
             >
               <RotateCw className="w-3.5 h-3.5" />
               <span>Rotate 90°</span>
@@ -202,7 +202,7 @@ export default function ImageCropperModal({ imageSrc, onCropComplete, onClose }:
                 setOffset({ x: 0, y: 0 });
                 setRotation(0);
               }}
-              className="py-2 px-4 border border-slate-200 bg-white hover:bg-slate-100 rounded-lg text-2xs font-serif font-bold text-slate-500 cursor-pointer shadow-xs"
+              className="py-2 px-4 border border-slate-200 bg-white hover:bg-slate-100 rounded-xl text-2xs font-serif font-bold text-slate-500 cursor-pointer shadow-xs"
             >
               Reset
             </button>
@@ -218,7 +218,7 @@ export default function ImageCropperModal({ imageSrc, onCropComplete, onClose }:
             </button>
             <button
               onClick={handleCrop}
-              className="flex-1 py-2.5 bg-[#8E94F2] text-white hover:bg-[#8E94F2]/95 font-serif font-bold text-xs rounded-xl cursor-pointer shadow-md flex items-center justify-center gap-1.5"
+              className="flex-1 py-2.5 bg-[#8daa91] text-white hover:bg-[#7ba180] font-serif font-bold text-xs rounded-xl cursor-pointer shadow-md flex items-center justify-center gap-1.5"
             >
               <Check className="w-4 h-4" />
               <span>Crop & Apply</span>

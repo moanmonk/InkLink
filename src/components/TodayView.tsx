@@ -237,7 +237,7 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-[#64748B] font-serif italic">
-        <Feather className="w-8 h-8 text-[#8E94F2] animate-spin mb-2" />
+        <Feather className="w-8 h-8 text-[#8daa91] animate-spin mb-2" />
         <span>Smoothing down today's parchment...</span>
       </div>
     );
@@ -264,8 +264,8 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
         </div>
 
         {/* Streak Counter widget */}
-        <div className="bg-[#F8FAFC] px-3 py-1.5 rounded-lg border border-[#CBD5E1] flex items-center gap-1.5 shadow-xs">
-          <Flame className="w-5 h-5 text-[#F09A9D] animate-bounce" />
+        <div className="bg-white px-3 py-1.5 rounded-xl border border-[#CBD5E1] flex items-center gap-1.5 shadow-xs">
+          <Flame className="w-5 h-5 text-[#EE98AD] animate-bounce" />
           <div className="leading-none">
             <p className="text-[#2D3748] font-bold text-xs">{user.currentStreak} Days</p>
             <p className="text-[#64748B] text-[9px] font-mono uppercase tracking-tight">Active Streak</p>
@@ -285,11 +285,11 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-[#F8FAFC] border-2 border-dashed border-[#CBD5E1] rounded-2xl p-8 text-center flex flex-col items-center justify-center h-[320px] sm:h-[380px] shadow-xs cursor-pointer relative hover:bg-[#F0F4F8] transition-all"
+                className="bg-white border-2 border-dashed border-[#CBD5E1] rounded-3xl p-8 text-center flex flex-col items-center justify-center h-[320px] sm:h-[380px] shadow-xs cursor-pointer relative hover:bg-[#F0F4F8]/30 transition-all"
                 onClick={handleReveal}
               >
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-xs border border-[#CBD5E1] mb-4 rotate-[-3deg]">
-                  <Feather className="w-8 h-8 text-[#8E94F2]" />
+                  <Feather className="w-8 h-8 text-[#8daa91]" />
                 </div>
                 <h4 className="font-serif text-lg font-black text-[#2D3748]">Today's Scroll is Sealed</h4>
                 <p className="text-xs text-[#64748B] italic max-w-sm mt-1.5">
@@ -300,7 +300,7 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                     e.stopPropagation();
                     handleReveal();
                   }}
-                  className="mt-6 px-6 py-2.5 bg-[#8E94F2] text-white font-serif font-bold text-xs rounded-xl shadow-[2px_2px_0_rgba(142,148,242,0.15)] hover:shadow-none translate-y-[-2px] hover:translate-y-0 transition-all cursor-pointer select-none"
+                  className="mt-6 px-6 py-2.5 bg-[#8daa91] hover:bg-[#7ba180] text-white font-serif font-bold text-xs rounded-xl shadow-[2px_2px_0_rgba(141,170,145,0.15)] hover:shadow-none translate-y-[-2px] hover:translate-y-0 transition-all cursor-pointer select-none"
                 >
                   Unroll Scroll
                 </button>
@@ -318,7 +318,7 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                   <span className="text-[10px] font-mono uppercase tracking-widest text-[#64748B]">Drafting Studio</span>
                   <button
                     onClick={() => setShowCanvasMode(false)}
-                    className="text-2xs font-serif italic text-[#64748B] hover:text-[#8E94F2] underline cursor-pointer"
+                    className="text-2xs font-serif italic text-[#64748B] hover:text-[#8daa91] underline cursor-pointer"
                   >
                     Cancel direct sketch
                   </button>
@@ -331,20 +331,20 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                 />
 
                 {uploadFileBase64 && (
-                  <div className="mt-4 p-3 bg-[#8E94F2]/10 rounded-lg border border-[#CBD5E1] flex flex-col gap-2">
-                    <p className="text-2xs text-[#8E94F2] font-serif italic">Masterpiece captured successfully! Add details below to bind your drawing.</p>
+                  <div className="mt-4 p-3 bg-[#8daa91]/10 rounded-xl border border-[#CBD5E1] flex flex-col gap-2">
+                    <p className="text-2xs text-[#4e6a53] font-serif italic">Masterpiece captured successfully! Add details below to bind your drawing.</p>
                     <div className="flex gap-2">
                       <input
                         type="text"
                         value={caption}
                         onChange={(e) => setCaption(e.target.value)}
                         placeholder="Add a caption..."
-                        className="flex-grow px-2 py-1.5 text-xs font-serif bg-white border border-[#CBD5E1] rounded focus:outline-none focus:border-[#8E94F2]"
+                        className="flex-grow px-2 py-1.5 text-xs font-serif bg-white border border-[#CBD5E1] rounded focus:outline-none focus:border-[#8daa91]"
                       />
                       <button
                         onClick={() => handleSubmission(uploadFileBase64)}
                         disabled={isUploading}
-                        className="px-4 py-1.5 bg-[#8E94F2] text-white font-serif text-xs rounded hover:bg-[#8E94F2]/90 font-bold cursor-pointer"
+                        className="px-4 py-1.5 bg-[#8daa91] hover:bg-[#7ba180] text-white font-serif text-xs rounded hover:bg-[#7ba180]/90 font-bold cursor-pointer"
                       >
                         {isUploading ? 'Binding...' : 'Bind Masterpiece'}
                       </button>
@@ -358,15 +358,15 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                 key="submitted"
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-white border border-[#CBD5E1] p-4 rounded-xl shadow-xs flex flex-col gap-3 relative"
+                className="bg-white border border-[#CBD5E1] p-4 rounded-3xl shadow-xs flex flex-col gap-3 relative"
               >
-                <div className="aspect-square w-full rounded-lg overflow-hidden bg-[#F8FAFC] border border-[#CBD5E1] flex items-center justify-center relative">
+                <div className="aspect-square w-full rounded-2xl overflow-hidden bg-[#F8FAFC] border border-[#CBD5E1] flex items-center justify-center relative">
                   <img src={submission.imageUrl} alt="today-submission" className="w-full h-full object-contain" referrerPolicy="no-referrer" />
                   
                   {/* Delete / Replace overlay */}
                   <button
                     onClick={handleDelete}
-                    className="absolute bottom-3 right-3 p-2 bg-[#F09A9D] hover:bg-[#F09A9D]/90 text-white rounded-lg shadow-md transition-colors cursor-pointer"
+                    className="absolute bottom-3 right-3 p-2 bg-[#EE98AD] hover:bg-[#dd7d93] text-white rounded-xl shadow-md transition-colors cursor-pointer"
                     title="Delete and re-draw before midnight"
                   >
                     <Trash2 className="w-4.5 h-4.5" />
@@ -391,28 +391,28 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                 initial={{ rotateY: 85, opacity: 0, scale: 0.95 }}
                 animate={{ rotateY: 0, opacity: 1, scale: 1 }}
                 transition={{ duration: 0.65, type: "spring", stiffness: 90, damping: 15 }}
-                className="bg-[#F8FAFC] border border-[#CBD5E1] rounded-2xl p-6 sm:p-8 flex flex-col justify-between min-h-[320px] sm:min-h-[380px] shadow-xs relative overflow-hidden"
+                className="bg-white border border-[#CBD5E1] rounded-3xl p-6 sm:p-8 flex flex-col justify-between min-h-[320px] sm:min-h-[380px] shadow-xs relative overflow-hidden"
               >
                 {/* Vintage sticker style indicator */}
-                <div className="absolute top-4 right-4 bg-[#8E94F2]/10 text-[#8E94F2] text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded border border-[#CBD5E1]">
+                <div className="absolute top-4 right-4 bg-[#8daa91]/10 text-[#4e6a53] text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded border border-[#CBD5E1]">
                   {prompt.category}
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <span className="text-2xs font-mono uppercase tracking-widest text-[#8E94F2]/90">Today's Scroll Prompt</span>
+                    <span className="text-2xs font-mono uppercase tracking-widest text-[#4e6a53]">Today's Scroll Prompt</span>
                     <h4 className="font-serif text-xl sm:text-2xl font-black text-[#2D3748] mt-1 leading-snug">
                       {prompt.text}
                     </h4>
                     {/* Cozy encouraging message */}
-                    <p className="text-2xs text-[#8E94F2] font-serif italic mt-3 bg-[#8E94F2]/5 px-3 py-1.5 rounded-lg border border-[#8E94F2]/10 inline-block">
+                    <p className="text-2xs text-[#4e6a53] font-serif italic mt-3 bg-[#8daa91]/5 px-3 py-1.5 rounded-xl border border-[#8daa91]/10 inline-block">
                       ✨ {getEncouragementForDay(dayIndex)}
                     </p>
                   </div>
 
                   <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs font-serif text-[#64748B] italic border-t border-[#CBD5E1] pt-3">
                     <div className="flex items-center gap-1.5">
-                      <Timer className="w-4 h-4 text-[#8E94F2]" />
+                      <Timer className="w-4 h-4 text-[#8daa91]" />
                       <span>Estimated Time: <strong className="font-sans font-bold text-[#2D3748]">{prompt.difficulty}</strong></span>
                     </div>
                   </div>
@@ -423,14 +423,14 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <button
                       onClick={() => setShowCanvasMode(true)}
-                      className="py-3 px-2.5 rounded-xl bg-[#8E94F2] hover:bg-[#8E94F2]/90 text-white text-xs font-serif font-bold transition-all shadow-[2px_2px_0_rgba(142,148,242,0.15)] hover:shadow-none translate-y-[-1px] active:translate-y-0 cursor-pointer flex items-center justify-center gap-1.5 select-none"
+                      className="py-3 px-2.5 rounded-xl bg-[#8daa91] hover:bg-[#7ba180] text-white text-xs font-serif font-bold transition-all shadow-[2px_2px_0_rgba(141,170,145,0.15)] hover:shadow-none translate-y-[-1px] active:translate-y-0 cursor-pointer flex items-center justify-center gap-1.5 select-none"
                     >
                       <Feather className="w-4 h-4" />
                       <span>Sketch On Screen</span>
                     </button>
 
-                    <label className="py-3 px-2.5 rounded-xl border border-[#CBD5E1] text-[#2D3748] hover:bg-[#F0F4F8]/50 text-xs font-serif font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 select-none">
-                      <Camera className="w-4 h-4 text-[#8E94F2]" />
+                    <label className="py-3 px-2.5 rounded-xl border border-[#CBD5E1] text-[#2D3748] hover:bg-[#fbf9f4] text-xs font-serif font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 select-none">
+                      <Camera className="w-4 h-4 text-[#8daa91]" />
                       <span>Take Photo</span>
                       <input
                         type="file"
@@ -441,8 +441,8 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                       />
                     </label>
 
-                    <label className="py-3 px-2.5 rounded-xl border border-[#CBD5E1] text-[#2D3748] hover:bg-[#F0F4F8]/50 text-xs font-serif font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 select-none">
-                      <Upload className="w-4 h-4 text-[#8E94F2]" />
+                    <label className="py-3 px-2.5 rounded-xl border border-[#CBD5E1] text-[#2D3748] hover:bg-[#fbf9f4] text-xs font-serif font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 select-none">
+                      <Upload className="w-4 h-4 text-[#8daa91]" />
                       <span>Upload from Gallery</span>
                       <input
                         type="file"
@@ -455,15 +455,15 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
 
                   {/* Loading spinner for storage upload */}
                   {isUploadingToStorage && (
-                    <div className="p-4 bg-[#F8FAFC] rounded-xl border border-dashed border-[#8E94F2] flex items-center justify-center gap-3 text-xs font-serif text-[#64748B] italic animate-pulse mt-3">
-                      <div className="w-4 h-4 border-2 border-[#8E94F2] border-t-transparent rounded-full animate-spin" />
+                    <div className="p-4 bg-white rounded-3xl border border-dashed border-[#8daa91] flex items-center justify-center gap-3 text-xs font-serif text-[#64748B] italic animate-pulse mt-3">
+                      <div className="w-4 h-4 border-2 border-[#8daa91] border-t-transparent rounded-full animate-spin" />
                       <span>Optimizing, cropping & uploading your masterpiece...</span>
                     </div>
                   )}
 
                   {/* If physical file uploaded, show review block */}
                   {uploadFileBase64 && (
-                    <div className="p-3 bg-[#F0F4F8]/60 rounded-xl border border-[#CBD5E1] mt-3 flex flex-col gap-3">
+                    <div className="p-3 bg-white rounded-2xl border border-[#CBD5E1] mt-3 flex flex-col gap-3">
                       <div className="flex items-center gap-3">
                         <div className="w-16 h-16 rounded border bg-white overflow-hidden flex-shrink-0">
                           <img src={uploadFileBase64} alt="uploaded" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
@@ -475,21 +475,21 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                             value={caption}
                             onChange={(e) => setCaption(e.target.value)}
                             placeholder="Add your artist notes or caption..."
-                            className="w-full mt-1 px-2.5 py-1 text-2xs font-serif bg-white border border-[#CBD5E1] rounded focus:outline-none focus:border-[#8E94F2]"
+                            className="w-full mt-1 px-2.5 py-1 text-2xs font-serif bg-white border border-[#CBD5E1] rounded focus:outline-none focus:border-[#8daa91]"
                           />
                         </div>
                       </div>
                       <div className="flex justify-end gap-2">
                         <button
                           onClick={() => setUploadFileBase64('')}
-                          className="px-2.5 py-1 text-2xs font-mono text-[#64748B] hover:text-[#F09A9D]"
+                          className="px-2.5 py-1 text-2xs font-mono text-[#64748B] hover:text-[#EE98AD]"
                         >
                           Cancel
                         </button>
                         <button
                           onClick={() => handleSubmission('')}
                           disabled={isUploading}
-                          className="px-4 py-1 bg-[#8E94F2] hover:bg-[#8E94F2]/90 text-white text-2xs font-serif font-bold rounded-lg"
+                          className="px-4 py-1 bg-[#8daa91] hover:bg-[#7ba180] text-white text-2xs font-serif font-bold rounded-xl shadow-xs"
                         >
                           {isUploading ? 'Binding...' : 'Bind My Sketch'}
                         </button>
@@ -506,8 +506,8 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
         <div className="lg:col-span-5 flex flex-col justify-between gap-5">
           
           {/* RITUAL COUNTDOWN CLOCK */}
-          <div className="bg-[#F8FAFC] p-5 rounded-2xl border border-[#CBD5E1] shadow-xs text-center">
-            <Timer className="w-6 h-6 text-[#8E94F2] mx-auto mb-1 animate-spin" style={{ animationDuration: '8s' }} />
+          <div className="bg-white p-5 rounded-3xl border border-[#CBD5E1] shadow-xs text-center">
+            <Timer className="w-6 h-6 text-[#8daa91] mx-auto mb-1 animate-spin" style={{ animationDuration: '8s' }} />
             <h5 className="font-serif font-bold text-xs text-[#64748B]">Hourglass of Tomorrow</h5>
             <p className="text-xl sm:text-2xl font-mono font-black text-[#2D3748] tracking-wider mt-1.5">
               {timeRemaining}
@@ -518,7 +518,7 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
           </div>
 
           {/* FRIENDS COMPLETIONS WIDGET */}
-          <div className="bg-white p-5 rounded-2xl border border-[#CBD5E1] shadow-xs flex-grow flex flex-col justify-between min-h-[160px]">
+          <div className="bg-white p-5 rounded-3xl border border-[#CBD5E1] shadow-xs flex-grow flex flex-col justify-between min-h-[160px]">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-widest text-[#64748B]">Circle completions</span>
               <h5 className="font-serif text-sm font-bold text-[#2D3748] mt-1">Friends who completed today</h5>
@@ -534,7 +534,7 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                   <button
                     key={friend.id}
                     onClick={() => onNavigateToFeed()}
-                    className="flex items-center gap-1.5 p-1 px-2.5 rounded-full bg-[#F8FAFC] hover:bg-[#F0F4F8] border border-[#CBD5E1] transition-colors cursor-pointer select-none"
+                    className="flex items-center gap-1.5 p-1 px-2.5 rounded-full bg-[#fbf9f4] hover:bg-stone-100 border border-[#CBD5E1] transition-colors cursor-pointer select-none"
                     title={`Click to view ${friend.displayName}'s drawing!`}
                   >
                     <div className="w-6 h-6 rounded-full overflow-hidden bg-[#E1E8F0] flex-shrink-0 flex items-center justify-center font-bold font-serif text-[10px]">
@@ -552,7 +552,7 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
 
             <button
               onClick={() => onNavigateToFeed()}
-              className="w-full py-1.5 bg-[#F8FAFC] hover:bg-[#F0F4F8] border border-[#CBD5E1] rounded-lg text-[#8E94F2] hover:text-[#8E94F2]/90 text-[11px] font-serif font-medium flex items-center justify-center gap-1 cursor-pointer select-none"
+              className="w-full py-1.5 bg-white hover:bg-[#fbf9f4] border border-[#CBD5E1] rounded-xl text-[#4e6a53] hover:text-[#8daa91] text-[11px] font-serif font-medium flex items-center justify-center gap-1 cursor-pointer select-none"
             >
               <Compass className="w-3.5 h-3.5" />
               <span>Explore Circle Feed</span>
@@ -560,8 +560,8 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
           </div>
 
           {/* MOTIVATIONAL WATERCOLOR EXCERPT */}
-          <div className="p-4 bg-[#8E94F2]/5 border border-[#CBD5E1]/50 rounded-2xl flex items-start gap-3">
-            <Feather className="w-5 h-5 text-[#8E94F2] flex-shrink-0 mt-0.5" />
+          <div className="p-4 bg-[#8daa91]/5 border border-[#CBD5E1]/50 rounded-3xl flex items-start gap-3">
+            <Feather className="w-5 h-5 text-[#8daa91] flex-shrink-0 mt-0.5" />
             <p className="text-xs font-serif italic text-[#2D3748] leading-relaxed">
               {quote}
             </p>

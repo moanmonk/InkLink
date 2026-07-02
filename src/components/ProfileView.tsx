@@ -211,20 +211,20 @@ export default function ProfileView({ user, onRefreshUser, onSelectSubmissionInF
 
         {/* Streaks counters */}
         <div className="md:col-span-6 grid grid-cols-3 gap-3.5 text-center">
-          <div className="bg-[#fcfbf9] border border-stone-200 p-2.5 rounded-xl shadow-2xs">
+          <div className="bg-white border border-stone-200 p-2.5 rounded-2xl shadow-2xs">
             <Flame className="w-5 h-5 text-orange-600 mx-auto mb-1 animate-pulse" />
             <p className="font-mono text-base font-black text-stone-800 leading-none">{user.currentStreak}</p>
             <p className="text-[9px] font-mono text-stone-400 uppercase tracking-wider mt-1">Current Streak</p>
           </div>
 
-          <div className="bg-[#fcfbf9] border border-stone-200 p-2.5 rounded-xl shadow-2xs">
-            <Award className="w-5 h-5 text-amber-700 mx-auto mb-1" />
+          <div className="bg-white border border-stone-200 p-2.5 rounded-2xl shadow-2xs">
+            <Award className="w-5 h-5 text-[#8daa91] mx-auto mb-1" />
             <p className="font-mono text-base font-black text-stone-800 leading-none">{user.longestStreak}</p>
             <p className="text-[9px] font-mono text-stone-400 uppercase tracking-wider mt-1">Max Streak</p>
           </div>
 
-          <div className="bg-[#fcfbf9] border border-stone-200 p-2.5 rounded-xl shadow-2xs">
-            <ImageIcon className="w-5 h-5 text-emerald-700 mx-auto mb-1" />
+          <div className="bg-white border border-stone-200 p-2.5 rounded-2xl shadow-2xs">
+            <ImageIcon className="w-5 h-5 text-[#4e6a53] mx-auto mb-1" />
             <p className="font-mono text-base font-black text-stone-800 leading-none">{submissions.length}</p>
             <p className="text-[9px] font-mono text-stone-400 uppercase tracking-wider mt-1">Total Sketches</p>
           </div>
@@ -242,7 +242,7 @@ export default function ProfileView({ user, onRefreshUser, onSelectSubmissionInF
             <button
               onClick={handleDownloadCollage}
               disabled={collageLoading}
-              className="px-3 py-1.5 bg-amber-800 hover:bg-amber-900 disabled:bg-stone-300 text-stone-100 rounded-lg text-2xs font-serif font-bold flex items-center gap-1 cursor-pointer transition-all shadow-[1px_1px_0_rgba(18,12,8,0.2)]"
+              className="px-3 py-1.5 bg-[#8daa91] hover:bg-[#7ba180] disabled:bg-stone-300 text-white rounded-xl text-2xs font-serif font-bold flex items-center gap-1 cursor-pointer transition-all shadow-[1.5px_1.5px_0_rgba(141,170,145,0.15)]"
             >
               <Download className="w-3.5 h-3.5" />
               <span>{collageLoading ? 'Weaving...' : 'Download Season Collage'}</span>
@@ -250,7 +250,7 @@ export default function ProfileView({ user, onRefreshUser, onSelectSubmissionInF
           </div>
 
           {submissions.length === 0 ? (
-            <div className="py-12 border border-dashed border-stone-200 rounded-xl bg-white text-center text-stone-400 font-serif italic">
+            <div className="py-12 border border-dashed border-stone-200 rounded-3xl bg-[#fbf9f4] text-center text-stone-400 font-serif italic">
               <span>Your drawing journal is empty. Begin sketching daily to populate these pages.</span>
             </div>
           ) : (
@@ -259,9 +259,9 @@ export default function ProfileView({ user, onRefreshUser, onSelectSubmissionInF
                 <div
                   key={sub.id}
                   onClick={() => onSelectSubmissionInFeed(sub.id)}
-                  className="bg-white border border-stone-200 p-2 rounded-lg text-center cursor-pointer shadow-sm hover:shadow-md transition-shadow relative group"
+                  className="bg-white border border-stone-200 p-2 rounded-2xl text-center cursor-pointer shadow-sm hover:shadow-md transition-shadow relative group hover:border-[#8daa91]/60"
                 >
-                  <div className="aspect-square bg-stone-50 border border-stone-100 rounded overflow-hidden">
+                  <div className="aspect-square bg-stone-50 border border-stone-100 rounded-xl overflow-hidden">
                     <img src={sub.imageUrl} alt="grid-sub" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                   </div>
                   <p className="text-3xs font-mono uppercase text-stone-400 mt-1.5">Day {sub.dayOfSeason}</p>
@@ -284,11 +284,11 @@ export default function ProfileView({ user, onRefreshUser, onSelectSubmissionInF
               return (
                 <div
                   key={m.id}
-                  className={`border p-3 rounded-xl flex items-start gap-3 transition-opacity ${
+                  className={`border p-3 rounded-2xl flex items-start gap-3 transition-opacity ${
                     isUnlocked ? m.color : 'opacity-40 bg-stone-100 border-stone-300'
                   }`}
                 >
-                  <div className="p-1.5 bg-white rounded-lg border border-stone-200 flex-shrink-0 mt-0.5">
+                  <div className="p-1.5 bg-white rounded-xl border border-stone-200 flex-shrink-0 mt-0.5">
                     <IconComp className="w-4 h-4 text-inherit" />
                   </div>
                   <div className="leading-tight">

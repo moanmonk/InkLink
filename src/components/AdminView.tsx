@@ -53,7 +53,7 @@ export default function AdminView() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-stone-500 font-serif italic">
-        <ShieldAlert className="w-8 h-8 text-amber-800 animate-spin mb-2" />
+        <ShieldAlert className="w-8 h-8 text-[#8daa91] animate-spin mb-2" />
         <span>Authorizing Studio administrative credentials...</span>
       </div>
     );
@@ -73,27 +73,27 @@ export default function AdminView() {
         </div>
 
         {/* Tab triggers */}
-        <div className="flex bg-[#eae4d5]/60 p-1 rounded-lg border border-[#ded7c8] self-start sm:self-auto">
+        <div className="flex bg-[#fbf9f4] p-1 rounded-xl border border-stone-200 self-start sm:self-auto">
           <button
             onClick={() => setActiveAdminTab('users')}
-            className={`px-3 py-1.5 rounded text-2xs font-serif font-bold transition-all cursor-pointer ${
-              activeAdminTab === 'users' ? 'bg-stone-800 text-white shadow-sm' : 'text-stone-600 hover:text-stone-800'
+            className={`px-3 py-1.5 rounded-lg text-2xs font-serif font-bold transition-all cursor-pointer ${
+              activeAdminTab === 'users' ? 'bg-[#8daa91] text-white shadow-sm' : 'text-stone-600 hover:text-stone-800'
             }`}
           >
             Manage Users ({users.length})
           </button>
           <button
             onClick={() => setActiveAdminTab('prompts')}
-            className={`px-3 py-1.5 rounded text-2xs font-serif font-bold transition-all cursor-pointer ${
-              activeAdminTab === 'prompts' ? 'bg-stone-800 text-white shadow-sm' : 'text-stone-600 hover:text-stone-800'
+            className={`px-3 py-1.5 rounded-lg text-2xs font-serif font-bold transition-all cursor-pointer ${
+              activeAdminTab === 'prompts' ? 'bg-[#8daa91] text-white shadow-sm' : 'text-stone-600 hover:text-stone-800'
             }`}
           >
             Prompts Log
           </button>
           <button
             onClick={() => setActiveAdminTab('drawings')}
-            className={`px-3 py-1.5 rounded text-2xs font-serif font-bold transition-all cursor-pointer ${
-              activeAdminTab === 'drawings' ? 'bg-stone-800 text-white shadow-sm' : 'text-stone-600 hover:text-stone-800'
+            className={`px-3 py-1.5 rounded-lg text-2xs font-serif font-bold transition-all cursor-pointer ${
+              activeAdminTab === 'drawings' ? 'bg-[#8daa91] text-white shadow-sm' : 'text-stone-600 hover:text-stone-800'
             }`}
           >
             Spotlight Features ({featuredSubIds.length})
@@ -107,7 +107,7 @@ export default function AdminView() {
         {activeAdminTab === 'users' && (
           <div className="space-y-4">
             <h4 className="font-serif text-sm font-black text-stone-700">Studio Registration Logs</h4>
-            <div className="overflow-x-auto border border-stone-200 rounded-xl bg-white">
+            <div className="overflow-x-auto border border-stone-200 rounded-3xl bg-white">
               <table className="w-full text-left border-collapse text-xs font-serif">
                 <thead>
                   <tr className="bg-stone-50 border-b border-stone-200 text-stone-500 uppercase font-mono text-[9px] tracking-wider">
@@ -156,7 +156,7 @@ export default function AdminView() {
               <h4 className="font-serif text-sm font-black text-stone-700">Algorithmic Season Prompts (Sample Index)</h4>
               <button
                 onClick={() => alert('New Season Prompt list generated successfully!')}
-                className="px-3 py-1 bg-stone-800 hover:bg-stone-900 text-stone-100 rounded text-2xs font-serif font-bold flex items-center gap-1 cursor-pointer"
+                className="px-3 py-1 bg-[#8daa91] hover:bg-[#7ba180] text-stone-100 rounded-xl text-2xs font-serif font-bold flex items-center gap-1 cursor-pointer"
               >
                 <RefreshCw className="w-3 h-3 animate-spin" style={{ animationDuration: '4s' }} />
                 <span>Compile Season 2</span>
@@ -165,11 +165,11 @@ export default function AdminView() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[420px] overflow-y-auto no-scrollbar pr-1">
               {samplePromptsList.map((p) => (
-                <div key={p.id} className="bg-white border border-stone-200 p-3.5 rounded-xl flex flex-col justify-between shadow-2xs">
+                <div key={p.id} className="bg-white border border-stone-200 p-3.5 rounded-3xl flex flex-col justify-between shadow-2xs">
                   <div className="flex items-center justify-between">
                     <span className="text-[9px] font-mono text-stone-400 uppercase tracking-widest">Day {p.dayOfSeason}</span>
-                    <span className={`px-1.5 py-0.5 rounded text-[8px] font-mono uppercase ${
-                      p.isWeeklyRidiculous ? 'bg-red-100 text-red-800 border border-red-300' : 'bg-stone-100 text-stone-500'
+                    <span className={`px-1.5 py-0.5 rounded-lg text-[8px] font-mono uppercase ${
+                      p.isWeeklyRidiculous ? 'bg-red-100 text-red-800 border border-red-300' : 'bg-[#fbf9f4] text-stone-500'
                     }`}>
                       {p.category}
                     </span>
@@ -200,9 +200,9 @@ export default function AdminView() {
                   const isFeatured = featuredSubIds.includes(sub.id);
 
                   return (
-                    <div key={sub.id} className="bg-white border border-stone-200 p-2.5 rounded-xl shadow-2xs space-y-2 text-center relative flex flex-col justify-between">
+                    <div key={sub.id} className="bg-white border border-stone-200 p-2.5 rounded-3xl shadow-2xs space-y-2 text-center relative flex flex-col justify-between">
                       <div>
-                        <div className="aspect-square bg-stone-50 border border-stone-100 rounded overflow-hidden">
+                        <div className="aspect-square bg-stone-50 border border-stone-100 rounded-2xl overflow-hidden">
                           <img src={sub.imageUrl} alt="sub" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                         </div>
                         <p className="text-2xs font-serif font-bold text-stone-700 mt-2 truncate">{sub.userDisplayName}</p>
@@ -211,10 +211,10 @@ export default function AdminView() {
 
                       <button
                         onClick={() => handleToggleFeature(sub.id, sub.caption)}
-                        className={`w-full py-1 rounded text-3xs font-serif font-bold cursor-pointer border transition-colors ${
+                        className={`w-full py-1 rounded-xl text-3xs font-serif font-bold cursor-pointer border transition-colors ${
                           isFeatured 
-                            ? 'bg-amber-100 text-amber-800 border-amber-300' 
-                            : 'bg-stone-100 text-stone-600 border-stone-200 hover:bg-[#faf5ea]'
+                            ? 'bg-[#8daa91]/10 text-[#4e6a53] border-[#8daa91]/30' 
+                            : 'bg-stone-50 text-stone-600 border-stone-200 hover:bg-[#fbf9f4]'
                         }`}
                       >
                         {isFeatured ? '★ Featured Spotlight' : 'Spotlight Post'}

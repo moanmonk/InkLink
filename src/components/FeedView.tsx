@@ -303,17 +303,17 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
                     type="text"
                     value={editingText}
                     onChange={(e) => setEditingText(e.target.value)}
-                    className="flex-grow px-2 py-1 text-2xs font-serif border border-[#CBD5E1] bg-white rounded focus:outline-none focus:border-[#8E94F2]"
+                    className="flex-grow px-2.5 py-1 text-2xs font-serif border border-[#CBD5E1] bg-white rounded-xl focus:outline-none focus:border-[#8daa91]"
                   />
                   <button
                     onClick={() => handleSaveEditComment(comment.id)}
-                    className="px-2 py-1 bg-[#8E94F2] text-white rounded text-2xs font-serif font-bold"
+                    className="px-3 py-1 bg-[#8daa91] hover:bg-[#7ba180] text-white rounded-xl text-2xs font-serif font-bold"
                   >
                     Save
                   </button>
                   <button
                     onClick={() => setEditingCommentId(null)}
-                    className="text-2xs font-mono text-[#64748B]"
+                    className="text-2xs font-mono text-[#64748B] hover:text-stone-900"
                   >
                     Cancel
                   </button>
@@ -336,7 +336,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-[#64748B] font-serif italic">
-        <Sparkles className="w-8 h-8 text-[#8E94F2] animate-pulse mb-2" />
+        <Sparkles className="w-8 h-8 text-[#8daa91] animate-pulse mb-2" />
         <span>Smoothing the canvas sheets...</span>
       </div>
     );
@@ -360,7 +360,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search sketches, prompts, artists..."
-            className="w-full pl-9 pr-3 py-1.5 text-xs font-serif bg-white border border-[#CBD5E1] rounded-full focus:outline-none focus:ring-1 focus:ring-[#8E94F2] focus:border-[#8E94F2]"
+            className="w-full pl-9 pr-3 py-1.5 text-xs font-serif bg-white border border-[#CBD5E1] rounded-full focus:outline-none focus:ring-1 focus:ring-[#8daa91] focus:border-[#8daa91]"
           />
         </div>
       </div>
@@ -368,7 +368,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
       {/* FEED GRID - PINTEREST STYLE */}
       <div className="flex-grow my-2">
         {filteredSubmissions.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 text-center text-[#64748B] font-serif italic border border-dashed border-[#CBD5E1] rounded-2xl p-6 bg-[#F8FAFC]/60">
+          <div className="flex flex-col items-center justify-center py-12 text-center text-[#64748B] font-serif italic border border-dashed border-[#CBD5E1] rounded-3xl p-6 bg-[#fbf9f4]">
             <AlertCircle className="w-8 h-8 text-[#64748B]/60 mb-2" />
             <span>No drawings matching your ink query. Be the first to start drawing!</span>
           </div>
@@ -382,12 +382,12 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
                 <motion.div
                   key={sub.id}
                   onClick={() => handleOpenDetails(sub)}
-                  className="bg-white border border-[#CBD5E1] p-3 rounded-xl shadow-xs hover:shadow-sm transition-all duration-300 cursor-pointer relative group flex flex-col justify-between"
+                  className="bg-white border border-[#CBD5E1] p-3 rounded-3xl shadow-xs hover:shadow-sm transition-all duration-300 cursor-pointer relative group flex flex-col justify-between"
                   whileHover={{ y: -3 }}
                 >
                   {/* Polaroid Frame */}
                   <div>
-                    <div className="aspect-square w-full rounded-lg bg-[#F8FAFC] border border-[#CBD5E1] overflow-hidden relative">
+                    <div className="aspect-square w-full rounded-2xl bg-[#F8FAFC] border border-[#CBD5E1] overflow-hidden relative">
                       <img
                         src={sub.imageUrl}
                         alt="drawing-post"
@@ -396,8 +396,8 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
                       />
                       
                       {/* Hover Star Indicator overlay */}
-                      <div className="absolute top-2 left-2 bg-[#F8FAFC]/95 backdrop-blur-xs px-2 py-0.5 rounded text-[10px] font-mono text-[#2D3748] border border-[#CBD5E1] flex items-center gap-0.5 shadow-xs">
-                        <Star className="w-3 h-3 fill-[#F09A9D] text-[#F09A9D]" />
+                      <div className="absolute top-2 left-2 bg-white/95 backdrop-blur-xs px-2 py-0.5 rounded text-[10px] font-mono text-[#2D3748] border border-[#CBD5E1] flex items-center gap-0.5 shadow-xs">
+                        <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
                         <span>{ratingVal}</span>
                       </div>
                     </div>
@@ -425,7 +425,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
 
                     <div className="flex items-center gap-2 text-[#64748B] text-2xs font-mono">
                       <span className="flex items-center gap-0.5">
-                        <Heart className="w-3 h-3 text-[#F09A9D] fill-[#F09A9D]" />
+                        <Heart className="w-3 h-3 text-[#ee98ad] fill-[#ee98ad]" />
                         <span>{totalReactions}</span>
                       </span>
                     </div>
@@ -478,7 +478,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
                   onClick={() => setSelectedSub(null)}
                   className="p-1.5 hover:bg-[#F0F4F8]/60 rounded-full transition-colors cursor-pointer"
                 >
-                  <X className="w-4 h-4 text-[#8E94F2]" />
+                  <X className="w-4 h-4 text-[#8daa91]" />
                 </button>
               </div>
 
@@ -486,18 +486,18 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
               <div className="flex-grow overflow-y-auto no-scrollbar p-4 sm:p-6 space-y-5 z-10">
                 
                 {/* LARGE DRAWING ARTWORK */}
-                <div className="w-full rounded-xl bg-white border border-[#CBD5E1] overflow-hidden shadow-xs p-2.5">
+                <div className="w-full rounded-3xl bg-white border border-[#CBD5E1] overflow-hidden shadow-xs p-2.5">
                   <img
                     src={selectedSub.imageUrl}
                     alt="expanded-drawing"
-                    className="w-full h-auto max-h-[350px] object-contain rounded"
+                    className="w-full h-auto max-h-[350px] object-contain rounded-2xl"
                     referrerPolicy="no-referrer"
                   />
                 </div>
 
                 {/* PROMPT & INFO BLOCK */}
-                <div className="bg-[#F8FAFC] border border-[#CBD5E1] p-4 rounded-xl space-y-2">
-                  <span className="text-[10px] font-mono uppercase text-[#8E94F2]/90 tracking-widest">Ritual Prompt</span>
+                <div className="bg-white border border-[#CBD5E1] p-4 rounded-3xl space-y-2">
+                  <span className="text-[10px] font-mono uppercase text-[#4e6a53] tracking-widest">Ritual Prompt</span>
                   <p className="font-serif text-sm font-black text-[#2D3748] leading-tight">
                     {selectedSub.promptText}
                   </p>
@@ -510,7 +510,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
                 {/* CAPTION BLOCK */}
                 <div className="px-1 space-y-1">
                   <span className="text-[10px] font-mono uppercase tracking-widest text-[#64748B]">Artist Note</span>
-                  <blockquote className="font-serif italic text-[#2D3748] text-sm leading-relaxed border-l-2 border-[#8E94F2]/40 pl-3">
+                  <blockquote className="font-serif italic text-[#2D3748] text-sm leading-relaxed border-l-2 border-[#8daa91]/40 pl-3">
                     {selectedSub.caption || '“A silent translation of form and shadow onto woodpulp.”'}
                   </blockquote>
                 </div>
@@ -540,7 +540,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
                           onClick={() => handleRateSubmit(star)}
                           className="hover:scale-115 transition-transform cursor-pointer"
                         >
-                          <Star className={`w-6 h-6 ${isFilled ? 'fill-[#F09A9D] text-[#F09A9D]' : 'text-[#CBD5E1]'}`} />
+                          <Star className={`w-6 h-6 ${isFilled ? 'fill-amber-400 text-amber-400' : 'text-[#CBD5E1]'}`} />
                         </button>
                       );
                     })}
@@ -552,9 +552,9 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
                       <p className="text-[9px] font-mono text-[#64748B] uppercase tracking-wider">Reviewing Circle</p>
                       <div className="flex flex-wrap gap-1.5">
                         {subRatings.map((r) => (
-                          <div key={r.id} className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#F8FAFC] border border-[#CBD5E1] text-2xs font-serif text-[#2D3748] shadow-xs">
+                          <div key={r.id} className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-white border border-[#CBD5E1] text-2xs font-serif text-[#2D3748] shadow-xs">
                             <span>{r.userDisplayName}</span>
-                            <span className="font-mono font-bold text-[#F09A9D]">{r.rating}★</span>
+                            <span className="font-mono font-bold text-amber-500">{r.rating}★</span>
                           </div>
                         ))}
                       </div>
@@ -576,7 +576,7 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
                           onClick={() => handleReact(selectedSub.id, emoji)}
                           className={`px-3 py-1.5 rounded-full border text-xs flex items-center gap-1.5 cursor-pointer transition-all ${
                             hasReacted 
-                              ? 'bg-[#8E94F2]/10 border-[#8E94F2] shadow-inner' 
+                              ? 'bg-[#8daa91]/10 border-[#8daa91] shadow-inner' 
                               : 'bg-white border-[#CBD5E1] hover:bg-[#F8FAFC]'
                           }`}
                         >
@@ -609,11 +609,11 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
               {/* PANEL BOTTOM: COMMENT INPUT DRAWER */}
               <div className="p-4 border-t border-[#CBD5E1] bg-white z-20 flex-shrink-0">
                 {replyingToCommentId && (
-                  <div className="mb-2 flex items-center justify-between bg-[#F0F4F8] border border-[#CBD5E1] p-1.5 px-3 rounded-lg text-2xs text-[#2D3748]">
+                  <div className="mb-2 flex items-center justify-between bg-[#F0F4F8] border border-[#CBD5E1] p-1.5 px-3 rounded-xl text-2xs text-[#2D3748]">
                     <span>Replying to comment...</span>
                     <button
                       onClick={() => setReplyingToCommentId(null)}
-                      className="font-mono text-[#64748B] hover:text-[#8E94F2]"
+                      className="font-mono text-[#64748B] hover:text-[#8daa91]"
                     >
                       Clear Reply
                     </button>
@@ -626,12 +626,12 @@ export default function FeedView({ currentUser, initialSelectedSubmissionId }: F
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="Ink your thoughts (mentions and emojis supported)..."
-                    className="flex-grow px-3 py-2 text-xs font-serif bg-[#F8FAFC] border border-[#CBD5E1] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#8E94F2] focus:border-[#8E94F2]"
+                    className="flex-grow px-3 py-2 text-xs font-serif bg-[#fbf9f4] border border-[#CBD5E1] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#8daa91] focus:border-[#8daa91]"
                     required
                   />
                   <button
                     type="submit"
-                    className="p-2.5 bg-[#8E94F2] hover:bg-[#8E94F2]/90 text-white rounded-xl transition-all shadow-[2px_2px_0_rgba(142,148,242,0.15)] hover:shadow-none translate-y-[-1.5px] active:translate-y-0 cursor-pointer"
+                    className="p-2.5 bg-[#8daa91] hover:bg-[#7ba180] text-white rounded-xl transition-all shadow-[2px_2px_0_rgba(141,170,145,0.15)] hover:shadow-none translate-y-[-1.5px] active:translate-y-0 cursor-pointer"
                   >
                     <Send className="w-4 h-4" />
                   </button>

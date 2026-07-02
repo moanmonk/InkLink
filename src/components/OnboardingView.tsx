@@ -104,16 +104,16 @@ export default function OnboardingView({ user, onOnboardingComplete }: Onboardin
           <div
             key={s}
             className={`h-1.5 rounded-full transition-all duration-300 ${
-              step >= s ? 'w-8 bg-amber-800' : 'w-2 bg-stone-300'
+              step >= s ? 'w-8 bg-[#8daa91]' : 'w-2 bg-stone-200'
             }`}
           />
         ))}
       </div>
 
-      <div className="bg-[#faf8f3] border border-[#e8dfcf] rounded-2xl p-6 sm:p-8 shadow-md relative overflow-hidden">
+      <div className="bg-white border border-[#CBD5E1] rounded-3xl p-6 sm:p-8 shadow-md relative overflow-hidden">
         
         {/* Watercolor overlay element */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-200/10 rounded-full filter blur-2xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-32 h-32 bg-[#8daa91]/10 rounded-full filter blur-2xl pointer-events-none" />
 
         {/* STEP 1: Name and Pen Name */}
         {step === 1 && (
@@ -123,18 +123,18 @@ export default function OnboardingView({ user, onOnboardingComplete }: Onboardin
             className="space-y-6"
           >
             <div className="text-center">
-              <div className="w-12 h-12 bg-amber-100/60 text-amber-800 rounded-full flex items-center justify-center mx-auto mb-3 shadow-inner">
+              <div className="w-12 h-12 bg-[#8daa91]/10 text-[#4e6a53] rounded-full flex items-center justify-center mx-auto mb-3 shadow-inner">
                 <Sparkles className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-serif font-black text-stone-800">Choose Your Pen Name</h3>
-              <p className="text-xs text-stone-500 italic mt-1">This is how your fellow artists will see and mention you.</p>
+              <h3 className="text-xl font-serif font-black text-[#2D3748]">Choose Your Pen Name</h3>
+              <p className="text-xs text-[#64748B] italic mt-1">This is how your fellow artists will see and mention you.</p>
             </div>
 
-            {error && <div className="p-2.5 bg-red-50 border border-red-200 text-red-700 text-xs rounded font-serif italic">{error}</div>}
+            {error && <div className="p-2.5 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl font-serif italic">{error}</div>}
 
             <div className="space-y-4">
               <div>
-                <label className="block text-[11px] font-mono uppercase text-stone-600 tracking-wider mb-1">
+                <label className="block text-[11px] font-mono uppercase text-[#64748B] tracking-wider mb-1">
                   Unique Username (lowercase, no spaces)
                 </label>
                 <input
@@ -142,12 +142,12 @@ export default function OnboardingView({ user, onOnboardingComplete }: Onboardin
                   value={username}
                   onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/\s+/g, ''))}
                   placeholder="e.g., rembrandt_12"
-                  className="w-full px-3 py-2 text-xs font-serif bg-white border border-stone-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-700 focus:border-amber-700 text-stone-800"
+                  className="w-full px-3 py-2 text-xs font-serif bg-white border border-[#CBD5E1] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#8daa91] focus:border-[#8daa91] text-[#2D3748]"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-mono uppercase text-stone-600 tracking-wider mb-1">
+                <label className="block text-[11px] font-mono uppercase text-[#64748B] tracking-wider mb-1">
                   Pen Name / Display Name
                 </label>
                 <input
@@ -155,14 +155,14 @@ export default function OnboardingView({ user, onOnboardingComplete }: Onboardin
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   placeholder="e.g., Rembrandt van Rijn"
-                  className="w-full px-3 py-2 text-xs font-serif bg-white border border-stone-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-700 focus:border-amber-700 text-stone-800"
+                  className="w-full px-3 py-2 text-xs font-serif bg-white border border-[#CBD5E1] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#8daa91] focus:border-[#8daa91] text-[#2D3748]"
                 />
               </div>
             </div>
 
             <button
               onClick={handleNextStep}
-              className="w-full py-2.5 mt-4 rounded-lg bg-amber-800 hover:bg-amber-900 text-stone-100 font-serif font-bold text-xs flex items-center justify-center gap-1.5 shadow-[2px_2px_0_rgba(18,12,8,0.2)] hover:shadow-none translate-y-[-1px] active:translate-y-0 transition-all cursor-pointer select-none"
+              className="w-full py-2.5 mt-4 rounded-xl bg-[#8daa91] hover:bg-[#7ba180] text-white font-serif font-bold text-xs flex items-center justify-center gap-1.5 shadow-[2px_2px_0_rgba(141,170,145,0.2)] hover:shadow-none translate-y-[-1px] active:translate-y-0 transition-all cursor-pointer select-none"
             >
               <span>Next Page</span>
               <ChevronRight className="w-4 h-4" />
@@ -178,14 +178,14 @@ export default function OnboardingView({ user, onOnboardingComplete }: Onboardin
             className="space-y-6"
           >
             <div className="text-center">
-              <h3 className="text-xl font-serif font-black text-stone-800">Select Portrait Sticker</h3>
-              <p className="text-xs text-stone-500 italic mt-1">Pick an artful mascot or ink your own custom image.</p>
+              <h3 className="text-xl font-serif font-black text-[#2D3748]">Select Portrait Sticker</h3>
+              <p className="text-xs text-[#64748B] italic mt-1">Pick an artful mascot or ink your own custom image.</p>
             </div>
 
             {/* Current Selected Preview */}
             <div className="flex justify-center">
               <div className="relative">
-                <div className="w-24 h-24 rounded-full border-4 border-stone-100 overflow-hidden shadow-md bg-stone-50 flex items-center justify-center">
+                <div className="w-24 h-24 rounded-full border-4 border-white overflow-hidden shadow-md bg-[#fbf9f4] flex items-center justify-center">
                   <img
                     src={customAvatarBase64 || selectedAvatar}
                     alt="avatar-preview"
@@ -193,7 +193,7 @@ export default function OnboardingView({ user, onOnboardingComplete }: Onboardin
                     referrerPolicy="no-referrer"
                   />
                 </div>
-                <label className="absolute bottom-0 right-0 bg-[#e4dac4] text-stone-800 p-2 rounded-full shadow border border-stone-300 cursor-pointer hover:bg-[#d6cbaf] transition-colors">
+                <label className="absolute bottom-0 right-0 bg-[#fbf9f4] text-[#2D3748] p-2 rounded-full shadow border border-[#CBD5E1] cursor-pointer hover:bg-[#e2dfd7] transition-colors">
                   <Camera className="w-4 h-4" />
                   <input
                     type="file"
@@ -207,7 +207,7 @@ export default function OnboardingView({ user, onOnboardingComplete }: Onboardin
 
             {/* Presets List */}
             <div>
-              <p className="text-[10px] font-mono text-stone-500 uppercase tracking-wider text-center mb-3">Watercolor Presets</p>
+              <p className="text-[10px] font-mono text-[#64748B] uppercase tracking-wider text-center mb-3">Watercolor Presets</p>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
                 {PRESET_AVATARS.map((av) => {
                   const isChosen = !customAvatarBase64 && selectedAvatar === av.url;
@@ -219,7 +219,7 @@ export default function OnboardingView({ user, onOnboardingComplete }: Onboardin
                         setSelectedAvatar(av.url);
                       }}
                       className={`relative rounded-full overflow-hidden border-2 cursor-pointer transition-transform ${
-                        isChosen ? 'border-amber-800 scale-110 shadow-sm' : 'border-stone-200/60 hover:scale-105'
+                        isChosen ? 'border-[#8daa91] scale-110 shadow-sm' : 'border-stone-200/60 hover:scale-105'
                       }`}
                     >
                       <img src={av.url} alt={av.name} className="w-12 h-12 object-cover" referrerPolicy="no-referrer" />
@@ -236,7 +236,7 @@ export default function OnboardingView({ user, onOnboardingComplete }: Onboardin
 
             <button
               onClick={handleNextStep}
-              className="w-full py-2.5 mt-4 rounded-lg bg-amber-800 hover:bg-amber-900 text-stone-100 font-serif font-bold text-xs flex items-center justify-center gap-1.5 shadow-[2px_2px_0_rgba(18,12,8,0.2)] hover:shadow-none translate-y-[-1px] active:translate-y-0 transition-all cursor-pointer select-none"
+              className="w-full py-2.5 mt-4 rounded-xl bg-[#8daa91] hover:bg-[#7ba180] text-white font-serif font-bold text-xs flex items-center justify-center gap-1.5 shadow-[2px_2px_0_rgba(141,170,145,0.2)] hover:shadow-none translate-y-[-1px] active:translate-y-0 transition-all cursor-pointer select-none"
             >
               <span>Next Page</span>
               <ChevronRight className="w-4 h-4" />
@@ -252,15 +252,15 @@ export default function OnboardingView({ user, onOnboardingComplete }: Onboardin
             className="space-y-6"
           >
             <div className="text-center">
-              <h3 className="text-xl font-serif font-black text-stone-800">Configure Your Studio</h3>
-              <p className="text-xs text-stone-500 italic mt-1">What inspires your fingers most?</p>
+              <h3 className="text-xl font-serif font-black text-[#2D3748]">Configure Your Studio</h3>
+              <p className="text-xs text-[#64748B] italic mt-1">What inspires your fingers most?</p>
             </div>
 
-            {error && <div className="p-2 bg-red-50 text-red-700 text-xs rounded font-serif italic">{error}</div>}
+            {error && <div className="p-2 bg-red-50 text-red-700 text-xs rounded-xl font-serif italic">{error}</div>}
 
             <div className="space-y-4">
               <div>
-                <label className="block text-[11px] font-mono uppercase text-stone-600 tracking-wider mb-1">
+                <label className="block text-[11px] font-mono uppercase text-[#64748B] tracking-wider mb-1">
                   Describe Your Medium / Bio
                 </label>
                 <textarea
@@ -268,12 +268,12 @@ export default function OnboardingView({ user, onOnboardingComplete }: Onboardin
                   onChange={(e) => setBio(e.target.value)}
                   placeholder="e.g., Quiet architect and coffee-ink lover. Prefer fine nib pens and twilight drafting."
                   rows={3}
-                  className="w-full px-3 py-2 text-xs font-serif bg-white border border-stone-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-700 focus:border-amber-700 text-stone-800"
+                  className="w-full px-3 py-2 text-xs font-serif bg-white border border-[#CBD5E1] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#8daa91] focus:border-[#8daa91] text-[#2D3748]"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-mono uppercase text-stone-600 tracking-wider mb-1">
+                <label className="block text-[11px] font-mono uppercase text-[#64748B] tracking-wider mb-1">
                   Favorite Sketch Theme
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -282,10 +282,10 @@ export default function OnboardingView({ user, onOnboardingComplete }: Onboardin
                       key={cat}
                       type="button"
                       onClick={() => setFavCategory(cat)}
-                      className={`px-3 py-1.5 text-xs font-serif rounded-lg border transition-all cursor-pointer ${
+                      className={`px-3 py-1.5 text-xs font-serif rounded-xl border transition-all cursor-pointer ${
                         favCategory === cat
-                          ? 'bg-[#3e2d24] text-white border-stone-800 shadow-sm'
-                          : 'bg-white border-stone-300 text-stone-600 hover:bg-[#faf5ea]'
+                          ? 'bg-[#8daa91] text-white border-[#8daa91] shadow-sm'
+                          : 'bg-white border-[#CBD5E1] text-[#64748B] hover:bg-[#fbf9f4]'
                       }`}
                     >
                       {cat}
@@ -298,7 +298,7 @@ export default function OnboardingView({ user, onOnboardingComplete }: Onboardin
             <button
               onClick={handleSaveProfile}
               disabled={loading}
-              className="w-full py-2.5 mt-4 rounded-lg bg-emerald-800 hover:bg-emerald-950 disabled:bg-stone-400 text-stone-100 font-serif font-bold text-xs flex items-center justify-center gap-1.5 shadow-[2px_2px_0_rgba(18,12,8,0.2)] hover:shadow-none translate-y-[-1px] active:translate-y-0 transition-all cursor-pointer select-none"
+              className="w-full py-2.5 mt-4 rounded-xl bg-[#8daa91] hover:bg-[#7ba180] disabled:bg-stone-300 text-white font-serif font-bold text-xs flex items-center justify-center gap-1.5 shadow-[2px_2px_0_rgba(141,170,145,0.2)] hover:shadow-none translate-y-[-1px] active:translate-y-0 transition-all cursor-pointer select-none"
             >
               {loading ? (
                 <span>Binding your page...</span>
