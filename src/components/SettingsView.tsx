@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Settings, Save, CheckCircle2, User, FileText, Sparkles, Feather, Trash2, AlertTriangle } from 'lucide-react';
+import { Settings, Save, CheckCircle2, User, FileText, Sparkles, Feather, Trash2, AlertTriangle, Flame } from 'lucide-react';
 import { updateProfile, deleteUserAccount } from '../lib/firebase';
 import { Profile } from '../types';
 import ConfirmationModal from './ConfirmationModal';
@@ -23,6 +23,8 @@ export default function SettingsView({ user, onRefreshUser }: SettingsViewProps)
   const [isSaved, setIsSaved] = useState(false);
   const [saving, setSaving] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showStreakConfirm, setShowStreakConfirm] = useState(false);
+  const [streakResetSuccess, setStreakResetSuccess] = useState(false);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,9 +46,31 @@ export default function SettingsView({ user, onRefreshUser }: SettingsViewProps)
       });
       onRefreshUser();
       setIsSaved(true);
+      setStreakResetSuccess(false);
     } catch (err: any) {
       console.error(err);
       setError('Failed to seal settings: ' + err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleResetStreak = async () => {
+    setShowStreakConfirm(false);
+    setSaving(true);
+    setError('');
+    setStreakResetSuccess(false);
+    setIsSaved(false);
+    try {
+      await updateProfile(user.id, {
+        currentStreak: 0,
+        longestStreak: 0
+      });
+      onRefreshUser();
+      setStreakResetSuccess(true);
+    } catch (err: any) {
+      console.error(err);
+      setError('Failed to reset drawing streaks: ' + err.message);
     } finally {
       setSaving(false);
     }
@@ -91,6 +115,13 @@ export default function SettingsView({ user, onRefreshUser }: SettingsViewProps)
           <div className="mb-4 p-3 bg-[#8daa91]/10 border border-[#8daa91]/50 text-[#4e6a53] text-xs rounded-xl font-serif italic flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-[#8daa91] flex-shrink-0" />
             <span>Your notebook coordinates have been sealed successfully!</span>
+          </div>
+        )}
+
+        {streakResetSuccess && (
+          <div className="mb-4 p-3 bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-xl font-serif italic flex items-center gap-2">
+            <Flame className="w-4 h-4 text-amber-600 flex-shrink-0 animate-pulse" />
+            <span>Your active and longest drawing streaks have been reset to zero!</span>
           </div>
         )}
 
@@ -170,6 +201,25 @@ export default function SettingsView({ user, onRefreshUser }: SettingsViewProps)
         </form>
       </div>
 
+      {/* STREAK CALIBRATION */}
+      <div className="mt-6 bg-amber-50/10 border border-amber-200/40 rounded-3xl p-6 sm:p-7 shadow-xs relative">
+        <h4 className="font-serif text-sm font-black text-amber-800 flex items-center gap-2">
+          <Flame className="w-4 h-4 text-amber-600" />
+          <span>Streak Calibration</span>
+        </h4>
+        <p className="text-[11px] font-serif text-[#64748B] mt-1.5 italic leading-relaxed">
+          Need a fresh start? Resetting your current and longest drawing streaks to zero will let you begin your creative journey on a clean slate.
+        </p>
+        <button
+          type="button"
+          onClick={() => setShowStreakConfirm(true)}
+          className="w-full py-2.5 mt-4 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-700 font-serif font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer select-none"
+        >
+          <Flame className="w-4 h-4" />
+          <span>Reset Day Streaks to Zero</span>
+        </button>
+      </div>
+
       {/* DANGER ZONE */}
       <div className="mt-6 bg-red-50/10 border border-red-200/40 rounded-3xl p-6 sm:p-7 shadow-xs relative">
         <h4 className="font-serif text-sm font-black text-red-800 flex items-center gap-2">
@@ -197,6 +247,16 @@ export default function SettingsView({ user, onRefreshUser }: SettingsViewProps)
         type="danger"
         onConfirm={handleDeleteAccount}
         onCancel={() => setShowDeleteConfirm(false)}
+      />
+
+      <ConfirmationModal
+        isOpen={showStreakConfirm}
+        title="Reset Drawing Streaks"
+        message="Are you absolutely sure you want to reset your current and longest drawing streaks to 0? This cannot be undone."
+        confirmLabel="Yes, Reset Streaks"
+        type="danger"
+        onConfirm={handleResetStreak}
+        onCancel={() => setShowStreakConfirm(false)}
       />
     </div>
   );

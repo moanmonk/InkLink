@@ -259,7 +259,7 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
             </span>
           </div>
           <h3 className="font-serif text-lg font-black text-[#2D3748] leading-tight mt-0.5">
-            Season {prompt.season} — Day {prompt.dayOfSeason}/28
+            Today's Parchment
           </h3>
         </div>
 
