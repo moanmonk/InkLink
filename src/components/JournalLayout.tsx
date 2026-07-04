@@ -6,17 +6,7 @@ import { Profile } from '../types';
 export function CuteCatLogo({ size = 40 }: { size?: number }) {
   return (
     <div className="relative flex-shrink-0 select-none pointer-events-none" style={{ width: size, height: size }}>
-      <svg viewBox="0 0 100 100" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-        {/* Paintbrush behind/next to the cat */}
-        <g transform="rotate(25 75 40) translate(15, -10)">
-          {/* Handle */}
-          <rect x="47" y="20" width="6" height="40" rx="3" fill="#D7A15C" stroke="#4e6a53" strokeWidth="2.5" />
-          {/* Ferrule */}
-          <rect x="46" y="14" width="8" height="6" fill="#A0AEC0" stroke="#4e6a53" strokeWidth="2.5" />
-          {/* Tip with pink paint */}
-          <path d="M 46,14 C 46,14 47,2 50,2 C 53,2 54,14 54,14 Z" fill="#EE98AD" stroke="#4e6a53" strokeWidth="2.5" strokeLinejoin="round" />
-        </g>
-
+      <svg viewBox="-8 -8 116 116" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
         {/* Left Ear */}
         <path d="M 30,35 L 14,8 L 44,22 Z" fill="#ffffff" stroke="#4e6a53" strokeWidth="4" strokeLinejoin="round" />
         <path d="M 28,29 L 18,13 L 37,20 Z" fill="#EE98AD" />
@@ -45,6 +35,16 @@ export function CuteCatLogo({ size = 40 }: { size?: number }) {
         {/* Cute whiskers */}
         <path d="M 16,50 L 5,49 M 16,56 L 7,57" stroke="#4e6a53" strokeWidth="2.5" strokeLinecap="round" />
         <path d="M 84,50 L 95,49 M 84,56 L 93,57" stroke="#4e6a53" strokeWidth="2.5" strokeLinecap="round" />
+
+        {/* Paintbrush - beautifully placed and angled, crossing the paw at (76, 62), pointing outwards and away from the face */}
+        <g transform="translate(76, 62) rotate(35)">
+          {/* Handle */}
+          <rect x="-3" y="-5" width="6" height="35" rx="3" fill="#D7A15C" stroke="#4e6a53" strokeWidth="2.5" />
+          {/* Ferrule */}
+          <rect x="-4.5" y="-12" width="9" height="7" fill="#CBD5E1" stroke="#4e6a53" strokeWidth="2.5" />
+          {/* Brush tip with pink paint */}
+          <path d="M -4.5,-12 C -4.5,-12 -6,-28 0,-28 C 6,-28 4.5,-12 4.5,-12 Z" fill="#EE98AD" stroke="#4e6a53" strokeWidth="2.5" strokeLinejoin="round" />
+        </g>
 
         {/* Little paw on the side holding the paintbrush */}
         <circle cx="76" cy="62" r="5" fill="#ffffff" stroke="#4e6a53" strokeWidth="2.5" />
