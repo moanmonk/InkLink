@@ -4,6 +4,7 @@ import { Palette, Trash2, Undo, Circle, Eraser, Download, Check, RefreshCw } fro
 interface SketchCanvasProps {
   onSaveSnapshot: (dataUrl: string) => void;
   savedDrawingUrl?: string;
+  key?: any;
 }
 
 const PALETTE_COLORS = [

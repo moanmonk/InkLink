@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Calendar, Flame, Timer, Compass, Upload, Sparkles, Feather, Image as ImageIcon, Camera, Trash2, MessageSquare } from 'lucide-react';
-import { getPromptForDay, getEncouragementForDay } from '../lib/prompts';
+import { Calendar, Flame, Timer, Compass, Upload, Sparkles, Feather, Image as ImageIcon, Camera, Trash2, MessageSquare, RefreshCw } from 'lucide-react';
+import { getPromptForDay, getEncouragementForDay, generateRandomSidePrompt } from '../lib/prompts';
 import { getSubmission, submitDrawing, deleteSubmission, getFriendsList, getSubmissionsForPrompt, uploadDrawingImage } from '../lib/firebase';
 import { Profile, Submission, Prompt } from '../types';
 import SketchCanvas from './SketchCanvas';
@@ -55,6 +55,11 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
   
   const [timeRemaining, setTimeRemaining] = useState('');
   const [friendsWhoCompleted, setFriendsWhoCompleted] = useState<Profile[]>([]);
+
+  // States for 'Draw on the Side'
+  const [sidePrompt, setSidePrompt] = useState<{ id: string; item: string; type: 'object' | 'animal' | 'live'; challenge: string } | null>(null);
+  const [showSideCanvas, setShowSideCanvas] = useState(false);
+  const [sideCanvasKey, setSideCanvasKey] = useState(0);
 
   // Calculate quote based on dayIndex
   const quote = MOTIVATIONAL_QUOTES[dayIndex % MOTIVATIONAL_QUOTES.length];
@@ -279,7 +284,7 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch flex-grow my-2">
         
         {/* LEFT COLUMN: Prompt Panel or Active Canvas */}
-        <div className="lg:col-span-7 flex flex-col justify-center h-full">
+        <div className="lg:col-span-7 flex flex-col gap-6 justify-start h-full">
           <AnimatePresence mode="wait">
             {!isRevealed ? (
               // UNREVEALED PROMPT CARD
@@ -421,11 +426,6 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                 transition={{ duration: 0.65, type: "spring", stiffness: 90, damping: 15 }}
                 className="bg-white border border-[#CBD5E1] rounded-3xl p-6 sm:p-8 flex flex-col justify-between min-h-[320px] sm:min-h-[380px] shadow-xs relative overflow-hidden"
               >
-                {/* Vintage sticker style indicator */}
-                <div className="absolute top-4 right-4 bg-[#8daa91]/10 text-[#4e6a53] text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded border border-[#CBD5E1]">
-                  {prompt.category}
-                </div>
-
                 <div className="space-y-4">
                   <div>
                     <span className="text-2xs font-mono uppercase tracking-widest text-[#4e6a53]">Today's Scroll Prompt</span>
@@ -521,6 +521,107 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
               </motion.div>
             )}
           </AnimatePresence>
+
+          {submission && (
+            <motion.div 
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-white border border-[#CBD5E1] rounded-3xl p-6 shadow-xs flex flex-col gap-4 mt-2"
+            >
+              <div className="flex items-center justify-between border-b border-[#CBD5E1]/60 pb-3">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-[#8daa91]" />
+                  <h4 className="font-serif text-base font-black text-[#2D3748]">Draw on the Side</h4>
+                </div>
+                <span className="text-[10px] font-mono text-[#4e6a53] uppercase bg-[#8daa91]/15 px-2 py-0.5 rounded-full font-bold">
+                  Bonus Studio
+                </span>
+              </div>
+
+              {!sidePrompt ? (
+                <div className="text-center py-6 space-y-3">
+                  <p className="text-xs text-[#64748B] italic max-w-md mx-auto">
+                    Already finished today's daily scroll? Practice and sketch infinite custom prompts of random objects, live items, or animals to incorporate into your art!
+                  </p>
+                  <button
+                    onClick={() => {
+                      const sp = generateRandomSidePrompt();
+                      setSidePrompt(sp);
+                      setShowSideCanvas(true);
+                    }}
+                    className="px-5 py-2.5 bg-[#8daa91] hover:bg-[#7ba180] text-white font-serif font-bold text-xs rounded-xl shadow-[2px_2px_0_rgba(141,170,145,0.15)] hover:shadow-none translate-y-[-1px] active:translate-y-0 transition-all cursor-pointer select-none"
+                  >
+                    Generate Side Challenge
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {/* Active Side Prompt */}
+                  <div className="bg-[#fbf9f4] border border-[#CBD5E1] p-4 rounded-2xl relative shadow-2xs">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-[9px] font-mono uppercase tracking-widest text-[#8daa91] font-bold">
+                        {sidePrompt.type === 'animal' ? '🐾 Animal Study' : sidePrompt.type === 'live' ? '👀 Live Object' : '🏺 Incorporate Object'}
+                      </span>
+                      <button
+                        onClick={() => {
+                          const sp = generateRandomSidePrompt();
+                          setSidePrompt(sp);
+                          setSideCanvasKey(prev => prev + 1);
+                        }}
+                        className="text-[10px] font-mono text-[#8daa91] hover:text-[#7ba180] flex items-center gap-1 transition-colors cursor-pointer select-none"
+                        title="Roll a different random challenge"
+                      >
+                        <RefreshCw className="w-3 h-3" />
+                        <span>Roll Different</span>
+                      </button>
+                    </div>
+                    <p className="font-serif text-[#2D3748] text-sm font-bold leading-snug">
+                      {sidePrompt.challenge}
+                    </p>
+                  </div>
+
+                  {/* Toggle sketchpad */}
+                  {showSideCanvas && (
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center justify-between text-2xs font-mono text-[#64748B]">
+                        <span>Bonus Canvas</span>
+                        <button 
+                          onClick={() => setSideCanvasKey(prev => prev + 1)}
+                          className="text-[#8daa91] hover:underline cursor-pointer flex items-center gap-1"
+                        >
+                          <Trash2 className="w-3 h-3 text-[#EE98AD]" /> Clear Paper
+                        </button>
+                      </div>
+                      
+                      <div className="border border-[#CBD5E1] rounded-2xl overflow-hidden h-[300px]">
+                        <SketchCanvas 
+                          key={sideCanvasKey}
+                          onSaveSnapshot={(dataUrl) => {
+                            // Ready for saving / exporting
+                          }}
+                        />
+                      </div>
+                      
+                      <div className="flex justify-between items-center mt-1">
+                        <p className="text-[10px] text-[#64748B] italic font-serif">
+                          Use colors, eraser, undo/redo, or download your bonus doodle.
+                        </p>
+                        <button
+                          onClick={() => {
+                            setSidePrompt(null);
+                            setShowSideCanvas(false);
+                          }}
+                          className="px-3.5 py-1.5 rounded-lg border border-[#CBD5E1] hover:bg-stone-100 text-[#2D3748] text-2xs font-serif font-bold transition-all cursor-pointer"
+                        >
+                          Finish Session
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </motion.div>
+          )}
         </div>
 
         {/* RIGHT COLUMN: Clock, Circle completes, motivational quote */}

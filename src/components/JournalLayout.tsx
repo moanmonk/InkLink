@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { BookOpen, Users, Compass, Award, Bell, Settings, ShieldAlert, FileHeart, CalendarRange, LogOut } from 'lucide-react';
 import { Profile } from '../types';
 
-function CuteCatLogo({ size = 40 }: { size?: number }) {
+export function CuteCatLogo({ size = 40 }: { size?: number }) {
   return (
     <div className="relative flex-shrink-0 select-none pointer-events-none" style={{ width: size, height: size }}>
       <svg viewBox="0 0 100 100" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">

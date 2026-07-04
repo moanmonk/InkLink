@@ -29,6 +29,7 @@ export const PROMPT_CATEGORIES = [
   "Historical",
   "Mythology",
   "Seasonal",
+  "Live & Simple Objects",
   "Weekly Unhinged"
 ];
 
@@ -451,6 +452,55 @@ const CATEGORY_VOCABULARY: Record<string, { subjects: string[], situations: stri
       "in the middle of a very quiet library", "on a live television broadcast room", "at a highly professional office board room",
       "in a crowded, modern city street subway", "inside a fancy, five-star restaurant dining room"
     ]
+  },
+  "Live & Simple Objects": {
+    subjects: [
+      "The mug or cup closest to you",
+      "A set of keys resting on a surface",
+      "The view outside your nearest window",
+      "Your current footwear or bare feet",
+      "A houseplant or leaf you can see",
+      "A piece of fruit or a snack",
+      "Your non-dominant hand",
+      "Something made of glass nearby",
+      "A chair or stool in the room",
+      "A pen, pencil, or stationery item",
+      "The light fixture or lamp above you",
+      "An item of clothing draped over something",
+      "Your phone charger or a cable coil",
+      "A bag, backpack, or wallet",
+      "A simple wooden spoon or kitchen tool",
+      "An object that is colored bright blue",
+      "Something metallic and reflective",
+      "The texture of a nearby blanket or fabric",
+      "A simple book stacked on a table",
+      "A water bottle or thermos",
+      "A nearby door handle or lock",
+      "A pair of glasses or sunglasses"
+    ],
+    situations: [
+      "drawn with continuous lines without lifting your pen",
+      "reimagined as if it was 100 years old",
+      "drawn using only hatching and shading",
+      "incorporating a tiny cartoon face",
+      "with wild, exaggerated shadows",
+      "surrounded by a subtle magical glow",
+      "as if it was a sacred relic",
+      "using your non-dominant hand to sketch",
+      "in exactly ten simple lines",
+      "re-imagined in a retro comic book style",
+      "with a small plant or vine growing out of it",
+      "as if it was floating in zero gravity"
+    ],
+    environments: [
+      "right in front of you",
+      "sitting on your desk or table",
+      "bathed in soft, warm indoor lighting",
+      "against a minimal, clean background",
+      "in the quiet room you are currently in",
+      "resting on a wooden surface",
+      "illuminated by a single light source"
+    ]
   }
 };
 
@@ -484,7 +534,16 @@ function pregeneratePrompts(): Prompt[] {
     let situation = vocab.situations[siIdx];
     let environment = vocab.environments[eIdx];
 
-    let title = `${subject} ${situation} ${environment}.`;
+    // Simpler prompt patterns to keep them concise yet high vibe
+    let title = "";
+    const pattern = i % 3;
+    if (pattern === 0) {
+      title = `${subject} ${situation}.`;
+    } else if (pattern === 1) {
+      title = `${subject} ${environment}.`;
+    } else {
+      title = `${subject}.`;
+    }
     title = title.replace(/\s+/g, ' ').replace(/\.+/g, '.').trim();
 
     // Prevent duplicates
@@ -497,7 +556,15 @@ function pregeneratePrompts(): Prompt[] {
       subject = vocab.subjects[sIdx];
       situation = vocab.situations[siIdx];
       environment = vocab.environments[eIdx];
-      title = `${subject} ${situation} ${environment}.`;
+      
+      const p = (i + attempt) % 3;
+      if (p === 0) {
+        title = `${subject} ${situation}.`;
+      } else if (p === 1) {
+        title = `${subject} ${environment}.`;
+      } else {
+        title = `${subject}.`;
+      }
       title = title.replace(/\s+/g, ' ').replace(/\.+/g, '.').trim();
     }
 
@@ -560,3 +627,73 @@ export function getEncouragementForDay(dayIndex: number): string {
   const idx = Math.abs(dayIndex + 42) % ENCOURAGING_MESSAGES.length;
   return ENCOURAGING_MESSAGES[idx];
 }
+
+// Side Draw / Extra Prompts database
+export const ANIMALS_LIST = [
+  "chubby sparrow", "lazy kitten", "curious red fox", "sleepy otter", "tiny hedgehog",
+  "majestic deer", "wise barn owl", "friendly tree frog", "jumping squirrel", "miniature snail",
+  "plump bumblebee", "graceful koi fish", "dancing butterfly", "fluffy bunny", "happy puppy"
+];
+
+export const OBJECTS_LIST = [
+  "ceramic mug", "antique key", "fountain pen", "pocket watch", "folded paper crane",
+  "wooden clothespeg", "worn leather shoe", "shiny glass marble", "vintage matchbox", "silver teaspoon",
+  "braided bookmark", "smooth river stone", "potted succulent", "brass safety pin", "half-eaten apple"
+];
+
+export const LIVE_THINGS_LIST = [
+  "the closest chair", "your own hand", "the pattern on your shirt", "the view outside your window",
+  "the charger cable on your desk", "the lamp or light bulb above", "your water bottle", "the keyboard or keys",
+  "a houseplant or flower", "a book cover nearby", "something bright red in your room", "your coffee or tea cup"
+];
+
+export interface SidePrompt {
+  id: string;
+  item: string;
+  type: 'object' | 'animal' | 'live';
+  challenge: string;
+}
+
+export function generateRandomSidePrompt(): SidePrompt {
+  const categories: ('object' | 'animal' | 'live')[] = ['object', 'animal', 'live'];
+  const type = categories[Math.floor(Math.random() * categories.length)];
+  
+  let item = "";
+  let challenge = "";
+  
+  if (type === 'animal') {
+    item = ANIMALS_LIST[Math.floor(Math.random() * ANIMALS_LIST.length)];
+    const challenges = [
+      `Incorporate a ${item} hiding somewhere in your sketch.`,
+      `Incorporate a ${item} wearing a tiny, fancy hat.`,
+      `Incorporate a ${item} asleep on top of a giant object.`,
+      `Draw a quick study of a ${item} in under 2 minutes.`,
+      `Incorporate a friendly ${item} peeking out from the corner.`
+    ];
+    challenge = challenges[Math.floor(Math.random() * challenges.length)];
+  } else if (type === 'live') {
+    item = LIVE_THINGS_LIST[Math.floor(Math.random() * LIVE_THINGS_LIST.length)];
+    const challenges = [
+      `Look at ${item} in front of you and draw it exactly as it is, focusing on shadows.`,
+      `Look at ${item} in front of you and draw it in a futuristic, sci-fi style.`,
+      `Look at ${item} in front of you and incorporate it as a giant landmark in your drawing.`,
+      `Look at ${item} in front of you and draw it using only continuous, unbroken lines.`
+    ];
+    challenge = challenges[Math.floor(Math.random() * challenges.length)];
+  } else {
+    item = OBJECTS_LIST[Math.floor(Math.random() * OBJECTS_LIST.length)];
+    const challenges = [
+      `Incorporate a ${item} transformed into a magical artifact.`,
+      `Incorporate a ${item} sitting in a strange, unexpected environment.`,
+      `Incorporate a ${item} that has roots or plants growing out of it.`,
+      `Draw a ${item} but make it look like it's made of liquid water or glass.`,
+      `Incorporate a ${item} with a small, adorable face on it.`
+    ];
+    challenge = challenges[Math.floor(Math.random() * challenges.length)];
+  }
+  
+  const id = `side_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+  
+  return { id, item, type, challenge };
+}
+

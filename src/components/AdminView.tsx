@@ -168,9 +168,6 @@ export default function AdminView() {
                 <div key={p.id} className="bg-white border border-stone-200 p-3.5 rounded-3xl flex flex-col justify-between shadow-2xs">
                   <div className="flex items-center justify-between">
                     <span className="text-[9px] font-mono text-stone-400 uppercase tracking-widest">{p.id}</span>
-                    <span className="px-1.5 py-0.5 rounded-lg text-[8px] font-mono uppercase bg-[#fbf9f4] text-stone-500">
-                      {p.category}
-                    </span>
                   </div>
 
                   <p className="font-serif font-bold text-stone-800 text-xs mt-2 leading-tight">
