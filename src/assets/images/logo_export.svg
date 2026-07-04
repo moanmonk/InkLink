@@ -1,0 +1,50 @@
+<svg viewBox="0 0 512 512" width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Elegant warm linen background for the icon -->
+  <rect width="512" height="512" fill="#FAF8F5" rx="112" />
+  
+  <!-- Centered container for the exact in-app logo group -->
+  <g transform="translate(256, 256) scale(3.5) translate(-50, -50)">
+    <!-- Left Ear -->
+    <path d="M 30,35 L 14,8 L 44,22 Z" fill="#ffffff" stroke="#4e6a53" stroke-width="4" stroke-linejoin="round" />
+    <path d="M 28,29 L 18,13 L 37,20 Z" fill="#EE98AD" />
+    
+    <!-- Right Ear -->
+    <path d="M 70,35 L 86,8 L 56,22 Z" fill="#ffffff" stroke="#4e6a53" stroke-width="4" stroke-linejoin="round" />
+    <path d="M 72,29 L 82,13 L 63,20 Z" fill="#EE98AD" />
+    
+    <!-- Cat Head Body -->
+    <path d="M 15,55 C 15,30 85,30 85,55 C 85,75 75,85 50,85 C 25,85 15,75 15,55 Z" fill="#ffffff" stroke="#4e6a53" stroke-width="4" stroke-linejoin="round" />
+    
+    <!-- Blush Cheeks -->
+    <ellipse cx="28" cy="62" rx="7" ry="5" fill="#EE98AD" opacity="0.6" />
+    <ellipse cx="72" cy="62" rx="7" ry="5" fill="#EE98AD" opacity="0.6" />
+    
+    <!-- Eyes (sparkly green/moss eyes) -->
+    <ellipse cx="36" cy="52" rx="4" ry="5" fill="#4e6a53" />
+    <circle cx="34.5" cy="49.5" r="1.5" fill="#ffffff" />
+    
+    <ellipse cx="64" cy="52" rx="4" ry="5" fill="#4e6a53" />
+    <circle cx="62.5" cy="49.5" r="1.5" fill="#ffffff" />
+    
+    <!-- Cute Mouth and Nose -->
+    <path d="M 48,56 L 52,56 L 50,59 Z" fill="#4e6a53" />
+    <path d="M 44,63 C 47,63 50,61 50,59 C 50,61 53,63 56,63" fill="none" stroke="#4e6a53" stroke-width="3" stroke-linecap="round" />
+    
+    <!-- Cute Whiskers -->
+    <path d="M 16,50 L 5,49 M 16,56 L 7,57" stroke="#4e6a53" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M 84,50 L 95,49 M 84,56 L 93,57" stroke="#4e6a53" stroke-width="2.5" stroke-linecap="round" />
+
+    <!-- Paintbrush - pointing outwards beautifully (rotated 35 degrees) -->
+    <g transform="translate(76, 62) rotate(35)">
+      <!-- Handle -->
+      <rect x="-3" y="-5" width="6" height="35" rx="3" fill="#D7A15C" stroke="#4e6a53" stroke-width="2.5" />
+      <!-- Ferrule -->
+      <rect x="-4.5" y="-12" width="9" height="7" fill="#CBD5E1" stroke="#4e6a53" stroke-width="2.5" />
+      <!-- Brush tip with pink paint -->
+      <path d="M -4.5,-12 C -4.5,-12 -6,-28 0,-28 C 6,-28 4.5,-12 4.5,-12 Z" fill="#EE98AD" stroke="#4e6a53" stroke-width="2.5" stroke-linejoin="round" />
+    </g>
+
+    <!-- Little paw on the side holding the paintbrush -->
+    <circle cx="76" cy="62" r="5" fill="#ffffff" stroke="#4e6a53" stroke-width="2.5" />
+  </g>
+</svg>
