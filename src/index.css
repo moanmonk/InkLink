@@ -45,41 +45,31 @@ input, textarea, select {
    Legibility & Readability Optimizations
    ========================================================================== */
 
-/* Keep the natural font weights but enable perfect rendering */
+/* Enable subpixel anti-aliasing and smooth rendering */
 body, .font-sans {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Ensure headings have solid, confident weights */
-h1, h2, h3, h4, h5, h6, .font-serif {
-  font-weight: 800 !important;
-}
-
-/* Make sure helper / small labels are slightly larger and clearer, but not bold/thick */
-.text-xs, .text-2xs, .text-\[10px\], .text-\[11px\], .text-\[9px\] {
-  font-size: 0.85rem !important; /* Scale up small text so it is readable */
-}
-
-/* Scale up text-sm a bit as well */
-.text-sm {
-  font-size: 0.95rem !important;
-}
-
-/* Darken pale text colors for significantly better contrast on light paper, while keeping natural thickness */
-.text-\[\#64748B\], .text-slate-500, .text-stone-500, .text-gray-500, .text-\[\#8C8379\] {
-  color: #334155 !important; /* Stronger dark gray slate for high contrast */
-}
-
-.text-slate-400, .text-stone-400, .text-gray-400, .text-\[\#8C8379\]\/80 {
-  color: #475569 !important; /* Richer gray instead of light pale gray */
-}
-
-.text-stone-600, .text-slate-600, .text-gray-600 {
+/* Darken text slightly for better legibility on high-contrast paper backdrops */
+.text-\[\#2D3748\], .text-stone-800, .text-slate-800, .text-gray-800 {
   color: #1e293b !important;
 }
 
-/* Inputs, textareas, and select elements should be solid and readable */
+/* Keep secondary/helper texts distinct but highly readable, without forcing them bold */
+.text-\[\#64748B\], .text-slate-500, .text-stone-500, .text-gray-500, .text-\[\#8C8379\] {
+  color: #475569 !important; /* High contrast gray-slate */
+}
+
+.text-slate-400, .text-stone-400, .text-gray-400, .text-\[\#8C8379\]\/80 {
+  color: #5c6370 !important;
+}
+
+.text-stone-600, .text-slate-600, .text-gray-600 {
+  color: #334155 !important;
+}
+
+/* Inputs, textareas, and select elements should be highly readable */
 input, textarea, select {
   color: #1e293b !important;
 }
