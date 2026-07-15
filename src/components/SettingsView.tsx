@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Settings, Save, CheckCircle2, User, FileText, Sparkles, Feather, Trash2, AlertTriangle, Flame } from 'lucide-react';
+import { Settings, Save, CheckCircle2, User, FileText, Sparkles, Feather, Trash2, AlertTriangle, Flame, LogOut } from 'lucide-react';
 import { updateProfile, deleteUserAccount } from '../lib/firebase';
 import { Profile } from '../types';
 import ConfirmationModal from './ConfirmationModal';
@@ -9,13 +9,14 @@ import { getPaletteForCategory, getPaletteForUser } from '../lib/colors';
 interface SettingsViewProps {
   user: Profile;
   onRefreshUser: () => void;
+  onLogout?: () => void;
 }
 
 const CATEGORIES = [
   'Character Design', 'Emotion', 'Memories', 'Longing', 'Horror', 'Mystery', 'Fantasy', 'Dreams', 'Atmosphere', 'Storytelling', 'Everyday Life', 'Cinematic', 'Nature', 'Urban', 'Cozy'
 ];
 
-export default function SettingsView({ user, onRefreshUser }: SettingsViewProps) {
+export default function SettingsView({ user, onRefreshUser, onLogout }: SettingsViewProps) {
   const [displayName, setDisplayName] = useState(user.displayName || '');
   const [bio, setBio] = useState(user.bio || '');
   const [favoriteCategory, setFavoriteCategory] = useState(user.favoriteCategory || 'Nature');
@@ -219,6 +220,27 @@ export default function SettingsView({ user, onRefreshUser }: SettingsViewProps)
           <span>Reset Day Streaks to Zero</span>
         </button>
       </div>
+
+      {/* SESSION MANAGEMENT */}
+      {onLogout && (
+        <div className="mt-6 bg-[#fbf9f4] border border-[#CBD5E1] rounded-3xl p-6 sm:p-7 shadow-xs relative">
+          <h4 className="font-serif text-sm font-black text-[#2D3748] flex items-center gap-2">
+            <LogOut className="w-4 h-4 text-[#8daa91]" />
+            <span>Studio Session</span>
+          </h4>
+          <p className="text-[11px] font-serif text-[#64748B] mt-1.5 italic leading-relaxed">
+            Ready to wrap up your drawing session? Sign out to lock your sketchbook securely until your next visit.
+          </p>
+          <button
+            type="button"
+            onClick={onLogout}
+            className="w-full py-2.5 mt-4 rounded-xl bg-white hover:bg-stone-50 border border-[#CBD5E1] text-[#2D3748] font-serif font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer select-none shadow-2xs"
+          >
+            <LogOut className="w-4 h-4 text-red-500" />
+            <span>Sign Out / Exit Studio Session</span>
+          </button>
+        </div>
+      )}
 
       {/* DANGER ZONE */}
       <div className="mt-6 bg-red-50/10 border border-red-200/40 rounded-3xl p-6 sm:p-7 shadow-xs relative">

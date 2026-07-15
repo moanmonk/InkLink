@@ -42,171 +42,51 @@ input, textarea, select {
 }
 
 /* ==========================================================================
-   Cozy Dark Mode (InkLink Midnight Vault) Styling Overrides
+   Legibility & Readability Optimizations
    ========================================================================== */
 
-.dark {
-  color-scheme: dark;
+/* Keep the natural font weights but enable perfect rendering */
+body, .font-sans {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Background & Body level overrides */
-.dark,
-.dark .bg-\[\#fbf9f4\],
-.dark.bg-\[\#fbf9f4\] {
-  background-color: #121310 !important;
-  color: #e2e3dd !important;
+/* Ensure headings have solid, confident weights */
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-weight: 800 !important;
 }
 
-/* Notebook Binder Leather Wrapper */
-.dark .bg-\[\#8daa91\] {
-  background-color: #233526 !important;
+/* Make sure helper / small labels are slightly larger and clearer, but not bold/thick */
+.text-xs, .text-2xs, .text-\[10px\], .text-\[11px\], .text-\[9px\] {
+  font-size: 0.85rem !important; /* Scale up small text so it is readable */
 }
 
-/* Sidebar navigation buttons custom adjustments */
-.dark [id^="tab-btn-"] {
-  color: rgba(255, 255, 255, 0.6) !important;
-}
-.dark [id^="tab-btn-"] svg {
-  color: rgba(255, 255, 255, 0.6) !important;
+/* Scale up text-sm a bit as well */
+.text-sm {
+  font-size: 0.95rem !important;
 }
 
-/* Active tab inside sidebar on desktop/mobile */
-.dark [id^="tab-btn-"].bg-\[\#fbf9f4\] {
-  background-color: #1a1c18 !important;
-  border-color: rgba(255, 255, 255, 0.05) !important;
-}
-.dark [id^="tab-btn-"].bg-\[\#fbf9f4\] span {
-  color: #a5cfa9 !important;
-}
-.dark [id^="tab-btn-"].bg-\[\#fbf9f4\] svg {
-  color: #a5cfa9 !important;
+/* Darken pale text colors for significantly better contrast on light paper, while keeping natural thickness */
+.text-\[\#64748B\], .text-slate-500, .text-stone-500, .text-gray-500, .text-\[\#8C8379\] {
+  color: #334155 !important; /* Stronger dark gray slate for high contrast */
 }
 
-/* Paper Page of the Sketchbook / Cards / Panels */
-.dark .bg-white,
-.dark .bg-white\/90,
-.dark .bg-white\/80 {
-  background-color: #1a1c18 !important;
+.text-slate-400, .text-stone-400, .text-gray-400, .text-\[\#8C8379\]\/80 {
+  color: #475569 !important; /* Richer gray instead of light pale gray */
 }
 
-.dark .bg-\[\#F9F7F2\]\/40 {
-  background-color: rgba(34, 37, 33, 0.4) !important;
-}
-.dark .bg-\[\#F9F7F2\]\/60 {
-  background-color: rgba(34, 37, 33, 0.6) !important;
-}
-.dark .bg-\[\#F9F7F2\],
-.dark .bg-\[\#fbf9f4\]\/40,
-.dark .bg-\[\#fbf9f4\]\/60 {
-  background-color: #222521 !important;
+.text-stone-600, .text-slate-600, .text-gray-600 {
+  color: #1e293b !important;
 }
 
-.dark .bg-[#F8FAFC],
-.dark .bg-stone-50 {
-  background-color: #222521 !important;
+/* Inputs, textareas, and select elements should be solid and readable */
+input, textarea, select {
+  color: #1e293b !important;
 }
 
-/* Borders and dividers */
-.dark .border-\[\#CBD5E1\],
-.dark .border-\[\#C7BFB5\],
-.dark .border-\[\#C7BFB5\]\/60,
-.dark .border-stone-100\/60,
-.dark .border-stone-200 {
-  border-color: #2e322d !important;
+/* Ensure placeholder text is distinct but legible */
+input::placeholder, textarea::placeholder {
+  color: #64748b !important;
 }
 
-/* Dot grid paper background override to match dark theme */
-.dark .bg-\[radial-gradient\(\#CBD5E1_1px\,transparent_1px\)\] {
-  background-image: radial-gradient(#2e322d 1.5px, transparent 1.5px) !important;
-}
 
-/* Text color overrides */
-.dark .text-\[\#2D3748\],
-.dark .text-stone-800,
-.dark .text-stone-700,
-.dark .text-\[\#3E3C3A\],
-.dark .text-[#3E3C3A],
-.dark h1,
-.dark h2,
-.dark h3,
-.dark h4,
-.dark h5 {
-  color: #e2e3dd !important;
-}
-
-.dark .text-\[\#64748B\],
-.dark .text-stone-500,
-.dark .text-\[\#8C8379\],
-.dark .text-stone-400,
-.dark .text-[#8C8379] {
-  color: #90928c !important;
-}
-
-.dark .text-\[\#4e6a53\],
-.dark .text-[#4e6a53],
-.dark .text-\[\#8daa91\] {
-  color: #a5cfa9 !important;
-}
-
-/* Translucent sage green overlays & highlights */
-.dark .bg-\[\#8daa91\]\/10,
-.dark .bg-\[\#8daa91\]\/5,
-.dark .bg-\[\#8daa91\]\/15 {
-  background-color: rgba(165, 207, 169, 0.1) !important;
-}
-
-/* Inputs, Textareas, Selects */
-.dark input,
-.dark textarea,
-.dark select {
-  background-color: #222521 !important;
-  color: #e2e3dd !important;
-  border-color: #2e322d !important;
-  accent-color: #a5cfa9 !important;
-}
-.dark input::placeholder,
-.dark textarea::placeholder {
-  color: #8c8e89 !important;
-}
-
-/* Canvas drawing zone */
-.dark .bg-stone-50 canvas {
-  background-color: #1a1c18 !important;
-}
-
-/* Scrollbars for Dark Theme */
-.dark ::-webkit-scrollbar-thumb {
-  background: #2e322d !important;
-}
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #3e423d !important;
-}
-
-/* Calibrations and alerts */
-.dark .bg-amber-50\/10 {
-  background-color: rgba(217, 119, 6, 0.05) !important;
-}
-.dark .bg-red-50\/10 {
-  background-color: rgba(220, 38, 38, 0.05) !important;
-}
-.dark .text-amber-800 {
-  color: #f59e0b !important;
-}
-.dark .text-red-800 {
-  color: #f87171 !important;
-}
-.dark .bg-red-50 {
-  background-color: rgba(220, 38, 38, 0.15) !important;
-  color: #f87171 !important;
-}
-.dark .border-amber-200 {
-  border-color: rgba(217, 119, 6, 0.2) !important;
-}
-.dark .border-red-200 {
-  border-color: rgba(220, 38, 38, 0.2) !important;
-}
-
-/* Adjusting modals and popups */
-.dark .bg-stone-900\/50 {
-  background-color: rgba(0, 0, 0, 0.7) !important;
-}

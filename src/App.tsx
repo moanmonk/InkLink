@@ -26,19 +26,6 @@ export default function App() {
   const [notifications, setNotifications] = useState<InkNotification[]>([]);
   const [selectedFeedSubId, setSelectedFeedSubId] = useState<string | undefined>(undefined);
   
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-    return localStorage.getItem('inklink_dark_mode') === 'true';
-  });
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('inklink_dark_mode', String(isDarkMode));
-  }, [isDarkMode]);
-  
   // Confirmation dialog states
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showClearNotificationsConfirm, setShowClearNotificationsConfirm] = useState(false);
@@ -180,8 +167,6 @@ export default function App() {
       user={user}
       notificationsCount={unreadNotifications.length}
       onLogout={handleLogout}
-      isDarkMode={isDarkMode}
-      onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
     >
       {/* TODAY'S PAGE TAB */}
       {activeTab === 'today' && (
@@ -342,6 +327,7 @@ export default function App() {
         <SettingsView 
           user={user} 
           onRefreshUser={handleRefreshUser}
+          onLogout={handleLogout}
         />
       )}
 

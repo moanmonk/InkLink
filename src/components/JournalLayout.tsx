@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { BookOpen, Users, Compass, Award, Bell, Settings, ShieldAlert, FileHeart, CalendarRange, LogOut, Sun, Moon } from 'lucide-react';
+import { BookOpen, Users, Compass, Award, Bell, Settings, ShieldAlert, FileHeart, CalendarRange, LogOut } from 'lucide-react';
 import { Profile } from '../types';
 
 export function CuteCatLogo({ size = 40 }: { size?: number }) {
@@ -60,8 +60,6 @@ interface JournalLayoutProps {
   user: Profile | null;
   notificationsCount: number;
   onLogout: () => void;
-  isDarkMode: boolean;
-  onToggleDarkMode: () => void;
 }
 
 export default function JournalLayout({
@@ -70,9 +68,7 @@ export default function JournalLayout({
   setActiveTab,
   user,
   notificationsCount,
-  onLogout,
-  isDarkMode,
-  onToggleDarkMode
+  onLogout
 }: JournalLayoutProps) {
   
   const tabs = [
@@ -82,7 +78,6 @@ export default function JournalLayout({
     { id: 'friends', label: 'My Circle', icon: Users, color: '#E3C57A', textClass: 'text-[#8F7124]' },
     { id: 'profile', label: 'Sketchbook', icon: FileHeart, color: '#EE98AD', textClass: 'text-[#B2455D]' },
     { id: 'notifications', label: 'Letterbox', icon: Bell, badge: notificationsCount, color: '#EFA694', textClass: 'text-[#B85741]' },
-    { id: 'settings', label: 'Settings', icon: Settings, color: '#859EBA', textClass: 'text-[#4A6482]' },
   ];
 
   if (user && user.role === 'admin') {
@@ -176,28 +171,7 @@ export default function JournalLayout({
               );
             })}
             
-            {user && (
-              <button
-                onClick={onLogout}
-                className="flex flex-col items-center justify-center md:hidden gap-0.5 px-1 sm:px-3 py-1 rounded-xl text-[9px] font-sans font-bold transition-all duration-300 relative select-none cursor-pointer flex-grow text-white/80 hover:text-white hover:bg-white/5"
-                title="Sign Out"
-                id="tab-btn-logout"
-              >
-                <LogOut className="w-4 h-4 text-white/80" />
-                <span>Exit</span>
-              </button>
-            )}
           </nav>
-
-          {/* Logout Button */}
-          {user && (
-            <button
-              onClick={onLogout}
-              className="hidden md:block mt-auto text-white/80 hover:text-white text-2xs font-mono tracking-widest uppercase py-1.5 px-3 border border-white/20 hover:border-white/50 rounded-xl transition-all cursor-pointer text-center mx-1 select-none"
-            >
-              Sign Out
-            </button>
-          )}
         </div>
 
         {/* Paper Page of the Sketchbook */}
@@ -212,30 +186,36 @@ export default function JournalLayout({
           {/* Faint dot-grid paper background */}
           <div className="absolute inset-0 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:16px_16px] opacity-20 pointer-events-none" />
 
-          {/* Desktop theme toggle button in the top right corner of the paper page */}
-          <div className="absolute top-4 right-4 z-30 hidden md:block">
-            <button
-              onClick={onToggleDarkMode}
-              className="p-1.5 rounded-xl bg-[#fbf9f4] hover:bg-stone-200 border border-[#CBD5E1]/60 transition-all flex items-center justify-center cursor-pointer shadow-2xs hover:scale-105 active:scale-95"
-              title="Toggle Dark Mode"
-            >
-              {isDarkMode ? <Sun className="w-4 h-4 text-amber-500 fill-amber-500" /> : <Moon className="w-4 h-4 text-indigo-500 fill-indigo-500" />}
-            </button>
-          </div>
+          {/* Desktop Settings button in the top right corner of the paper page */}
+          {user && (
+            <div className="absolute top-4 right-4 z-30 hidden md:block">
+              <button
+                onClick={() => setActiveTab('settings')}
+                className={`p-1.5 rounded-xl border transition-all flex items-center justify-center cursor-pointer shadow-2xs hover:scale-105 active:scale-95 ${
+                  activeTab === 'settings'
+                    ? 'bg-[#8daa91] text-white border-transparent shadow-inner'
+                    : 'bg-[#fbf9f4] hover:bg-stone-200 text-[#8daa91] border-[#CBD5E1]/60'
+                }`}
+                title="Settings"
+              >
+                <Settings className="w-4 h-4" />
+              </button>
+            </div>
+          )}
 
           {/* Mobile top logo header with cute cat with brush and no social challenge line */}
           <div className="md:hidden flex items-center justify-between border-b border-stone-100/60 pb-3 pt-[calc(12px+env(safe-area-inset-top))] px-5 bg-white relative z-20">
             <div className="flex items-center gap-2.5">
-              <CuteCatLogo size={36} />
+              <CuteCatLogo size={42} />
               <span className="font-serif font-black text-[#8daa91] text-base tracking-wide leading-none">InkLink</span>
             </div>
             {user && (
               <button
-                onClick={onToggleDarkMode}
-                className="p-2 rounded-full bg-[#8daa91]/10 hover:bg-[#8daa91]/20 border border-[#8daa91]/10 flex items-center justify-center cursor-pointer transition-all active:scale-95 text-[#4e6a53]"
-                title="Toggle Dark Mode"
+                onClick={() => setActiveTab('settings')}
+                className="p-1.5 rounded-xl bg-stone-50 hover:bg-stone-100 border border-[#CBD5E1]/60 transition-all flex items-center justify-center cursor-pointer shadow-2xs hover:scale-105 active:scale-95 text-[#8daa91]"
+                title="Settings"
               >
-                {isDarkMode ? <Sun className="w-4 h-4 text-amber-500 fill-amber-500" /> : <Moon className="w-4 h-4 text-indigo-500 fill-indigo-500" />}
+                <Settings className="w-4 h-4" />
               </button>
             )}
           </div>
