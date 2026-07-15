@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { CalendarRange, Flame, Award, Image as ImageIcon, Download, Star, Sparkles, Feather, Clock, CheckCircle } from 'lucide-react';
+import { CalendarRange, Flame, Award, Image as ImageIcon, Download, Star, Sparkles, Feather, Clock, CheckCircle, Users, Heart, Trophy, Paintbrush } from 'lucide-react';
 import { getProfileSubmissions, getFriendsList } from '../lib/firebase';
 import { Profile, Submission } from '../types';
 
@@ -14,7 +14,13 @@ const MILESTONES = [
   { id: 'first', title: 'First Pigment', desc: 'Inked your very first daily sketch.', icon: Sparkles, color: 'text-amber-600 bg-amber-50 border-amber-200' },
   { id: 'streak3', title: 'Loyal Scribe', desc: 'Maintained a 3-day drawing streak.', icon: Flame, color: 'text-orange-600 bg-orange-50 border-orange-200' },
   { id: 'streak7', title: 'Enlightened Scribe', desc: 'Maintained a 7-day drawing streak.', icon: Flame, color: 'text-red-600 bg-red-50 border-red-200' },
+  { id: 'streak14', title: 'Vanguard Artist', desc: 'Maintained a 14-day drawing streak.', icon: Trophy, color: 'text-purple-600 bg-purple-50 border-purple-200' },
+  { id: 'streak30', title: 'Grandmaster Scribe', desc: 'Maintained a 30-day drawing streak.', icon: Paintbrush, color: 'text-rose-600 bg-rose-50 border-rose-200' },
+  { id: 'prolific5', title: 'Gallery Curator', desc: 'Inked 5 or more drawings in your sketchbook.', icon: ImageIcon, color: 'text-teal-600 bg-teal-50 border-teal-200' },
+  { id: 'master10', title: 'Visual Novelist', desc: 'Inked 10 or more drawings in your sketchbook.', icon: Feather, color: 'text-indigo-600 bg-indigo-50 border-indigo-200' },
   { id: 'critic', title: 'Art Appreciator', desc: 'Left supportive star ratings for friends.', icon: Star, color: 'text-yellow-600 bg-yellow-50 border-yellow-200' },
+  { id: 'circle_initiate', title: 'Circle Initiate', desc: 'Connected with at least 1 friend in your Circle.', icon: Users, color: 'text-sky-600 bg-sky-50 border-sky-200' },
+  { id: 'social_catalyst', title: 'Social Catalyst', desc: 'Connected with 3 or more friends in your Circle.', icon: Heart, color: 'text-pink-600 bg-pink-50 border-pink-200' },
   { id: 'challenge', title: 'Duel Master', desc: 'Participated in a private challenge.', icon: Award, color: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
 ];
 
@@ -180,7 +186,13 @@ export default function ProfileView({ user, onRefreshUser, onSelectSubmissionInF
     if (m.id === 'first') return submissions.length >= 1;
     if (m.id === 'streak3') return user.longestStreak >= 3;
     if (m.id === 'streak7') return user.longestStreak >= 7;
-    if (m.id === 'critic') return submissions.some(s => s.ratingsCount > 0); // simplification
+    if (m.id === 'streak14') return user.longestStreak >= 14;
+    if (m.id === 'streak30') return user.longestStreak >= 30;
+    if (m.id === 'prolific5') return submissions.length >= 5;
+    if (m.id === 'master10') return submissions.length >= 10;
+    if (m.id === 'critic') return submissions.some(s => s.ratingsCount > 0);
+    if (m.id === 'circle_initiate') return friendsCount >= 1;
+    if (m.id === 'social_catalyst') return friendsCount >= 3;
     if (m.id === 'challenge') return true; // always show for fun
     return false;
   });
