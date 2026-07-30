@@ -5,50 +5,17 @@ import { Profile } from '../types';
 
 export function CuteCatLogo({ size = 40 }: { size?: number }) {
   return (
-    <div className="relative flex-shrink-0 select-none pointer-events-none" style={{ width: size, height: size }}>
-      <svg viewBox="-8 -8 116 116" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-        {/* Left Ear */}
-        <path d="M 30,35 L 14,8 L 44,22 Z" fill="#ffffff" stroke="#4e6a53" strokeWidth="4" strokeLinejoin="round" />
-        <path d="M 28,29 L 18,13 L 37,20 Z" fill="#EE98AD" />
-
-        {/* Right Ear */}
-        <path d="M 70,35 L 86,8 L 56,22 Z" fill="#ffffff" stroke="#4e6a53" strokeWidth="4" strokeLinejoin="round" />
-        <path d="M 72,29 L 82,13 L 63,20 Z" fill="#EE98AD" />
-
-        {/* Head/Face */}
-        <path d="M 20,48 C 20,30 32,24 50,24 C 68,24 80,30 80,48 C 80,66 72,82 50,82 C 28,82 20,66 20,48 Z" fill="#ffffff" stroke="#4e6a53" strokeWidth="4" strokeLinejoin="round" />
-
-        {/* Eyes */}
-        <circle cx="38" cy="46" r="5" fill="#2D3748" />
-        <circle cx="62" cy="46" r="5" fill="#2D3748" />
-        {/* Eye highlights */}
-        <circle cx="36" cy="44" r="1.5" fill="#ffffff" />
-        <circle cx="60" cy="44" r="1.5" fill="#ffffff" />
-
-        {/* Blushing cheeks */}
-        <circle cx="29" cy="54" r="4.5" fill="#EE98AD" opacity="0.65" />
-        <circle cx="71" cy="54" r="4.5" fill="#EE98AD" opacity="0.65" />
-
-        {/* Cute mouth (W shape) */}
-        <path d="M 44,52 Q 47,55 50,52 Q 53,55 56,52" fill="none" stroke="#2D3748" strokeWidth="3" strokeLinecap="round" />
-
-        {/* Cute whiskers */}
-        <path d="M 16,50 L 5,49 M 16,56 L 7,57" stroke="#4e6a53" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M 84,50 L 95,49 M 84,56 L 93,57" stroke="#4e6a53" strokeWidth="2.5" strokeLinecap="round" />
-
-        {/* Paintbrush - beautifully placed and angled, crossing the paw at (76, 62), pointing outwards and away from the face */}
-        <g transform="translate(76, 62) rotate(35)">
-          {/* Handle */}
-          <rect x="-3" y="-5" width="6" height="35" rx="3" fill="#D7A15C" stroke="#4e6a53" strokeWidth="2.5" />
-          {/* Ferrule */}
-          <rect x="-4.5" y="-12" width="9" height="7" fill="#CBD5E1" stroke="#4e6a53" strokeWidth="2.5" />
-          {/* Brush tip with pink paint */}
-          <path d="M -4.5,-12 C -4.5,-12 -6,-28 0,-28 C 6,-28 4.5,-12 4.5,-12 Z" fill="#EE98AD" stroke="#4e6a53" strokeWidth="2.5" strokeLinejoin="round" />
-        </g>
-
-        {/* Little paw on the side holding the paintbrush */}
-        <circle cx="76" cy="62" r="5" fill="#ffffff" stroke="#4e6a53" strokeWidth="2.5" />
-      </svg>
+    <div className="relative flex-shrink-0 select-none pointer-events-none rounded-2xl overflow-hidden shadow-xs border border-white/20" style={{ width: size, height: size }}>
+      <img
+        src="/apple-touch-icon-180x180.png"
+        alt="InkLink Logo"
+        className="w-full h-full object-cover"
+        referrerPolicy="no-referrer"
+        onError={(e) => {
+          // Fallback if image fails
+          (e.target as HTMLElement).style.display = 'none';
+        }}
+      />
     </div>
   );
 }
