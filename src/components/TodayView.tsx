@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Calendar, Flame, Timer, Compass, Upload, Sparkles, Feather, Image as ImageIcon, Camera, Trash2, MessageSquare, RefreshCw } from 'lucide-react';
+import { Calendar, Flame, Timer, Compass, Upload, Sparkles, Feather, Image as ImageIcon, Camera, Trash2, MessageSquare, RefreshCw, Dices, Layers } from 'lucide-react';
 import { getPromptForDay, getEncouragementForDay, generateRandomSidePrompt } from '../lib/prompts';
+import { REFERENCE_GALLERY, ReferenceImage } from '../lib/references';
 import { getSubmission, submitDrawing, deleteSubmission, getFriendsList, getSubmissionsForPrompt, uploadDrawingImage } from '../lib/firebase';
 import { Profile, Submission, Prompt } from '../types';
 import SketchCanvas from './SketchCanvas';
@@ -26,12 +27,6 @@ const MOTIVATIONAL_QUOTES = [
 ];
 
 export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: TodayViewProps) {
-  // Compute current day index based on the number of days since joined date or just absolute calendars,
-  // Let's do a deterministic index based on joinedDate to give each user their personal journey,
-  // or a shared global day so all friends get the EXACT SAME prompt each day!
-  // "Friends react, rate and comment... Users receive one drawing prompt every day. A new season begins afterwards (28 days)."
-  // To make it social and synchronous for friends, we should base the Day Index on the global calendar date!
-  // This guarantees all friends share the SAME daily prompt! This is extremely smart for private circles!
   const today = new Date();
   const startOfYear2026 = new Date('2026-01-01T00:00:00');
   const msDiff = today.getTime() - startOfYear2026.getTime();
@@ -39,6 +34,13 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
 
   const prompt: Prompt = getPromptForDay(dayIndex);
   
+  const [selectedTier, setSelectedTier] = useState<'simple' | 'creative' | 'artsy' | 'advanced'>('creative');
+  const [activePromptText, setActivePromptText] = useState(
+    prompt.options?.creative?.text || prompt.text
+  );
+  const [selectedReferenceUrl, setSelectedReferenceUrl] = useState<string | undefined>(prompt.referenceUrl);
+  const [showRefZoomModal, setShowRefZoomModal] = useState(false);
+
   const [isRevealed, setIsRevealed] = useState(false);
   const [submission, setSubmission] = useState<Submission | null>(null);
   const [loading, setLoading] = useState(true);
@@ -60,6 +62,18 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
   const [sidePrompt, setSidePrompt] = useState<{ id: string; item: string; type: 'object' | 'animal' | 'live'; challenge: string } | null>(null);
   const [showSideCanvas, setShowSideCanvas] = useState(false);
   const [sideCanvasKey, setSideCanvasKey] = useState(0);
+
+  // Sync active prompt text when tier or prompt changes
+  useEffect(() => {
+    if (prompt.options && prompt.options[selectedTier]) {
+      setActivePromptText(prompt.options[selectedTier].text);
+    } else {
+      setActivePromptText(prompt.text);
+    }
+    if (prompt.referenceUrl) {
+      setSelectedReferenceUrl(prompt.referenceUrl);
+    }
+  }, [selectedTier, prompt]);
 
   // Calculate quote based on dayIndex
   const quote = MOTIVATIONAL_QUOTES[dayIndex % MOTIVATIONAL_QUOTES.length];
@@ -200,7 +214,7 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
       const sub = await submitDrawing(
         user.id,
         prompt.id,
-        prompt.text,
+        activePromptText || prompt.text,
         season,
         dayOfSeason,
         finalImg,
@@ -336,6 +350,7 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                   onSaveSnapshot={(data) => {
                     setUploadFileBase64(data);
                   }}
+                  referenceImageUrl={selectedReferenceUrl}
                 />
 
                 {uploadFileBase64 && (
@@ -417,30 +432,106 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
                 </div>
               </motion.div>
             ) : (
-              // REVEALED PROMPT CARD (AWAITING UPLOAD/SKETCH)
+              // REVEALED PROMPT CARD (WITH TIER SELECTION & INTEGRATED VISUAL REFERENCE)
               <motion.div
                 key="revealed"
                 style={{ originX: 0, transformPerspective: 1000 }}
                 initial={{ rotateY: 85, opacity: 0, scale: 0.95 }}
                 animate={{ rotateY: 0, opacity: 1, scale: 1 }}
                 transition={{ duration: 0.65, type: "spring", stiffness: 90, damping: 15 }}
-                className="bg-white border border-[#CBD5E1] rounded-3xl p-6 sm:p-8 flex flex-col justify-between min-h-[320px] sm:min-h-[380px] shadow-xs relative overflow-hidden"
+                className="bg-white border border-[#CBD5E1] rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-xs relative overflow-hidden gap-6"
               >
+                {/* PROMPT TIER SELECTION BAR */}
                 <div className="space-y-4">
-                  <div>
-                    <span className="text-2xs font-mono uppercase tracking-widest text-[#4e6a53]">Today's Scroll Prompt</span>
-                    <h4 className="font-serif text-xl sm:text-2xl font-black text-[#2D3748] mt-1 leading-snug">
-                      {prompt.text}
-                    </h4>
-                    {/* Cozy encouraging message */}
-                    <p className="text-2xs text-[#4e6a53] font-serif italic mt-3 bg-[#8daa91]/5 px-3 py-1.5 rounded-xl border border-[#8daa91]/10 inline-block">
-                      ✨ {getEncouragementForDay(dayIndex)}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#CBD5E1]/60 pb-3">
+                    <div>
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#4e6a53] font-bold">Today's Daily Challenge</span>
+                      <h4 className="font-serif text-sm font-bold text-[#2D3748]">Choose Prompt Style</h4>
+                    </div>
+
+                    {/* Tier selector pills */}
+                    <div className="flex items-center gap-1 bg-[#F8FAFC] p-1 rounded-2xl border border-[#CBD5E1]/70 overflow-x-auto">
+                      {(['simple', 'creative', 'artsy', 'advanced'] as const).map(tier => {
+                        const isSel = selectedTier === tier;
+                        const opt = prompt.options?.[tier];
+                        const label = tier === 'simple' ? 'Simple' : tier === 'creative' ? 'Creative' : tier === 'artsy' ? 'Artsy' : 'Advanced';
+                        return (
+                          <button
+                            key={tier}
+                            onClick={() => setSelectedTier(tier)}
+                            className={`px-2.5 py-1 rounded-xl text-2xs font-serif font-bold transition-all whitespace-nowrap cursor-pointer select-none ${
+                              isSel 
+                                ? 'bg-[#8daa91] text-white shadow-xs' 
+                                : 'text-[#64748B] hover:text-[#2D3748] hover:bg-stone-200/50'
+                            }`}
+                          >
+                            {opt?.badge || label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* ACTIVE PROMPT DISPLAY */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#8daa91]/15 text-[#4e6a53] text-[10px] font-mono font-bold uppercase tracking-wider">
+                        {prompt.options?.[selectedTier]?.badge || prompt.category}
+                      </span>
+                      <span className="text-[10px] font-mono text-[#64748B]">Category: {prompt.category}</span>
+                    </div>
+
+                    <h3 className="font-serif text-xl sm:text-2xl font-black text-[#2D3748] leading-snug">
+                      {activePromptText}
+                    </h3>
+
+                    <p className="text-xs text-[#64748B] font-serif italic">
+                      {prompt.options?.[selectedTier]?.description || getEncouragementForDay(dayIndex)}
                     </p>
                   </div>
                 </div>
 
+                {/* BASIC VISUAL REFERENCE CARD */}
+                {prompt.referenceUrl && (
+                  <div className="bg-[#FAF8F5] p-3.5 sm:p-4 rounded-2xl border border-[#E2E8F0] flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
+                    <div 
+                      onClick={() => setShowRefZoomModal(true)}
+                      className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-stone-200 border border-[#CBD5E1] flex-shrink-0 relative group cursor-pointer shadow-xs"
+                      title="Click to expand reference photo"
+                    >
+                      <img src={prompt.referenceUrl} alt="ref" className="w-full h-full object-cover group-hover:scale-105 transition-transform" referrerPolicy="no-referrer" />
+                      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span className="text-[9px] font-serif text-white bg-black/60 px-1.5 py-0.5 rounded">Zoom</span>
+                      </div>
+                    </div>
+
+                    <div className="flex-grow space-y-1 text-center sm:text-left">
+                      <div className="flex items-center justify-center sm:justify-start gap-1.5">
+                        <ImageIcon className="w-3.5 h-3.5 text-[#8daa91]" />
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-[#8daa91] font-bold">Daily Visual Reference</span>
+                      </div>
+                      <h5 className="font-serif font-bold text-xs text-[#2D3748] leading-tight">
+                        {prompt.referenceTitle || 'Botanical Ink Inspiration'}
+                      </h5>
+                      <p className="text-[11px] font-serif italic text-[#64748B] leading-snug">
+                        💡 {prompt.referenceTip || 'Focus on organic line weight & soft shading values.'}
+                      </p>
+
+                      <button
+                        onClick={() => {
+                          setSelectedReferenceUrl(prompt.referenceUrl);
+                          setShowCanvasMode(true);
+                        }}
+                        className="mt-1 text-[10px] font-mono text-[#8daa91] font-bold hover:underline flex items-center justify-center sm:justify-start gap-1 cursor-pointer"
+                      >
+                        <span>Draw with this reference image →</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
                 {/* Draw or Upload Selector */}
-                <div className="space-y-3 mt-6">
+                <div className="space-y-3 mt-2">
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <button
                       onClick={() => setShowCanvasMode(true)}
@@ -624,7 +715,7 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
           )}
         </div>
 
-        {/* RIGHT COLUMN: Clock, Circle completes, motivational quote */}
+        {/* RIGHT COLUMN: Clock, Circle completes, Reference Gallery, Games */}
         <div className="lg:col-span-5 flex flex-col justify-between gap-5">
           
           {/* RITUAL COUNTDOWN CLOCK */}
@@ -711,6 +802,69 @@ export default function TodayView({ user, onNavigateToFeed, onRefreshUser }: Tod
         onConfirm={handleDeleteConfirmed}
         onCancel={() => setShowDeleteConfirm(false)}
       />
+
+      {/* Visual Reference Zoom Lightbox Modal */}
+      <AnimatePresence>
+        {showRefZoomModal && prompt.referenceUrl && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowRefZoomModal(false)}
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4 cursor-pointer"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-3xl p-4 max-w-lg w-full overflow-hidden shadow-2xl space-y-3 relative border border-[#CBD5E1]"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] font-mono text-[#8daa91] uppercase tracking-widest font-bold">Daily Visual Reference</span>
+                  <h4 className="font-serif font-bold text-sm text-[#2D3748]">{prompt.referenceTitle || 'Drawing Reference'}</h4>
+                </div>
+                <button
+                  onClick={() => setShowRefZoomModal(false)}
+                  className="w-7 h-7 rounded-full bg-stone-100 text-[#64748B] hover:text-[#2D3748] flex items-center justify-center font-bold text-xs"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="max-h-[60vh] rounded-2xl overflow-hidden border border-stone-200 bg-stone-900 flex items-center justify-center">
+                <img src={prompt.referenceUrl} alt="ref-zoom" className="w-full h-full object-contain" referrerPolicy="no-referrer" />
+              </div>
+
+              {prompt.referenceTip && (
+                <p className="text-xs font-serif italic text-[#64748B] bg-[#FAF8F5] p-2.5 rounded-xl border border-stone-200">
+                  💡 {prompt.referenceTip}
+                </p>
+              )}
+
+              <div className="flex justify-end gap-2 pt-1">
+                <button
+                  onClick={() => setShowRefZoomModal(false)}
+                  className="px-4 py-1.5 text-xs font-serif text-[#64748B] hover:text-[#2D3748]"
+                >
+                  Close
+                </button>
+                <button
+                  onClick={() => {
+                    setShowRefZoomModal(false);
+                    setSelectedReferenceUrl(prompt.referenceUrl);
+                    setShowCanvasMode(true);
+                  }}
+                  className="px-4 py-1.5 bg-[#8daa91] hover:bg-[#7ba180] text-white font-serif font-bold text-xs rounded-xl shadow-xs cursor-pointer"
+                >
+                  Sketch with this Reference
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

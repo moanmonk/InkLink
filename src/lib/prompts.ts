@@ -1,4 +1,5 @@
 import { Prompt } from '../types';
+import { REFERENCE_GALLERY } from './references';
 
 // Deterministic pseudorandom generator based on a seed
 function seedRandom(seed: number) {
@@ -570,11 +571,52 @@ function pregeneratePrompts(): Prompt[] {
 
     seenTitles.add(title);
 
+    const refIndex = i % REFERENCE_GALLERY.length;
+    const ref = REFERENCE_GALLERY[refIndex];
+
+    const simpleText = `Minimalist Line Study: ${subject}. Focus on a 3-minute contour outline with clean line weight.`;
+    const creativeText = `Pinterest Whimsy: ${subject} ${situation} with cozy storybook details & botanical motifs.`;
+    const artsyText = `Expressive Ink Wash: ${subject} with rich ink cross-hatching and fluid watercolor tones.`;
+    const advancedText = `Atmospheric Masterpiece: ${subject} ${environment}, featuring a complete scene composition with ambient light.`;
+
     prompts.push({
       id: `prompt_${i}`,
       title,
-      text: title, // Keep duplicate alias for perfect compatibility
-      category
+      text: title, // Main default prompt
+      category,
+      referenceUrl: ref.imageUrl,
+      referenceTitle: ref.title,
+      referenceTip: ref.artistNote,
+      options: {
+        simple: {
+          key: 'simple',
+          label: 'Simple Sketch',
+          badge: '🌿 Minimal & Quick',
+          text: simpleText,
+          description: '3-5 min warm-up focusing on clean outlines and essential silhouettes without heavy shading.'
+        },
+        creative: {
+          key: 'creative',
+          label: 'Creative Whimsy',
+          badge: '🎨 Story & Detail',
+          text: creativeText,
+          description: 'Aesthetic Pinterest storybook style with whimsical botanical elements and playful textures.'
+        },
+        artsy: {
+          key: 'artsy',
+          label: 'Artsy Ink Wash',
+          badge: '✒️ Ink & Contrast',
+          text: artsyText,
+          description: 'Focus on dramatic value contrast, cross-hatching, and fluid ink or watercolor washes.'
+        },
+        advanced: {
+          key: 'advanced',
+          label: 'Atmospheric Scene',
+          badge: '🌌 Full Masterpiece',
+          text: advancedText,
+          description: 'Complete composition with background depth, environmental lighting, and detailed narrative.'
+        }
+      }
     });
   }
 

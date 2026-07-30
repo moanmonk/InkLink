@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { LogIn, UserPlus, Mail, Lock, Feather, KeyRound } from 'lucide-react';
 import { signUpUser, signInUser } from '../lib/firebase';
-import { CuteCatLogo } from './JournalLayout';
+import { AppLogo } from './JournalLayout';
 
 interface AuthViewProps {
   onAuthSuccess: (userProfile: any) => void;
@@ -54,7 +54,7 @@ export default function AuthView({ onAuthSuccess }: AuthViewProps) {
         {/* Visual Brand Header */}
         <div className="text-center mb-6 relative z-10">
           <div className="flex justify-center mb-1">
-            <CuteCatLogo size={72} />
+            <AppLogo size={72} />
           </div>
           <h2 className="text-2xl font-serif font-black text-[#2D3748] mt-2 tracking-tight">
             {isLogin ? 'Open Your Journal' : 'Create New Sketchbook'}

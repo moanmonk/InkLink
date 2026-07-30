@@ -11,11 +11,34 @@ export interface Profile {
   role: 'user' | 'admin';
 }
 
+export interface PromptOption {
+  key: 'simple' | 'creative' | 'artsy' | 'advanced';
+  label: string;
+  badge: string;
+  text: string;
+  description: string;
+}
+
+export interface PromptReference {
+  imageUrl: string;
+  title: string;
+  artistNote: string;
+}
+
 export interface Prompt {
   id: string;
   title: string;
-  text: string; // Keep text as alias to prevent breaking other components
+  text: string; // Keep text as alias to prevent breaking existing components
   category: string;
+  referenceUrl?: string;
+  referenceTitle?: string;
+  referenceTip?: string;
+  options?: {
+    simple: PromptOption;
+    creative: PromptOption;
+    artsy: PromptOption;
+    advanced: PromptOption;
+  };
 }
 
 export interface Submission {

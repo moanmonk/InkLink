@@ -1,24 +1,36 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { BookOpen, Users, Compass, Award, Bell, Settings, ShieldAlert, FileHeart, CalendarRange, LogOut } from 'lucide-react';
+import { BookOpen, Users, Compass, Award, Bell, Settings, ShieldAlert, FileHeart, CalendarRange, LogOut, Feather, PenTool } from 'lucide-react';
 import { Profile } from '../types';
+import artsyLogoImg from '../assets/images/inklink_artsy_icon_1785448409739.jpg';
 
-export function CuteCatLogo({ size = 40 }: { size?: number }) {
+export function AppLogo({ size = 40, className = "" }: { size?: number; className?: string }) {
+  const [hasError, setHasError] = React.useState(false);
+
   return (
-    <div className="relative flex-shrink-0 select-none pointer-events-none rounded-2xl overflow-hidden shadow-xs border border-white/20" style={{ width: size, height: size }}>
-      <img
-        src="/apple-touch-icon-180x180.png"
-        alt="InkLink Logo"
-        className="w-full h-full object-cover"
-        referrerPolicy="no-referrer"
-        onError={(e) => {
-          // Fallback if image fails
-          (e.target as HTMLElement).style.display = 'none';
-        }}
-      />
+    <div 
+      className={`relative flex-shrink-0 select-none rounded-2xl overflow-hidden shadow-md border border-white/40 bg-[#8daa91] flex items-center justify-center ${className}`} 
+      style={{ width: size, height: size }}
+    >
+      {!hasError ? (
+        <img
+          src={artsyLogoImg}
+          alt="InkLink Logo"
+          className="w-full h-full object-cover rounded-2xl"
+          referrerPolicy="no-referrer"
+          onError={() => setHasError(true)}
+        />
+      ) : (
+        <div className="w-full h-full bg-gradient-to-br from-[#8daa91] via-[#78967c] to-[#5d7a61] flex items-center justify-center text-white p-2">
+          <PenTool className="w-2/3 h-2/3 text-amber-100 drop-shadow-sm" />
+        </div>
+      )}
     </div>
   );
 }
+
+// Backwards compatibility alias
+export const CuteCatLogo = AppLogo;
 
 interface JournalLayoutProps {
   children: React.ReactNode;
@@ -73,9 +85,9 @@ export default function JournalLayout({
         {/* Sidebar/Navigation Bookmarks */}
         <div className="w-full md:w-56 flex flex-row md:flex-col justify-between items-center md:items-stretch py-1.5 pb-[calc(8px+env(safe-area-inset-bottom))] pt-1.5 px-2.5 md:px-2 md:py-6 bg-[#8daa91] md:bg-white/15 rounded-none md:rounded-2xl md:rounded-r-none relative z-10 md:mr-1 border-t md:border-t-0 md:border-r border-white/10 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] md:shadow-none">
           
-          {/* Logo Brand area (Moss Green aesthetic) with cute cat with brush */}
+          {/* Logo Brand area (Moss Green aesthetic) */}
           <div className="hidden md:flex flex-col items-center mb-6 px-2">
-            <CuteCatLogo size={60} />
+            <AppLogo size={60} />
             <h1 className="mt-2 text-white font-serif font-black text-xl tracking-wider">InkLink</h1>
           </div>
 
@@ -170,10 +182,10 @@ export default function JournalLayout({
             </div>
           )}
 
-          {/* Mobile top logo header with cute cat with brush and no social challenge line */}
+          {/* Mobile top logo header */}
           <div className="md:hidden flex items-center justify-between border-b border-stone-100/60 pb-3 pt-[calc(12px+env(safe-area-inset-top))] px-5 bg-white relative z-20">
             <div className="flex items-center gap-2.5">
-              <CuteCatLogo size={42} />
+              <AppLogo size={38} />
               <span className="font-serif font-black text-[#8daa91] text-base tracking-wide leading-none">InkLink</span>
             </div>
             {user && (
